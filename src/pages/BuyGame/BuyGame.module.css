@@ -1,0 +1,295 @@
+:root {
+  --bg: #000;
+  --panel: #3d1a15;
+  --text: #ffffff;
+  --muted: #c9c4d6;
+  --accent: #a83427;
+  --border: rgba(255, 255, 255, 0.14);
+  --sel: #2b74ff;
+}
+
+.wrap {
+  background: var(--bg);
+  color: var(--text);
+  padding: 100px 20px 60px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.leftCard {
+  background: linear-gradient(
+    145deg,
+    var(--panel) 0%,
+    rgba(61, 26, 21, 0.8) 100%
+  );
+  border: 1px solid rgba(168, 52, 39, 0.3);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  max-width: 400px;
+  margin: 0 auto 40px;
+}
+
+.leftCard img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/11;
+  object-fit: cover;
+}
+
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(168, 52, 39, 0.1) 0%,
+    rgba(38, 17, 13, 0.3) 100%
+  );
+  padding: 25px;
+  border-radius: 16px;
+  border: 1px solid rgba(168, 52, 39, 0.2);
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--accent);
+  text-shadow: 0 0 20px rgba(168, 52, 39, 0.3);
+  text-align: center;
+}
+
+.gameName {
+  color: var(--accent);
+  text-shadow: 0 0 15px rgba(168, 52, 39, 0.4);
+  font-size: 28px;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 10px rgba(168, 52, 39, 0.3);
+}
+
+/* الشبكة */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(150px, 1fr));
+  gap: 16px;
+  background: linear-gradient(
+    145deg,
+    var(--panel) 0%,
+    rgba(61, 26, 21, 0.6) 100%
+  );
+  padding: 25px;
+  border-radius: 16px;
+  border: 1px solid rgba(168, 52, 39, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.pack {
+  position: relative;
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  color: #111;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 12px 14px 14px;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  row-gap: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 95px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pack:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: rgba(168, 52, 39, 0.3);
+}
+
+.badge {
+  position: absolute;
+  top: 8px;
+  inset-inline-start: 8px; /* يمين في RTL */
+  background: linear-gradient(135deg, #e9fff3 0%, #d4f7e0 100%);
+  color: #07a65a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #baf0d4;
+  box-shadow: 0 2px 6px rgba(7, 166, 90, 0.2);
+}
+
+.amount {
+  font-weight: 800;
+  font-size: 16px;
+  color: #2f2f2f;
+  margin-top: 10px;
+}
+
+.price {
+  color: #ff4b4b;
+  font-weight: 700;
+  font-size: 14px;
+  text-shadow: 0 0 8px rgba(255, 75, 75, 0.3);
+}
+
+/* راديو التحديد */
+.radio {
+  position: absolute;
+  top: 8px;
+  inset-inline-end: 8px; /* يسار في RTL */
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  display: grid;
+  place-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(168, 52, 39, 0.2);
+  background: linear-gradient(145deg, #fff8e1 0%, #ffffff 100%);
+}
+
+.selected .radio {
+  border-color: var(--accent);
+}
+
+.selected .dot {
+  background: var(--accent);
+}
+
+/* CTA */
+.ctaRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.buyBtn {
+  background: linear-gradient(135deg, var(--accent) 0%, #8b2c1f 100%);
+  color: #fff;
+  border: 2px solid var(--accent);
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(168, 52, 39, 0.3);
+  min-width: 180px;
+  text-align: center;
+}
+
+.buyBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(168, 52, 39, 0.4);
+}
+.buyBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 15px rgba(168, 52, 39, 0.2);
+}
+
+/* ريسبونسيف */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 950px) {
+  .wrap {
+    padding: 80px 16px 40px;
+  }
+  .leftCard {
+    max-width: 350px;
+    margin: 0 auto 30px;
+  }
+  .rightCol {
+    margin-bottom: 30px;
+  }
+  .header {
+    padding: 20px;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .subtitle {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .wrap {
+    padding: 60px 12px 30px;
+  }
+  .leftCard {
+    max-width: 300px;
+    margin: 0 auto 25px;
+  }
+  .rightCol {
+    margin-bottom: 25px;
+  }
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 20px;
+  }
+  .pack {
+    min-height: 90px;
+    padding: 10px 12px 12px;
+  }
+  .header {
+    padding: 16px;
+  }
+  .title {
+    font-size: 20px;
+  }
+  .subtitle {
+    font-size: 13px;
+  }
+  .buyBtn {
+    padding: 14px 28px;
+    font-size: 14px;
+    min-width: 160px;
+  }
+}

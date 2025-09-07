@@ -1,0 +1,73 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.notificationsWrapper {
+  position: relative;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  max-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  align-items: center;
+}
+
+/* إخفاء شريط التمرير */
+.notificationsWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.notificationsWrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ريسبونسيف */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .notificationsWrapper {
+    padding: 10px;
+    gap: 8px;
+    width: 100%;
+    max-width: calc(100vw - 40px);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 5px;
+  }
+
+  .notificationsWrapper {
+    padding: 5px;
+    gap: 6px;
+    max-width: calc(100vw - 20px);
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 5px;
+  }
+
+  .notificationsWrapper {
+    padding: 5px;
+    gap: 4px;
+    max-width: calc(100vw - 10px);
+  }
+}

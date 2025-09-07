@@ -1,0 +1,371 @@
+/* TopNav */
+.topNav {
+  background: #000;
+  color: white;
+  padding: 0;
+  font-size: 14px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1002;
+  overflow: hidden;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+/* خلفية النجوم */
+.starsCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* النص المتحرك */
+.scrollingWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0 20px;
+  order: 0;
+}
+
+.scrollingText {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: scroll 55s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.textItem {
+  display: inline-block;
+  margin: 0 24px;
+  font-weight: 500;
+  font-size: 18px; /* زيادة حجم النص الأساسي */
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  white-space: nowrap; /* منع كسر النص */
+}
+
+.separator {
+  margin: 0 16px;
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 18px; /* زيادة حجم الفاصل */
+}
+
+/* روابط السوشيال ميديا */
+.socialLinks {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  order: 1;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.socialLink:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffd700;
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+.socialLink svg {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+/* الوضع الفاتح */
+[data-theme="light"] .topNav {
+  background: #000;
+}
+
+[data-theme="light"] .textItem {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .socialLink {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] .socialLink:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffd700;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+/* ريسبونسيف */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 15px;
+  }
+
+  .scrollingWrapper {
+    margin-right: 0;
+    margin-bottom: 6px;
+  }
+
+  .scrollingText {
+    animation-duration: 50s;
+  }
+
+  .textItem {
+    margin: 0 16px;
+    font-size: 20px; /* زيادة حجم النص */
+  }
+
+  .separator {
+    margin: 0 12px;
+    font-size: 20px; /* زيادة حجم الفاصل */
+  }
+
+  .socialLinks {
+    gap: 8px;
+  }
+
+  .socialLink {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .socialLink svg {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topNav {
+    padding: 4px 0;
+    height: auto;
+    min-height: 60px;
+  }
+
+  .textItem {
+    margin: 0 12px;
+    font-size: 18px; /* زيادة حجم النص */
+  }
+
+  .separator {
+    margin: 0 8px;
+    font-size: 18px; /* زيادة حجم الفاصل */
+  }
+
+  .socialLinks {
+    gap: 6px;
+  }
+
+  .socialLink {
+    width: 32px;
+    height: 32px;
+  }
+
+  .socialLink svg {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* إصلاح النص للشاشات الصغيرة جداً */
+@media (max-width: 400px) {
+  .topNav {
+    height: auto;
+    min-height: 55px;
+  }
+
+  .textItem {
+    margin: 0 10px;
+    font-size: 17px; /* زيادة حجم النص */
+  }
+
+  .separator {
+    margin: 0 6px;
+    font-size: 17px;
+  }
+
+  .socialLink {
+    width: 30px;
+    height: 30px;
+  }
+
+  .socialLink svg {
+    font-size: 13px;
+    width: 13px;
+    height: 13px;
+  }
+}
+
+@media (max-width: 300px) {
+  .topNav {
+    height: auto;
+    min-height: 50px;
+  }
+
+  .textItem {
+    margin: 0 8px;
+    font-size: 16px; /* زيادة حجم النص */
+  }
+
+  .separator {
+    margin: 0 4px;
+    font-size: 16px;
+  }
+
+  .socialLink {
+    width: 28px;
+    height: 28px;
+  }
+
+  .socialLink svg {
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 250px) {
+  .topNav {
+    height: auto;
+    min-height: 45px;
+  }
+
+  .textItem {
+    margin: 0 6px;
+    font-size: 15px; /* زيادة حجم النص */
+  }
+
+  .separator {
+    margin: 0 3px;
+    font-size: 15px;
+  }
+
+  .socialLink {
+    width: 26px;
+    height: 26px;
+  }
+
+  .socialLink svg {
+    font-size: 11px;
+    width: 11px;
+    height: 11px;
+  }
+}
+
+@media (max-width: 200px) {
+  .topNav {
+    height: auto;
+    min-height: 40px;
+  }
+
+  .textItem {
+    margin: 0 4px;
+    font-size: 14px; /* زيادة حجم النص */
+  }
+
+  .separator {
+    margin: 0 2px;
+    font-size: 14px;
+  }
+
+  .socialLink {
+    width: 24px;
+    height: 24px;
+  }
+
+  .socialLink svg {
+    font-size: 10px;
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* تأثيرات إضافية */
+.topNav::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+/* تحسين الأداء */
+.scrollingText {
+  will-change: transform;
+}
+
+.socialLink {
+  will-change: transform, background-color;
+}

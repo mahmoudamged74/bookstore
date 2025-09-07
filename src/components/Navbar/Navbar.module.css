@@ -1,0 +1,720 @@
+.navbar {
+  background-color: var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem; /* تقليل الـ padding من 0.8rem إلى 0.5rem */
+  direction: rtl;
+  font-size: 14px;
+  position: fixed; /* Fixed navbar */
+  top: 40px; /* تحت TopNav مباشرة بدون فراغ */
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(0px);
+  margin: 0;
+}
+
+/* تعديل النافبار للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .navbar {
+    top: 70px; /* تحت TopNav للشاشات الصغيرة - نفس الارتفاع */
+    padding: 0.4rem 1.5rem; /* تقليل الـ padding للشاشات الصغيرة */
+  }
+}
+
+/* تطبيق الألوان في اللايت مود */
+body[data-theme="light"] .navbar {
+  background-color: var(--bg);
+  color: #ffffff; /* أبيض للنافبار في اللايت مود */
+}
+
+/* أيقون السهم React Icons */
+.navbar svg {
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+/* أيقون السهم في اللايت مود */
+:global(body[data-theme="light"]) .navbar svg {
+  color: #000000 !important;
+}
+
+/* أيقون السهم في الوضع الافتراضي (الدارك مود) */
+.navbar svg {
+  color: #ffffff;
+}
+
+body[data-theme="light"] .navbar .link {
+  color: #000000; /* أسود للروابط */
+}
+
+body[data-theme="light"] .navbar .link:hover {
+  color: var(--accent);
+}
+
+body[data-theme="light"] .navbar .login {
+  background-color: var(--accent);
+  color: #ffffff; /* أبيض لزر تسجيل الدخول */
+  border-color: var(--accent);
+}
+
+body[data-theme="light"] .navbar .cartCount {
+  background-color: var(--accent);
+  color: #ffffff; /* أبيض لرقم العربة */
+}
+
+/* ألوان اللغة والسهم في اللايت مود */
+body[data-theme="light"] .navbar .lang span {
+  color: #000000 !important; /* أسود للغة والسهم */
+}
+
+/* إصلاح لون السهم في اللايت مود */
+body[data-theme="light"] .navbar .lang i {
+  color: #000000 !important;
+}
+
+/* ألوان الدروب داون للغة في اللايت مود */
+body[data-theme="light"] .navbar .langDropdown {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+body[data-theme="light"] .navbar .langDropdown li {
+  color: #000000;
+}
+
+body[data-theme="light"] .navbar .langDropdown li:hover {
+  background-color: #f3f4f6;
+  color: #000000;
+}
+
+/* تحسين ظهور الدروب داون في اللايت مود */
+body[data-theme="light"] .navbar .lang {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body[data-theme="light"] .navbar .lang:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ألوان الروابط النشطة في اللايت مود */
+body[data-theme="light"] .navbar .link.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ألوان أيقونة العربة في اللايت مود */
+body[data-theme="light"] .navbar .cartIcon {
+  color: #ffffff;
+}
+
+body[data-theme="light"] .navbar .cartIconSymbol {
+  color: #ffffff;
+}
+
+/* ألوان الموبايل في اللايت مود */
+body[data-theme="light"] .navbar .mobileLink {
+  color: #ffffff !important; /* أبيض لروابط الموبايل */
+}
+
+body[data-theme="light"] .navbar .mobileLink:hover {
+  color: var(--accent);
+}
+
+body[data-theme="light"] .navbar .mobileLink.active {
+  color: var(--accent);
+  border-right-color: var(--accent);
+}
+
+/* ألوان أيقونة العربة في الموبايل - اللايت مود */
+body[data-theme="light"] .navbar .mobileCartIcon {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobileCartIcon .cartIconSymbol {
+  color: #ffffff !important;
+}
+
+/* ألوان اللغة في الموبايل - اللايت مود */
+body[data-theme="light"] .navbar .mobilePanel .lang {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobilePanel .lang span {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobilePanel .lang i {
+  color: #ffffff !important;
+}
+
+/* ألوان تبديل الوضع في الموبايل - اللايت مود */
+body[data-theme="light"] .navbar .mobileThemeToggle {
+  color: #ffffff !important;
+}
+
+/* إصلاح إضافي لألوان النصوص في الموبايل */
+.navbar .mobilePanel .lang,
+.navbar .mobilePanel .lang span,
+.navbar .mobilePanel .lang i,
+.navbar .mobilePanel .mobileThemeToggle {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobilePanel .lang,
+body[data-theme="light"] .navbar .mobilePanel .lang span,
+body[data-theme="light"] .navbar .mobilePanel .lang i,
+body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
+  color: #ffffff !important;
+}
+
+/* Scrolled state */
+.navbar.scrolled {
+  background-color: var(--card);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px var(--shadow);
+  padding: 0.4rem 2rem; /* تقليل الـ padding للشاشات الصغيرة */
+  border-bottom: 1px solid var(--accent);
+}
+
+/* Logo animation on scroll */
+.navbar.scrolled .logo img {
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+/* Link hover effects */
+.navbar.scrolled .link:hover {
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(168, 52, 39, 0.3);
+}
+
+/* اتجاه النافبار للعربية */
+.navbar.arabic {
+  direction: rtl;
+}
+
+/* اتجاه النافبار للإنجليزية */
+.navbar.english {
+  direction: ltr;
+}
+
+/* اتجاه زر الهامبورجر للعربية */
+.navbar.arabic .hamburger {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+/* اتجاه زر الهامبورجر للإنجليزية */
+.navbar.english .hamburger {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.link {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.link:hover {
+  color: var(--accent);
+}
+
+/* أيقونة السلة */
+.cartIcon {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(168, 52, 39, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.cartIcon:hover {
+  background: rgba(168, 52, 39, 0.2);
+  transform: translateY(-1px);
+}
+
+.cartIconSymbol {
+  font-size: 18px;
+}
+
+.cartCount {
+  background: var(--accent);
+  color: var(--text);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 20px;
+}
+
+.active {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 2px;
+}
+
+.lang {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  position: relative; /* لقائمة dropdown */
+}
+
+.lang:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.lang img {
+  width: 20px;
+  height: 15px;
+}
+
+.authButtons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.signup {
+  background-color: #a83427;
+  border: 2px solid #a83427;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  color: white;
+}
+
+.login {
+  background-color: var(--accent);
+  color: var(--text);
+  border: 2px solid var(--accent);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.signup:hover,
+.login:hover {
+  opacity: 0.8;
+}
+
+/* === Dropdown للغات === */
+.langDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--card);
+  color: var(--text);
+  list-style: none;
+  padding: 0.4rem 0;
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  min-width: 120px;
+  text-align: right;
+}
+
+.langDropdown li {
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease-in-out;
+  font-size: 12px;
+}
+
+.langDropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+.langDropdown img {
+  width: 18px;
+  height: 14px;
+}
+
+/* === زر الهامبورجر للموبايل === */
+.hamburger {
+  display: none; /* يظهر فقط تحت 990px */
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin-right: auto; /* يدفع الزر إلى اليمين */
+}
+
+.hamburger span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: #fff;
+  position: relative;
+}
+
+.hamburger span::before,
+.hamburger span::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 18px;
+  height: 2px;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+
+.hamburger span::before {
+  top: -6px;
+}
+
+.hamburger span::after {
+  top: 6px;
+}
+
+/* حالة الفتح */
+.hamburgerOpen span {
+  background: transparent;
+}
+
+.hamburgerOpen span::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hamburgerOpen span::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* === قائمة الموبايل === */
+.mobileMenu {
+  display: none;
+}
+
+.mobilePanel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  background: #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: slideDown 0.18s ease-out;
+}
+
+/* اتجاه النص للعربية */
+.mobilePanel.arabic {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+/* اتجاه النص للإنجليزية */
+.mobilePanel.english {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobileLink {
+  color: #ffffff !important;
+  text-decoration: none;
+  padding: 10px 8px 10px 16px;
+  border-radius: 6px;
+  font-size: 15px;
+  text-align: right;
+}
+
+/* اتجاه الروابط في الموبايل للعربية */
+.mobilePanel.arabic .mobileLink {
+  text-align: right !important;
+  direction: rtl !important;
+  padding: 10px 16px 10px 8px !important;
+}
+
+/* اتجاه الروابط في الموبايل للإنجليزية */
+.mobilePanel.english .mobileLink {
+  text-align: left !important;
+  direction: ltr !important;
+}
+
+/* اتجاه تغيير اللغة في الموبايل للعربية */
+.mobilePanel.arabic .lang {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+/* اتجاه تغيير اللغة في الموبايل للإنجليزية */
+.mobilePanel.english .lang {
+  text-align: left !important;
+  direction: ltr !important;
+}
+
+.mobileLink:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mobileLink.active {
+  background: rgba(168, 52, 39, 0.2);
+  color: var(--accent);
+  border-right: 3px solid var(--accent);
+}
+
+.mobileAuth {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.mobileAuth .login,
+.mobileAuth .signup {
+  flex: 1;
+  text-align: center;
+}
+
+/* أيقونة السلة في الموبايل */
+.mobileCartIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 8px 10px 16px;
+  background: rgba(168, 52, 39, 0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 8px 0;
+  justify-content: flex-start;
+  text-align: right;
+  direction: rtl;
+}
+
+.mobileCartIcon:hover {
+  background: rgba(168, 52, 39, 0.2);
+  transform: translateY(-1px);
+}
+
+/* اتجاه أيقونة السلة في الموبايل للعربية */
+.mobilePanel.arabic .mobileCartIcon {
+  text-align: right !important;
+  direction: rtl !important;
+  padding: 10px 16px 10px 8px !important;
+}
+
+/* اتجاه أيقونة السلة في الموبايل للإنجليزية */
+.mobilePanel.english .mobileCartIcon {
+  text-align: left !important;
+  direction: ltr !important;
+  padding: 10px 8px 10px 16px !important;
+}
+
+/* === الاستجابة: لحد 990px يظل ديسكتوب؛ تحتها موبايل === */
+@media (max-width: 990px) {
+  .navLinks {
+    display: none;
+  }
+  .authButtons {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .mobileMenu {
+    display: block;
+  }
+  .logo img {
+    height: 34px;
+  }
+  .navbar {
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* إصلاح مشكلة الريسبونسف - منع تداخل العربة مع التوجلر */
+@media (max-width: 1200px) {
+  .authButtons {
+    gap: 8px;
+  }
+
+  .themeToggle {
+    min-width: 36px;
+    height: 36px;
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+
+  .cartIcon {
+    padding: 6px 8px;
+    gap: 4px;
+  }
+
+  .cartIconSymbol {
+    font-size: 16px;
+  }
+
+  .cartCount {
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .authButtons {
+    gap: 6px;
+  }
+
+  .themeToggle {
+    min-width: 32px;
+    height: 32px;
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+
+  .cartIcon {
+    padding: 4px 6px;
+    gap: 3px;
+  }
+
+  .cartIconSymbol {
+    font-size: 14px;
+  }
+
+  .cartCount {
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+  }
+}
+
+/* Theme Toggle Styles */
+.themeToggle {
+  background: none !important;
+  border: none !important;
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+}
+
+.themeToggle:hover {
+  background: none !important;
+  transform: translateY(-2px);
+  box-shadow: none !important;
+}
+
+/* إزالة الخلفية في اللايت مود */
+body[data-theme="light"] .themeToggle {
+  background: none !important;
+  border: none !important;
+}
+
+body[data-theme="light"] .themeToggle:hover {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.mobileThemeToggle {
+  background: none !important;
+  border: none !important;
+  color: var(--text);
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 10px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.mobileThemeToggle:hover {
+  background: none !important;
+  transform: translateY(-2px);
+  box-shadow: none !important;
+}
+
+/* إزالة الخلفية في اللايت مود للموبايل */
+body[data-theme="light"] .mobileThemeToggle {
+  background: none !important;
+  border: none !important;
+}
+
+body[data-theme="light"] .mobileThemeToggle:hover {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* منع تحرك التوجلر في الموبايل */
+.mobileThemeToggle:active {
+  transform: none;
+}
+
+.mobileThemeToggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(168, 52, 39, 0.3);
+}

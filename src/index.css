@@ -1,0 +1,660 @@
+* {
+  font-family: "JF-Flat", "Tajawal", Inter, "Open Sans", Helvetica, Arial,
+    sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0%;
+  text-align: left;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a1a;
+  overflow-x: hidden;
+}
+
+/* إضافة مساحة للـ TopNav والـ Navbar */
+body {
+  /* padding-top: 120px; TopNav (70px) + Navbar (50px) */
+}
+
+/* انيميشن الطيران في الموقع كله */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(168, 52, 39, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 215, 0, 0.05) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(168, 52, 39, 0.02) 50%,
+      transparent 100%
+    );
+  animation: backgroundFloat 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes backgroundFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateY(-10px) rotate(0.5deg) scale(1.02);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(-20px) rotate(1deg) scale(1.05);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-10px) rotate(0.5deg) scale(1.02);
+    opacity: 0.9;
+  }
+}
+
+/* انيميشن إضافي للعناصر المتحركة */
+.floating-element {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+}
+
+/* انيميشن للكاردات */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* انيميشن للروابط */
+a {
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  transform: translateY(-2px);
+}
+
+/* انيميشن للأزرار */
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* انيميشن للصور */
+img {
+  transition: all 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05) rotate(1deg);
+}
+
+/* إصلاح لون أيقون السهم في اللايت مود */
+body[data-theme="light"] .navbar i.fas.fa-chevron-down {
+  color: #000000 !important;
+}
+
+/* إصلاح إضافي لسهم اللغة في اللايت مود */
+body[data-theme="light"] .navbar .lang i {
+  color: #000000 !important;
+}
+
+/* لون أيقون السهم في الوضع الافتراضي */
+.navbar i.fas.fa-chevron-down {
+  color: #ffffff;
+}
+
+.navbar .lang i {
+  color: #ffffff;
+}
+
+/* إصلاح لون روابط الموبايل */
+.navbar .mobileLink {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobileLink {
+  color: #ffffff !important;
+}
+
+/* إصلاح ألوان منيو الموبايل في الدارك مود */
+.navbar .mobilePanel .lang {
+  color: #ffffff !important;
+}
+
+.navbar .mobilePanel .lang span {
+  color: #ffffff !important;
+}
+
+.navbar .mobilePanel .lang i {
+  color: #ffffff !important;
+}
+
+.navbar .mobileCartIcon {
+  color: #ffffff !important;
+}
+
+.navbar .mobileCartIcon .cartIconSymbol {
+  color: #ffffff !important;
+}
+
+/* إصلاح ألوان منيو الموبايل في اللايت مود */
+body[data-theme="light"] .navbar .mobilePanel .lang {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobilePanel .lang span {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobilePanel .lang i {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobileCartIcon {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobileCartIcon .cartIconSymbol {
+  color: #ffffff !important;
+}
+
+/* إصلاح إضافي لألوان منيو الموبايل */
+.navbar .mobileThemeToggle {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobileThemeToggle {
+  color: #ffffff !important;
+}
+
+/* إصلاح ألوان النصوص في منيو الموبايل */
+.navbar .mobilePanel * {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobilePanel * {
+  color: #ffffff !important;
+}
+
+/* إصلاح إضافي لنصوص تغيير اللغة والوضع */
+.navbar .mobilePanel .lang,
+.navbar .mobilePanel .lang span,
+.navbar .mobilePanel .lang i,
+.navbar .mobilePanel .mobileThemeToggle {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .navbar .mobilePanel .lang,
+body[data-theme="light"] .navbar .mobilePanel .lang span,
+body[data-theme="light"] .navbar .mobilePanel .lang i,
+body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
+  color: #ffffff !important;
+}
+
+/* إصلاح ألوان صفحة Auth */
+.authContainer {
+  background: linear-gradient(
+    135deg,
+    #0f0f23 0%,
+    #1a1a2e 50%,
+    #16213e 100%
+  ) !important;
+}
+
+body[data-theme="light"] .authContainer {
+  background: linear-gradient(
+    135deg,
+    #f8f9fa 0%,
+    #e9ecef 50%,
+    #dee2e6 100%
+  ) !important;
+}
+
+/* إصلاح ألوان النصوص في صفحة Auth */
+.authContainer .formTitle,
+.authContainer .formSubtitle,
+.authContainer .logoTitle,
+.authContainer .logoSubtitle,
+.authContainer .switchText,
+.authContainer .forgotLink,
+.authContainer .btnText,
+.authContainer .btnIcon,
+.authContainer * {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .authContainer .formTitle,
+body[data-theme="light"] .authContainer .formSubtitle,
+body[data-theme="light"] .authContainer .logoTitle,
+body[data-theme="light"] .authContainer .logoSubtitle,
+body[data-theme="light"] .authContainer .switchText,
+body[data-theme="light"] .authContainer .forgotLink,
+body[data-theme="light"] .authContainer .btnText,
+body[data-theme="light"] .authContainer .btnIcon,
+body[data-theme="light"] .authContainer * {
+  color: #ffffff !important;
+}
+
+/* إصلاح ألوان الحقول في صفحة Auth */
+.authContainer .authInput,
+.authContainer .phoneInput,
+.authContainer .countrySelect {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+body[data-theme="light"] .authContainer .authInput,
+body[data-theme="light"] .authContainer .phoneInput,
+body[data-theme="light"] .authContainer .countrySelect {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: #000000 !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+}
+
+/* إصلاح ألوان الأزرار في صفحة Auth */
+.authContainer .submitBtn {
+  background: linear-gradient(135deg, #ff7730, #ff6b35) !important;
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .authContainer .submitBtn {
+  background: linear-gradient(135deg, #a83427, #ff6b35) !important;
+  color: #ffffff !important;
+}
+
+/* إصلاح ألوان صفحة FAQ */
+.faqPage {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
+}
+
+body[data-theme="light"] .faqPage {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+}
+
+/* إصلاح ألوان النصوص في صفحة FAQ */
+.faqPage * {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .faqPage * {
+  color: #ffffff !important;
+}
+
+/* إصلاح ألوان العناصر المحددة في صفحة FAQ */
+.faqPage .heroTitle,
+.faqPage .heroSubtitle,
+.faqPage .faqQuestion,
+.faqPage .faqAnswer,
+.faqPage .faqAnswer p {
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .faqPage .heroTitle,
+body[data-theme="light"] .faqPage .heroSubtitle,
+body[data-theme="light"] .faqPage .faqQuestion,
+body[data-theme="light"] .faqPage .faqAnswer,
+body[data-theme="light"] .faqPage .faqAnswer p {
+  color: #ffffff !important;
+}
+
+/* إصلاح محاذاة النصوص في صفحة FAQ */
+.faqPage .faqQuestion,
+.faqPage .faqAnswer,
+.faqPage .faqAnswer p {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+body[data-theme="light"] .faqPage .faqQuestion,
+body[data-theme="light"] .faqPage .faqAnswer,
+body[data-theme="light"] .faqPage .faqAnswer p {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+/* إزالة الألوان الحمراء في اللايت مود لصفحة FAQ */
+body[data-theme="light"] .faqPage .heroSection {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+}
+
+body[data-theme="light"] .faqPage .faqQuestion:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+body[data-theme="light"] .faqPage .faqQuestion.active {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .faqPage .arrow {
+  color: #ffffff !important;
+}
+
+/* إصلاح لون عنوان "الأسئلة الشائعة" في اللايت مود */
+body[data-theme="light"] .faqPage .heroTitle {
+  background: linear-gradient(45deg, #000000, #333333) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: #000000 !important;
+}
+
+/* إصلاح لون النص الفرعي في اللايت مود */
+body[data-theme="light"] .faqPage .heroSubtitle {
+  color: #000000 !important;
+}
+
+[dir="rtl"] {
+  --font-family-sans-serif: "JF-Flat", "Tajawal", Inter, "Open Sans", Helvetica,
+    Arial, sans-serif;
+}
+
+/* تطبيق فونت JF-Flat على النصوص العربية */
+[dir="rtl"] *,
+[dir="rtl"] body,
+[dir="rtl"] html,
+[lang="ar"] *,
+[lang="ar"] body,
+[lang="ar"] html {
+  font-family: "JF-Flat", "Tajawal", Inter, "Open Sans", Helvetica, Arial,
+    sans-serif !important;
+}
+
+/* متغيرات الألوان للدارك مود (الافتراضي) */
+:root {
+  --bg: #000;
+  --text: #ffffff;
+  --muted: #cccccc;
+  --accent: #a83427;
+  --card: #3d1a15;
+  --border: #4a2c1f;
+  --hover: #5a3c2f;
+  --shadow: rgba(0, 0, 0, 0.3);
+
+  /* ألوان إضافية */
+  --white: #ffffff;
+  --grey-400: #9ca3af;
+  --grey-800: #1f2937;
+  --white-300: #f3f4f6;
+  --white-400: #e5e7eb;
+  --white-500: #d1d5db;
+  --white-700: #374151;
+  --white-800: #1f2937;
+  --dark-800: #1f2937;
+  --dark-900: #111827;
+  --blue-500: #3b82f6;
+}
+
+/* متغيرات الألوان للايت مود */
+[data-theme="light"] {
+  --bg: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --accent: #a83427; /* نفس لون الأزرار */
+  --card: #f3f4f6;
+  --border: #e5e7eb;
+  --hover: #d1d5db;
+  --shadow: rgba(0, 0, 0, 0.1);
+
+  /* ألوان إضافية للايت مود */
+  --primary-background: #ffffff;
+  --alt-background: #ddddd3;
+  --main-color: #1f2937;
+  --main-background-color: #e5e7eb;
+  --card-background-color: #f3f4f6;
+  --card-alt-background-color: #d1d5db;
+  --madal-background-color: #e5e7eb;
+  --main-text-color: #1f2937;
+  --white-text-color: #111827;
+  --dark-text-color: #1f2937;
+  --blue-text-color: #3b82f6;
+  --background-gray-300: #374151;
+  --button-white: #9ca3af;
+}
+
+/* تطبيق الألوان على body في اللايت مود */
+body[data-theme="light"] {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+/* تطبيق الألوان على العناصر في اللايت مود */
+[data-theme="light"] body {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+body[data-theme="light"]::before {
+  background: linear-gradient(45deg, #ffffff, #f3f4f6, #ffffff, #e5e7eb);
+  opacity: 0.1;
+}
+
+body[data-theme="light"]::after {
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(168, 52, 39, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    );
+  opacity: 0.2;
+}
+
+/* تطبيق الألوان على جميع العناصر في اللايت مود */
+body[data-theme="light"] * {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+body[data-theme="light"] .card,
+body[data-theme="light"] .game-card,
+body[data-theme="light"] [class*="card"] {
+  background-color: var(--card);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+body[data-theme="light"] button,
+body[data-theme="light"] .btn,
+body[data-theme="light"] [role="button"] {
+  background-color: var(--accent);
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+body[data-theme="light"] a {
+  color: var(--text);
+}
+
+body[data-theme="light"] a:hover {
+  color: var(--accent);
+}
+
+/* أنيميشن الألعاب في الخلفية - تم إزالته */
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(38, 17, 13, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(168, 52, 39, 0.2) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(38, 17, 13, 0.1) 0%,
+      transparent 50%
+    );
+  z-index: -1;
+  animation: gamePulseAnimation 8s ease-in-out infinite;
+}
+
+@keyframes gameGradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gamePulseAnimation {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.05);
+  }
+}
+
+/* أنيميشن للعناصر التفاعلية */
+button,
+.btn,
+[role="button"] {
+  position: relative;
+  overflow: hidden;
+}
+
+button::before,
+.btn::before,
+[role="button"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(168, 52, 39, 0.4),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+button:hover::before,
+.btn:hover::before,
+[role="button"]:hover::before {
+  left: 100%;
+}
+
+/* أنيميشن للكاردات */
+.card,
+.game-card,
+[class*="card"] {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.card:hover,
+.game-card:hover,
+[class*="card"]:hover {
+  transform: translateY(-5px) scale(1.02);
+}
+
+/* أنيميشن للروابط */
+a {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #a83427;
+  transition: width 0.3s ease;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  /* padding-top: 80px;  */
+  font-family: "JF-Flat", "Tajawal", Inter, "Open Sans", Helvetica, Arial,
+    sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0%;
+  text-align: left;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

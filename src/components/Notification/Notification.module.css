@@ -1,0 +1,520 @@
+/* إشعارات الموقع */
+.notification {
+  position: fixed !important;
+  top: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(-100%) scale(0.8) !important;
+  min-width: 350px;
+  max-width: 450px;
+  width: auto;
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  margin-bottom: 12px;
+  animation: floatUp 3s ease-in-out infinite;
+}
+
+.notification.show {
+  transform: translateX(-50%) translateY(0) scale(1) !important;
+  opacity: 1;
+}
+
+.notification.hide {
+  transform: translateX(-50%) translateY(-100%) scale(0.8) !important;
+  opacity: 0;
+}
+
+/* أنواع الإشعارات */
+.notification.success {
+  border-left: 4px solid #10b981;
+  background: linear-gradient(145deg, #f0fdf4, #ecfdf5);
+}
+
+.notification.error {
+  border-left: 4px solid #ef4444;
+  background: linear-gradient(145deg, #fef2f2, #fee2e2);
+}
+
+.notification.warning {
+  border-left: 4px solid #f59e0b;
+  background: linear-gradient(145deg, #fffbeb, #fef3c7);
+}
+
+.notification.info {
+  border-left: 4px solid #3b82f6;
+  background: linear-gradient(145deg, #eff6ff, #dbeafe);
+}
+
+/* محتوى الإشعار */
+.notificationContent {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 16px;
+  position: relative;
+}
+
+/* أيقون الإشعار */
+.iconContainer {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  animation: iconPulse 2s infinite, floatUp 2s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.iconContainer::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 3s linear infinite;
+  transform: rotate(45deg);
+}
+
+.notification.success .iconContainer {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.notification.error .iconContainer {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.notification.warning .iconContainer {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.notification.info .iconContainer {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.icon {
+  animation: iconBounce 0.6s ease-out;
+}
+
+/* المحتوى النصي */
+.textContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 6px 0;
+  line-height: 1.4;
+  text-align: right;
+  animation: slideInRight 0.5s ease-out 0.1s both;
+}
+
+.message {
+  font-size: 18px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+  text-align: right;
+  animation: slideInRight 0.5s ease-out 0.2s both;
+}
+
+/* زر الإغلاق */
+.closeBtn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(107, 114, 128, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #6b7280;
+  animation: slideInRight 0.5s ease-out 0.3s both,
+    wiggle 2s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.closeBtn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.closeBtn:hover::before {
+  left: 100%;
+}
+
+.closeBtn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+.closeBtn:active {
+  transform: scale(0.95);
+}
+
+.closeIcon {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+  color: #ffffff !important;
+}
+
+/* شريط التقدم */
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  animation: progressAnimation 5s linear forwards;
+  border-radius: 0 2px 2px 0;
+}
+
+.notification.success .progressFill {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.notification.error .progressFill {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.notification.warning .progressFill {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+/* الانيميشنز */
+@keyframes iconPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes iconBounce {
+  0% {
+    transform: scale(0) rotate(180deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(0deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes progressAnimation {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+/* انيميشنز إضافية */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6),
+      0 0 30px rgba(59, 130, 246, 0.4);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+}
+
+/* تأثيرات إضافية */
+.notification::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+  animation: shimmer 2s linear infinite;
+}
+
+.notification::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: glow 2s ease-in-out infinite;
+}
+
+.notification:hover::after {
+  opacity: 1;
+}
+
+.notification:hover {
+  animation: floatUp 1s ease-in-out infinite, wiggle 0.5s ease-in-out;
+}
+
+/* ريسبونسيف */
+@media (max-width: 768px) {
+  .notification {
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-100%) scale(0.8) !important;
+    min-width: 300px;
+    max-width: calc(100vw - 40px);
+    width: calc(100vw - 40px);
+    top: 10px !important;
+    margin: 0;
+  }
+
+  .notification.show {
+    transform: translateX(-50%) translateY(0) scale(1) !important;
+  }
+
+  .notification.hide {
+    transform: translateX(-50%) translateY(-100%) scale(0.8) !important;
+  }
+
+  .notificationContent {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .title {
+    font-size: 17px;
+  }
+
+  .message {
+    font-size: 15px;
+  }
+
+  .iconContainer {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}
+
+/* شاشات أصغر */
+@media (max-width: 480px) {
+  .notification {
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%) scale(0.8);
+    min-width: 280px;
+    max-width: calc(100vw - 20px);
+    width: calc(100vw - 20px);
+    top: 10px;
+    margin: 0;
+  }
+
+  .notification.show {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  .notification.hide {
+    transform: translateX(-50%) translateY(-100%) scale(0.8);
+  }
+
+  .notificationContent {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .message {
+    font-size: 14px;
+  }
+
+  .iconContainer {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+}
+
+/* شاشات صغيرة جداً */
+@media (max-width: 360px) {
+  .notification {
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%) scale(0.8);
+    min-width: 260px;
+    max-width: calc(100vw - 10px);
+    width: calc(100vw - 10px);
+    top: 5px;
+    margin: 0;
+  }
+
+  .notification.show {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  .notification.hide {
+    transform: translateX(-50%) translateY(-100%) scale(0.8);
+  }
+
+  .notificationContent {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .message {
+    font-size: 13px;
+  }
+
+  .iconContainer {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+}
+
+/* Dark Mode */
+[data-theme="dark"] .notification {
+  background: linear-gradient(145deg, #1f2937, #111827);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .title {
+  color: #f9fafb;
+}
+
+[data-theme="dark"] .message {
+  color: #d1d5db;
+}
+
+[data-theme="dark"] .closeBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #d1d5db;
+}
+
+[data-theme="dark"] .closeBtn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}

@@ -1,0 +1,377 @@
+:root {
+  --bg: #000;
+  --card-bg: #22124f;
+  --border: #3b2c74;
+  --text: #ffffff;
+  --muted: #c9c4d6;
+  --accent: #a83427;
+  --success: #00ff88;
+  --danger: #ff4757;
+  --warning: #ffa502;
+}
+
+.section {
+  background: var(--bg);
+  color: var(--text);
+  padding: 60px 20px 40px;
+  min-height: 100vh;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.headings {
+  text-align: center;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #a83427, #ff6b35);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+/* الشبكة */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+/* البطاقة */
+.card {
+  background: linear-gradient(135deg, var(--card-bg), #2a1a5e);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 480px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+}
+
+.thumbWrap {
+  background: #140a33;
+  aspect-ratio: 16/11;
+  overflow: hidden;
+  position: relative;
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .thumb {
+  transform: scale(1.05);
+}
+
+/* شارات العروض */
+.hotBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--danger);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 2;
+  animation: pulse 2s infinite;
+}
+
+.discountBadge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--accent);
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(255, 204, 0, 0.3);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.gameTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: right;
+}
+
+.desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 44px;
+  text-align: right;
+}
+
+/* قسم الأسعار */
+.priceSection {
+  margin-top: auto;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  justify-content: center;
+}
+
+.originalPrice {
+  color: var(--muted);
+  text-decoration: line-through;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.discountPrice {
+  color: var(--success);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.discountPercent {
+  background: var(--danger);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+/* زر */
+.btnPrimary {
+  background: linear-gradient(45deg, var(--accent), #ff6b35);
+  color: #000;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 204, 0, 0.4);
+}
+
+.btnPrimary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btnPrimary:hover::before {
+  left: 100%;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 40px 0 32px;
+  flex-wrap: wrap;
+}
+
+.pageBtn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #a83427;
+  color: #a83427;
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageBtn.active {
+  background: #a83427;
+  color: #000;
+  border-color: #a83427;
+  font-weight: 700;
+}
+
+/* أزرار السابق/التالي */
+.pageBtn:first-child,
+.pageBtn:last-child {
+  width: auto;
+  min-width: 80px;
+  padding: 8px 12px;
+  border-radius: 20px;
+}
+
+/* زر عرض جميع الألعاب كـ pagination */
+.pagination .pageBtn:last-child {
+  width: auto;
+  min-width: 140px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+  margin-left: 12px;
+}
+
+.pagination .pageBtn:last-child:hover {
+  background: #ffb300;
+  border-color: #ffb300;
+  color: #000;
+}
+
+/* ريسبونسيف */
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+}
+
+@media (max-width: 990px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 40px 14px 30px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    height: 450px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .pagination {
+    gap: 6px;
+    margin: 32px 0 24px;
+  }
+
+  .pageBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+
+  .pageBtn:first-child,
+  .pageBtn:last-child {
+    width: auto;
+    min-width: 70px;
+    padding: 6px 10px;
+  }
+
+  .moreLink {
+    padding: 12px 28px;
+    font-size: 14px;
+    min-width: 140px;
+  }
+}

@@ -1,0 +1,769 @@
+:root {
+  --bg: #000;
+  --text: #ffffff;
+  --muted: #c9c4d6;
+  --accent: #a83427;
+  --card: #3d1a15;
+}
+
+.hero {
+  background: var(--bg);
+  color: var(--text);
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* توزيع متساوي */
+  gap: 40px;
+  align-items: center;
+  padding: 250px 32px 60px;
+  direction: rtl;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* تطبيق الألوان في اللايت مود - نفس الدارك مود */
+body[data-theme="light"] .hero {
+  background: #000; /* نفس لون الدارك مود */
+  color: #ffffff; /* نفس لون النص في الدارك مود */
+}
+
+body[data-theme="light"] .hero .title {
+  color: #ffffff; /* نفس لون العنوان في الدارك مود */
+}
+
+body[data-theme="light"] .hero .subtitle {
+  color: #c9c4d6; /* نفس لون النص الثانوي في الدارك مود */
+}
+
+body[data-theme="light"] .hero .primaryBtn {
+  background: #a83427; /* نفس لون الأزرار */
+  color: #ffffff;
+  border-color: #a83427;
+}
+
+body[data-theme="light"] .hero .ghostBtn {
+  background: transparent;
+  color: #ffffff; /* نفس لون النص في الدارك مود */
+  border-color: #a83427;
+}
+
+body[data-theme="light"] .hero .ghostBtn:hover {
+  background: #a83427;
+  color: #ffffff;
+}
+
+/* الحفاظ على نفس التدرج في اللايت مود */
+body[data-theme="light"] .hero::before {
+  background: radial-gradient(
+    circle,
+    rgba(168, 52, 39, 0.3) 0%,
+    transparent 70%
+  );
+}
+
+/* الحفاظ على نفس ألوان الكارد في اللايت مود */
+body[data-theme="light"] .hero .mainCard {
+  background: #3d1a15; /* نفس لون الكارد في الدارك مود */
+  border: 1px solid #4a2c1f; /* نفس لون الحدود */
+}
+
+body[data-theme="light"] .hero .badge {
+  background: #a83427; /* نفس لون البادج */
+  color: #ffffff;
+}
+
+/* الحفاظ على نفس ألوان التمييز */
+body[data-theme="light"] .hero .highlight1 {
+  color: #a83427; /* نفس لون التمييز الأول */
+}
+
+body[data-theme="light"] .hero .highlight2 {
+  color: #a83427; /* نفس لون التمييز الثاني */
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    rgba(168, 52, 39, 0.3) 0%,
+    transparent 70%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* يسار */
+.left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.mainCard {
+  position: relative;
+  background: var(--card);
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 100%;
+}
+
+.mainImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: all 1.2s ease-in-out;
+  animation: imageFadeIn 1.2s ease-in-out;
+}
+
+@keyframes imageFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.2) rotate(2deg);
+    filter: blur(2px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05) rotate(1deg);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+}
+
+/* شارة اسم الكتاب */
+.badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* يمين */
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.2;
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  text-align: center;
+}
+
+.highlight1 {
+  color: var(--accent);
+  font-size: inherit;
+}
+
+.highlight2 {
+  color: var(--accent);
+  font-size: inherit;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 0 0 6px 0;
+  font-weight: 600;
+}
+
+.ctaRow {
+  display: flex;
+  gap: 12px;
+}
+
+.primaryBtn {
+  background: var(--accent);
+  color: #fff;
+  border: 2px solid var(--accent);
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  min-width: 160px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primaryBtn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.ghostBtn {
+  background: transparent;
+  color: #fff;
+  border: 2px solid var(--accent);
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease,
+    transform 0.15s ease;
+  min-width: 160px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ghostBtn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* ريسبونسيف */
+@media (max-width: 1200px) {
+  .hero {
+    grid-template-columns: 1fr;
+    align-items: center;
+    padding: 170px 24px 80px;
+    gap: 40px;
+  }
+  .hero::before {
+    display: none; /* إخفاء الـ gradient في الشاشات الصغيرة */
+  }
+  .right {
+    order: -1; /* خلي النص فوق في الشاشات الأصغر */
+    align-items: center;
+    text-align: center;
+  }
+  .left {
+    justify-content: center;
+  }
+  .mainCard {
+    max-width: 400px;
+  }
+  .subtitle {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 170px 20px 80px;
+    gap: 30px;
+    min-height: auto;
+  }
+  .title {
+    font-size: clamp(28px, 4.5vw, 40px);
+  }
+  .subtitle {
+    font-size: 16px;
+  }
+  .mainCard {
+    max-width: 350px;
+  }
+  .ctaRow {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .primaryBtn,
+  .ghostBtn {
+    padding: 14px 24px;
+    width: 100%;
+    text-align: center;
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 170px 16px 80px;
+    gap: 25px;
+  }
+  .mainCard {
+    aspect-ratio: 4/3;
+    max-width: 300px;
+  }
+  .title {
+    font-size: clamp(24px, 5.5vw, 32px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 170px 12px 80px;
+    gap: 20px;
+  }
+  .mainCard {
+    max-width: 280px;
+  }
+  .title {
+    font-size: clamp(22px, 6.5vw, 28px);
+  }
+  .subtitle {
+    font-size: 14px;
+  }
+  .primaryBtn,
+  .ghostBtn {
+    padding: 12px 20px;
+    font-size: 14px;
+    min-width: 120px;
+  }
+}
+
+/* ===== أنيميشن الكتب المتطايرة ===== */
+.floatingBooks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.book {
+  position: absolute;
+  font-size: 24px;
+  animation: floatBook 12s linear infinite;
+  animation-delay: var(--delay);
+  opacity: 0.7;
+  filter: drop-shadow(0 0 10px rgba(168, 52, 39, 0.3));
+}
+
+.book:nth-child(1) {
+  left: 10%;
+  top: 20%;
+}
+.book:nth-child(2) {
+  left: 80%;
+  top: 30%;
+}
+.book:nth-child(3) {
+  left: 15%;
+  top: 60%;
+}
+.book:nth-child(4) {
+  left: 85%;
+  top: 70%;
+}
+.book:nth-child(5) {
+  left: 5%;
+  top: 80%;
+}
+.book:nth-child(6) {
+  left: 90%;
+  top: 10%;
+}
+.book:nth-child(7) {
+  left: 25%;
+  top: 40%;
+}
+.book:nth-child(8) {
+  left: 75%;
+  top: 50%;
+}
+
+@keyframes floatBook {
+  0% {
+    transform: translateY(100vh) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(50vh) rotate(180deg) scale(1);
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* ===== أنيميشن الورق المتطاير ===== */
+.floatingPapers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.paper {
+  position: absolute;
+  font-size: 20px;
+  animation: floatPaper 15s linear infinite;
+  animation-delay: var(--delay);
+  opacity: 0.6;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+}
+
+.paper:nth-child(1) {
+  left: 20%;
+  top: 15%;
+}
+.paper:nth-child(2) {
+  left: 70%;
+  top: 25%;
+}
+.paper:nth-child(3) {
+  left: 30%;
+  top: 65%;
+}
+.paper:nth-child(4) {
+  left: 80%;
+  top: 75%;
+}
+.paper:nth-child(5) {
+  left: 10%;
+  top: 45%;
+}
+
+@keyframes floatPaper {
+  0% {
+    transform: translateY(100vh) rotate(0deg) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(50vh) rotate(180deg) translateX(20px);
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg) translateX(-20px);
+    opacity: 0;
+  }
+}
+
+/* ===== أنيميشن القرطاسية ===== */
+.stationery {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pen,
+.pencil,
+.ruler,
+.calculator,
+.globe {
+  position: absolute;
+  font-size: 18px;
+  animation: floatStationery 10s ease-in-out infinite;
+  animation-delay: var(--delay);
+  opacity: 0.8;
+  filter: drop-shadow(0 0 6px rgba(168, 52, 39, 0.4));
+}
+
+.pen {
+  left: 12%;
+  top: 25%;
+}
+.pencil {
+  left: 88%;
+  top: 35%;
+}
+.ruler {
+  left: 18%;
+  top: 70%;
+}
+.calculator {
+  left: 82%;
+  top: 60%;
+}
+.globe {
+  left: 50%;
+  top: 20%;
+}
+
+@keyframes floatStationery {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(180deg);
+  }
+  75% {
+    transform: translateY(-30px) rotate(270deg);
+  }
+}
+
+/* ===== أنيميشن النجوم المتلألئة ===== */
+.sparkles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 16px;
+  animation: sparkle 3s ease-in-out infinite;
+  animation-delay: var(--delay);
+  opacity: 0;
+}
+
+.sparkle:nth-child(1) {
+  left: 15%;
+  top: 20%;
+}
+.sparkle:nth-child(2) {
+  left: 85%;
+  top: 30%;
+}
+.sparkle:nth-child(3) {
+  left: 25%;
+  top: 60%;
+}
+.sparkle:nth-child(4) {
+  left: 75%;
+  top: 70%;
+}
+.sparkle:nth-child(5) {
+  left: 50%;
+  top: 40%;
+}
+.sparkle:nth-child(6) {
+  left: 10%;
+  top: 80%;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5) rotate(180deg);
+  }
+}
+
+/* ===== أنيميشن إضافي للصورة الرئيسية ===== */
+.mainCard {
+  animation: cardFloat 4s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.mainCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: cardShine 4s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* أنيميشن خاص عند تغيير الصور */
+.mainCard[data-changing="true"] {
+  animation: cardChange 1.5s ease-in-out;
+}
+
+@keyframes cardChange {
+  0% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+  25% {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 20px 50px rgba(168, 52, 39, 0.4);
+  }
+  50% {
+    transform: scale(0.98) rotate(-0.5deg);
+    box-shadow: 0 25px 60px rgba(168, 52, 39, 0.6);
+  }
+  75% {
+    transform: scale(1.02) rotate(0.5deg);
+    box-shadow: 0 20px 50px rgba(168, 52, 39, 0.4);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@keyframes cardFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+@keyframes cardShine {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* ===== أنيميشن للشارة ===== */
+.badge {
+  animation: badgePulse 2s ease-in-out infinite;
+  transition: all 0.5s ease;
+}
+
+.badge[data-changing="true"] {
+  animation: badgeChange 1s ease-in-out;
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(168, 52, 39, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(168, 52, 39, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes badgeChange {
+  0% {
+    transform: scale(1);
+    background: rgba(0, 0, 0, 0.6);
+  }
+  50% {
+    transform: scale(1.2);
+    background: rgba(168, 52, 39, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* ===== أنيميشن للأزرار ===== */
+.primaryBtn,
+.ghostBtn {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.primaryBtn::before,
+.ghostBtn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.primaryBtn:hover::before,
+.ghostBtn:hover::before {
+  left: 100%;
+}
+
+.primaryBtn:hover,
+.ghostBtn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(168, 52, 39, 0.4);
+}
+
+/* ===== استجابة للشاشات الصغيرة ===== */
+@media (max-width: 768px) {
+  .book,
+  .paper,
+  .pen,
+  .pencil,
+  .ruler,
+  .calculator,
+  .globe {
+    font-size: 16px;
+  }
+
+  .sparkle {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .book,
+  .paper,
+  .pen,
+  .pencil,
+  .ruler,
+  .calculator,
+  .globe {
+    font-size: 14px;
+  }
+
+  .sparkle {
+    font-size: 10px;
+  }
+}
