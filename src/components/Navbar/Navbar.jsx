@@ -46,9 +46,14 @@ const Navbar = () => {
       document.documentElement.setAttribute("data-theme", "light");
       document.body.setAttribute("data-theme", "light");
     } else {
+      // الوضع الافتراضي - Dark Mode
       setIsLightMode(false);
       document.documentElement.removeAttribute("data-theme");
       document.body.removeAttribute("data-theme");
+      // التأكد من تطبيق الوضع الافتراضي
+      if (!savedTheme) {
+        localStorage.setItem("theme", "dark");
+      }
     }
   }, []);
 

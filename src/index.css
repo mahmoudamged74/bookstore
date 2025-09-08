@@ -409,6 +409,18 @@ body[data-theme="light"] .faqPage .heroSubtitle {
   --border: #4a2c1f;
   --hover: #5a3c2f;
   --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* التأكد من تطبيق الوضع الافتراضي */
+html:not([data-theme="light"]) {
+  --bg: #000;
+  --text: #ffffff;
+  --muted: #cccccc;
+  --accent: #eb2027;
+  --card: #3d1a15;
+  --border: #4a2c1f;
+  --hover: #5a3c2f;
+  --shadow: rgba(0, 0, 0, 0.3);
 
   /* ألوان إضافية */
   --white: #ffffff;
@@ -645,9 +657,15 @@ body {
   vertical-align: middle;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg);
-  color: var(--text);
+  background-color: #000; /* الوضع الافتراضي - Dark Mode */
+  color: #ffffff; /* الوضع الافتراضي - نص أبيض */
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* التأكد من تطبيق الوضع الافتراضي */
+html:not([data-theme="light"]) body {
+  background-color: #000 !important;
+  color: #ffffff !important;
 }
 
 code {
