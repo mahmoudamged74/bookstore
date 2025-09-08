@@ -214,7 +214,7 @@ function GameStore() {
 
       <Swiper
         modules={[Autoplay, Navigation]}
-        spaceBetween={20}
+        spaceBetween={30}
         speed={800}
         autoplay={{
           delay: 3000,
@@ -251,9 +251,14 @@ function GameStore() {
                     alt={book.title}
                     className={styles.thumb}
                   />
+                </div>
 
-                  {/* عداد الكمية - يظهر عند الـ hover */}
-                  <div className={styles.hoverCounter}>
+                <div className={styles.body}>
+                  <h3 className={styles.gameTitle}>{book.title}</h3>
+                  <p className={styles.desc}>{book.desc}</p>
+
+                  {/* عداد الكمية - يظهر بشكل ثابت */}
+                  <div className={styles.staticCounter}>
                     <button
                       className={styles.counterBtn}
                       onClick={(e) => {
@@ -278,15 +283,11 @@ function GameStore() {
                       +
                     </button>
                   </div>
-                </div>
 
-                <div className={styles.body}>
-                  <h3 className={styles.gameTitle}>{book.title}</h3>
-                  <p className={styles.desc}>{book.desc}</p>
                   {/* السعر والزر */}
                   <div className={styles.priceContainer}>
                     <p className={styles.priceLine}>
-                    <strong>{book.price.toFixed(2)} جنيهًا</strong>
+                      <strong>{book.price.toFixed(2)} جنيهًا</strong>
                     </p>
                     <button className={styles.browseBtn}>تصفح المنتج</button>
                   </div>

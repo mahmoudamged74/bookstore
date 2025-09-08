@@ -16,6 +16,25 @@
   animation: sectionFadeIn 1s ease-out;
 }
 
+/* زيادة المساحة في اليمين واليسار للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .offers {
+    padding: 30px 30px 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .offers {
+    padding: 30px 25px 80px;
+  }
+}
+
+@media (max-width: 400px) {
+  .offers {
+    padding: 30px 20px 80px;
+  }
+}
+
 @keyframes sectionFadeIn {
   from {
     opacity: 0;
@@ -81,6 +100,19 @@
 .swiper {
   padding: 20px 0;
   animation: swiperSlideIn 1.8s ease-out 1.2s both;
+}
+
+/* زيادة المساحة في اليمين واليسار للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .swiper {
+    padding: 20px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .swiper {
+    padding: 20px 5px;
+  }
 }
 
 @keyframes swiperSlideIn {
@@ -161,31 +193,20 @@
   position: relative;
 }
 
-/* عداد الكمية عند الـ hover */
-.hoverCounter {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+/* عداد الكمية الثابت */
+.staticCounter {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  background: rgba(0, 0, 0, 0.8);
+  margin: 8px 0;
   padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.card:hover .hoverCounter {
-  opacity: 1;
-  visibility: visible;
-}
-
-.hoverCounter .counterBtn {
+.staticCounter .counterBtn {
   background: var(--accent);
   color: white;
   border: none;
@@ -201,17 +222,27 @@
   transition: all 0.2s ease;
 }
 
-.hoverCounter .counterBtn:hover {
+.staticCounter .counterBtn:hover {
   background: #d32f2f;
   transform: scale(1.1);
 }
 
-.hoverCounter .quantity {
+.staticCounter .quantity {
   color: white;
   font-weight: bold;
   font-size: 14px;
   min-width: 20px;
   text-align: center;
+}
+
+/* لون العداد في اللايت مود */
+[data-theme="light"] .staticCounter {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .staticCounter .quantity {
+  color: #000000;
 }
 
 .thumb {

@@ -141,7 +141,7 @@ function Offers() {
 
       <Swiper
         modules={[Autoplay, Navigation]}
-        spaceBetween={20}
+        spaceBetween={30}
         speed={800}
         autoplay={{
           delay: 4000,
@@ -182,9 +182,14 @@ function Offers() {
                     className={styles.thumb}
                   />
                   <div className={styles.discountBadge}>-{offer.discount}%</div>
+                </div>
 
-                  {/* عداد الكمية - يظهر عند الـ hover */}
-                  <div className={styles.hoverCounter}>
+                <div className={styles.body}>
+                  <h3 className={styles.offerTitle}>{offer.title}</h3>
+                  <p className={styles.desc}>{offer.desc}</p>
+
+                  {/* عداد الكمية - يظهر بشكل ثابت */}
+                  <div className={styles.staticCounter}>
                     <button
                       className={styles.counterBtn}
                       onClick={(e) => {
@@ -209,20 +214,15 @@ function Offers() {
                       +
                     </button>
                   </div>
-                </div>
-
-                <div className={styles.body}>
-                  <h3 className={styles.offerTitle}>{offer.title}</h3>
-                  <p className={styles.desc}>{offer.desc}</p>
 
                   {/* السعر والزر */}
                   <div className={styles.priceContainer}>
                     <div className={styles.prices}>
                       <span className={styles.originalPrice}>
-                        {offer.originalPrice.toFixed(2)} جنيهًا  
+                        {offer.originalPrice.toFixed(2)} جنيهًا
                       </span>
                       <span className={styles.discountPrice}>
-                        {offer.discountPrice.toFixed(2)}جنيهًا  
+                        {offer.discountPrice.toFixed(2)}جنيهًا
                       </span>
                     </div>
                     <button className={styles.browseBtn}>تصفح المنتج</button>

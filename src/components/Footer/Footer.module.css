@@ -206,9 +206,11 @@ body[data-theme="light"] .footer .inner::before {
   transition: all 0.3s ease;
 }
 
-.social a img {
-  width: 32px;
-  height: 32px;
+.socialIcon {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 50%;
   opacity: 0.9;
   transition: all 0.3s ease;
 }
@@ -218,7 +220,7 @@ body[data-theme="light"] .footer .inner::before {
   transform: translateY(-2px);
 }
 
-.social a:hover img {
+.social a:hover .socialIcon {
   opacity: 1;
   transform: scale(1.1);
 }
@@ -252,5 +254,16 @@ body[data-theme="light"] .footer .inner::before {
   }
   .navCol {
     gap: 14px;
+  }
+  .socialIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .socialIcon {
+    width: 18px;
+    height: 18px;
   }
 }

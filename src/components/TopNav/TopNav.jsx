@@ -1,12 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./TopNav.module.css";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaYoutube,
-  FaInstagram,
-} from "react-icons/fa";
+// تم إزالة React Icons واستبدالها بالصور
 
 function TopNav() {
   const canvasRef = useRef();
@@ -24,10 +18,10 @@ function TopNav() {
 
   const socialLinks = {
     facebook: "https://facebook.com/thanawyastore",
-    twitter: "https://twitter.com/thanawyastore",
-    linkedin: "https://linkedin.com/company/thanawyastore",
-    youtube: "https://youtube.com/@thanawyastore",
+    whatsapp: "https://wa.me/1234567890",
+    telegram: "https://t.me/thanawyastore",
     instagram: "https://instagram.com/thanawyastore",
+    tiktok: "https://tiktok.com/@thanawyastore",
   };
 
   // تحقق من الوضع المظلم/الفاتح
@@ -130,34 +124,37 @@ function TopNav() {
             className={styles.socialLink}
             title="فيسبوك"
           >
-            <FaFacebookF />
+            <img
+              src="/facebook.png"
+              alt="فيسبوك"
+              className={styles.socialIcon}
+            />
           </a>
           <a
-            href={socialLinks.twitter}
+            href={socialLinks.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.socialLink}
-            title="تويتر"
+            title="واتساب"
           >
-            <FaTwitter />
+            <img
+              src="/whatsapp.png"
+              alt="واتساب"
+              className={styles.socialIcon}
+            />
           </a>
           <a
-            href={socialLinks.linkedin}
+            href={socialLinks.telegram}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.socialLink}
-            title="لينكد إن"
+            title="تيليجرام"
           >
-            <FaLinkedinIn />
-          </a>
-          <a
-            href={socialLinks.youtube}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.socialLink}
-            title="يوتيوب"
-          >
-            <FaYoutube />
+            <img
+              src="/telegram.png"
+              alt="تيليجرام"
+              className={styles.socialIcon}
+            />
           </a>
           <a
             href={socialLinks.instagram}
@@ -166,7 +163,24 @@ function TopNav() {
             className={styles.socialLink}
             title="إنستجرام"
           >
-            <FaInstagram />
+            <img
+              src="/instagram.png"
+              alt="إنستجرام"
+              className={styles.socialIcon}
+            />
+          </a>
+          <a
+            href={socialLinks.tiktok}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.socialLink}
+            title="تيك توك"
+          >
+            <img
+              src="/tiktok.png"
+              alt="تيك توك"
+              className={styles.socialIcon}
+            />
           </a>
         </div>
       </div>

@@ -411,15 +411,22 @@ body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
   display: none; /* يظهر فقط تحت 990px */
   width: 40px;
   height: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid #eb2027;
   border-radius: 8px;
-  background: transparent;
+  background: #eb2027;
   cursor: pointer;
   align-items: center;
   justify-content: center;
   margin-right: auto; /* يدفع الزر إلى اليمين */
   position: relative;
   z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+  background: #d32f2f;
+  border-color: #d32f2f;
+  transform: scale(1.05);
 }
 
 /* إظهار أيقونة الكارت في الموبايل */
@@ -464,7 +471,7 @@ body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
   display: block;
   width: 18px;
   height: 2px;
-  background: #fff;
+  background: #ffffff;
   position: relative;
   transition: all 0.3s ease;
 }
@@ -476,7 +483,7 @@ body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
   right: 0;
   width: 18px;
   height: 2px;
-  background: #fff;
+  background: #ffffff;
   transition: all 0.3s ease;
 }
 
@@ -495,43 +502,50 @@ body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
 
 .hamburgerOpen span::before {
   transform: translateY(6px) rotate(45deg);
-  background: #eb2027;
+  background: #ffffff;
 }
 
 .hamburgerOpen span::after {
   transform: translateY(-6px) rotate(-45deg);
-  background: #eb2027;
+  background: #ffffff;
 }
 
 /* تحسين مظهر الـ X */
 .hamburgerOpen {
   border-color: #eb2027;
-  background: rgba(235, 32, 39, 0.1);
+  background: #eb2027;
 }
 
 /* تحسين الـ X في الوضع الفاتح */
 body[data-theme="light"] .hamburgerOpen span::before,
 body[data-theme="light"] .hamburgerOpen span::after {
-  background: #eb2027;
+  background: #ffffff;
 }
 
 body[data-theme="light"] .hamburgerOpen {
   border-color: #eb2027;
-  background: rgba(235, 32, 39, 0.1);
+  background: #eb2027;
 }
 
 /* تحسين ألوان الهامبورجر في الوضع الفاتح */
 body[data-theme="light"] .hamburger span {
-  background: #000;
+  background: #ffffff;
 }
 
 body[data-theme="light"] .hamburger span::before,
 body[data-theme="light"] .hamburger span::after {
-  background: #000;
+  background: #ffffff;
 }
 
 body[data-theme="light"] .hamburger {
-  border-color: rgba(0, 0, 0, 0.3);
+  border-color: #eb2027;
+  background: #eb2027;
+}
+
+body[data-theme="light"] .hamburger:hover {
+  background: #d32f2f;
+  border-color: #d32f2f;
+  transform: scale(1.05);
 }
 
 /* === قائمة الموبايل === */

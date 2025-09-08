@@ -513,7 +513,7 @@ body[data-theme="light"] .priceSection {
   flex-direction: column;
   gap: 5px;
   text-align: right;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .priceLabel {

@@ -30,7 +30,7 @@ function HeroSection() {
       {/* يمين: النصوص والأزرار */}
       <div className={styles.right}>
         <h1 className={styles.title}>
-        ثانوي استور
+        ثانوية استور
         </h1>
 
         <p style={{textAlign: "center"}} className={styles.subtitle}>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Footer.module.css";
-import { FaXTwitter, FaLinkedin, FaFacebook } from "react-icons/fa6";
 
 const Footer = () => {
   const [isLightMode, setIsLightMode] = useState(false);
@@ -8,16 +7,19 @@ const Footer = () => {
   // مراقبة تغيير الثيم
   useEffect(() => {
     const checkTheme = () => {
-      const theme = localStorage.getItem('theme');
-      setIsLightMode(theme === 'light');
+      const theme = localStorage.getItem("theme");
+      setIsLightMode(theme === "light");
     };
 
     checkTheme();
-    
+
     // مراقبة تغيير الثيم
     const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
-    
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
     return () => observer.disconnect();
   }, []);
   return (
@@ -27,23 +29,74 @@ const Footer = () => {
         <div className={styles.topRow}>
           {/* العمود الأيسر: لوجو + نص + سوشيال */}
           <div className={styles.brandCol}>
-            <img 
-              src={isLightMode ? "/bookLogo2.png" : "/bookLogo.png"} 
-              alt="ThanawyaStore" 
-              className={styles.logo} 
+            <img
+              src={isLightMode ? "/bookLogo2.png" : "/bookLogo.png"}
+              alt="ThanawyaStore"
+              className={styles.logo}
             />
             <p className={styles.desc}>
               كتب دراسية شاملة لجميع المواد والصفوف الدراسية بأفضل الأسعار.
             </p>
             <div className={styles.social}>
-              <a href="#" aria-label="X">
-                <FaXTwitter />
+              <a
+                href="https://facebook.com/thanawyastore"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="فيسبوك"
+              >
+                <img
+                  src="/facebook.png"
+                  alt="فيسبوك"
+                  className={styles.socialIcon}
+                />
               </a>
-              <a href="#" aria-label="LinkedIn">
-                <FaLinkedin />
+              <a
+                href="https://wa.me/1234567890"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="واتساب"
+              >
+                <img
+                  src="/whatsapp.png"
+                  alt="واتساب"
+                  className={styles.socialIcon}
+                />
               </a>
-              <a href="#" aria-label="Facebook">
-                <FaFacebook />
+              <a
+                href="https://t.me/thanawyastore"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="تيليجرام"
+              >
+                <img
+                  src="/telegram.png"
+                  alt="تيليجرام"
+                  className={styles.socialIcon}
+                />
+              </a>
+              <a
+                href="https://instagram.com/thanawyastore"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="إنستجرام"
+              >
+                <img
+                  src="/instagram.png"
+                  alt="إنستجرام"
+                  className={styles.socialIcon}
+                />
+              </a>
+              <a
+                href="https://tiktok.com/@thanawyastore"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="تيك توك"
+              >
+                <img
+                  src="/tiktok.png"
+                  alt="تيك توك"
+                  className={styles.socialIcon}
+                />
               </a>
             </div>
           </div>
@@ -57,8 +110,6 @@ const Footer = () => {
             <a href="/account">حسابي</a>
             <a href="/contact">اتصل بنا</a>
           </nav>
-
-        
         </div>
 
         <hr className={styles.hr} />
@@ -69,9 +120,7 @@ const Footer = () => {
           <div aria-hidden="true" />
 
           {/* حقوق النشر في المنتصف */}
-          <p className={styles.copy}>
-            © 2025 Brmja Tech. All rights reserved.
-          </p>
+          <p className={styles.copy}>© 2025 Brmja Tech. All rights reserved.</p>
 
           {/* عمود فارغ لضبط السنتر */}
           <div aria-hidden="true" />
