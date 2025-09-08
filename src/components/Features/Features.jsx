@@ -5,37 +5,37 @@ function Features() {
   const featuresData = [
     {
       id: 1,
-      icon: "https://cdn-icons-png.flaticon.com/512/1055/1055687.png",
+      icon: "https://cdn-icons-png.flaticon.com/512/1055/1055687.png", // سماعة
       title: "دعم فني ٢٤ ساعة",
       description: "على مدار الأسبوع",
     },
     {
       id: 2,
-      icon: "https://cdn-icons-png.flaticon.com/512/2920/2920277.png",
+      icon: "https://cdn-icons-png.flaticon.com/512/2920/2920277.png", // كتب
       title: "كل كتب الثانوية العامة",
       description: "للمدرسين اللي بتحبهم",
     },
     {
       id: 3,
-      icon: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+      icon: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", // دولار
       title: "أقل سعر شحن",
       description: "في مصر",
     },
     {
       id: 4,
-      icon: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+      icon: "https://cdn-icons-png.flaticon.com/512/684/684908.png", // توصيل
       title: "توصيل لأي حته",
       description: "في مصر",
     },
     {
       id: 5,
-      icon: "https://cdn-icons-png.flaticon.com/512/2753/2753611.png",
+      icon: "https://cdn-icons-png.flaticon.com/512/2753/2753611.png", // صاروخ
       title: "مدة توصيل من ٣ - ٧ أيام عمل",
       description: "بحد أقصى",
     },
     {
       id: 6,
-      icon: "https://cdn-icons-png.flaticon.com/512/2583/2583785.png",
+      icon: "https://cdn-icons-png.flaticon.com/512/2583/2583785.png", // هدية
       title: "عروض ومسابقات وخدمات كتير",
       description: "على أوردراتنا",
     },
