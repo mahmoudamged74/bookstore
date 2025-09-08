@@ -433,7 +433,7 @@ body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
 @media (max-width: 480px) {
   .navbar {
     padding: 0.3rem 0.8rem;
-    top: 70px;
+    top: 74px;
   }
 
   .logo img {
