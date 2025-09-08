@@ -1,10 +1,10 @@
 :root {
   --bg: #000;
-  --card-bg: #22124f;
-  --border: #3b2c74;
+  --card-bg: #2a2a2a;
+  --border: #eb2027;
   --text: #ffffff;
   --muted: #c9c4d6;
-  --accent: #a83427;
+  --accent: #eb2027;
   --success: #00ff88;
   --danger: #ff4757;
   --warning: #ffa502;
@@ -13,11 +13,11 @@
 /* Light Mode Variables */
 body[data-theme="light"] {
   --bg: #f8f9fa;
-  --card-bg: #ffffff;
+  --card-bg: #e9ecef;
   --border: #e9ecef;
   --text: #212529;
   --muted: #6c757d;
-  --accent: #8b4513;
+  --accent: #eb2027;
   --success: #28a745;
   --danger: #dc3545;
   --warning: #ffc107;
@@ -99,7 +99,7 @@ body[data-theme="light"] {
   font-size: 48px;
   font-weight: 800;
   margin: 0 0 20px;
-  background: linear-gradient(45deg, #a83427, #ff6b35, #ffd700);
+  background: linear-gradient(45deg, #eb2027, #ff6b35, #ffd700);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -189,7 +189,7 @@ body[data-theme="light"] {
   position: absolute;
   bottom: 20px;
   left: 20px;
-  background: rgba(168, 52, 39, 0.9);
+  background: #eb2027;
   color: white;
   padding: 8px 16px;
   border-radius: 20px;
@@ -502,7 +502,7 @@ body[data-theme="light"] {
   background: var(--card-bg);
   padding: 40px;
   border-radius: 20px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   text-align: right;
   position: relative;
   overflow: hidden;
@@ -510,6 +510,11 @@ body[data-theme="light"] {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+}
+
+/* لون البوردر في اللايت مود */
+[data-theme="light"] .textContent {
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 @keyframes slideInFromLeft {
@@ -530,7 +535,7 @@ body[data-theme="light"] {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), #ffd700, var(--accent));
+  background: linear-gradient(90deg, var(--accent), #eb2027, var(--accent));
   background-size: 200% 100%;
   animation: borderShine 3s ease-in-out infinite;
 }
@@ -558,7 +563,7 @@ body[data-theme="light"] {
   background: var(--card-bg);
   padding: 30px 20px;
   border-radius: 16px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   text-align: center;
   transition: all 0.3s ease;
   display: flex;
@@ -569,6 +574,11 @@ body[data-theme="light"] {
   overflow: hidden;
   backdrop-filter: blur(10px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* لون بوردر بطاقات الإحصائيات في اللايت مود */
+[data-theme="light"] .statCard {
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .statCard::before {
@@ -600,10 +610,16 @@ body[data-theme="light"] {
 .statNumber {
   font-size: 36px;
   font-weight: 800;
-  color: var(--accent);
+  color: #ffffff;
   margin-bottom: 8px;
   animation: numberPulse 2s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(168, 52, 39, 0.3);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* لون الأرقام في اللايت مود */
+[data-theme="light"] .statNumber {
+  color: #000000;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes numberPulse {
@@ -626,16 +642,26 @@ body[data-theme="light"] {
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 30px;
-  color: var(--accent);
+  color: #ffffff;
   text-align: right;
+}
+
+/* لون عنوان القسم في اللايت مود */
+[data-theme="light"] .sectionTitle {
+  color: #000000;
 }
 
 .description {
   font-size: 16px;
   line-height: 1.8;
-  color: var(--muted);
+  color: #ffffff;
   margin: 0 0 20px;
   text-align: right;
+}
+
+/* لون الفقرات في اللايت مود */
+[data-theme="light"] .description {
+  color: #000000;
 }
 
 /* Responsive Design */

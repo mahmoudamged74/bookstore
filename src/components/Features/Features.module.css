@@ -1,0 +1,355 @@
+/* متغيرات الألوان */
+:root {
+  --features-bg: #000000;
+  --features-text: #ffffff;
+  --features-card-bg: #2a2a2a;
+  --features-card-border: rgba(255, 255, 255, 0.2);
+  --features-accent: #eb2027;
+  --features-icon-bg: rgba(255, 255, 255, 0.1);
+}
+
+/* متغيرات اللايت مود */
+body[data-theme="light"] {
+  --features-bg: #f8f9fa;
+  --features-text: #000000;
+  --features-card-bg: #ffffff;
+  --features-card-border: rgba(0, 0, 0, 0.1);
+  --features-accent: #eb2027;
+  --features-icon-bg: rgba(0, 0, 0, 0.05);
+}
+
+.features {
+  background: var(--features-bg);
+  color: var(--features-text);
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* خلفية ديكورية */
+.features::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(235, 32, 39, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 215, 0, 0.1) 0%,
+      transparent 50%
+    );
+  animation: backgroundFloat 20s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes backgroundFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-20px) rotate(2deg);
+    opacity: 0.8;
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+}
+
+/* النص الرئيسي */
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+}
+
+.mainText {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--features-text);
+  margin: 0;
+  max-width: 700px;
+  text-align: center;
+  animation: fadeInUp 1s ease-out;
+  position: relative;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* الكارد */
+.featureCard {
+  background: var(--features-card-bg);
+  border: 1px solid var(--features-card-border);
+  border-radius: 16px;
+  padding: 25px 20px;
+  text-align: center;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  animation: cardFadeIn 0.8s ease-out both;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* انيميشن ظهور الكاردات */
+.featureCard:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.featureCard:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.featureCard:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.featureCard:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.featureCard:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.featureCard:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* تأثير اللمعان */
+.featureCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.featureCard:hover::before {
+  left: 100%;
+}
+
+/* انيميشن الـ hover */
+.featureCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--features-accent);
+  border-color: var(--features-accent);
+}
+
+/* حاوية الأيقونة */
+.iconContainer {
+  width: 70px;
+  height: 70px;
+  background: var(--features-icon-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.featureCard:hover .iconContainer {
+  transform: scale(1.1);
+  background: var(--features-accent);
+  box-shadow: 0 8px 20px rgba(235, 32, 39, 0.3);
+}
+
+/* الأيقونة */
+.icon {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  filter: brightness(0.9);
+}
+
+.featureCard:hover .icon {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* العنوان */
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--features-text);
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.featureCard:hover .title {
+  color: var(--features-accent);
+  transform: translateY(-2px);
+}
+
+/* الوصف */
+.description {
+  font-size: 14px;
+  color: var(--features-text);
+  margin: 0;
+  opacity: 0.8;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.featureCard:hover .description {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* انيميشن دخول من الأسفل */
+.featureCard::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--features-accent),
+    #ffd700,
+    var(--features-accent)
+  );
+  background-size: 200% 100%;
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+}
+
+.featureCard:hover::after {
+  transform: translateY(0);
+  animation: borderShine 2s ease-in-out infinite;
+}
+
+@keyframes borderShine {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ريسبونسيف */
+@media (max-width: 768px) {
+  .features {
+    padding: 60px 0;
+  }
+
+  .header {
+    margin-bottom: 40px;
+  }
+
+  .mainText {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+  .featureCard {
+    padding: 25px 20px;
+    margin-bottom: 20px;
+  }
+
+  .iconContainer {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 15px;
+  }
+
+  .icon {
+    font-size: 28px;
+  }
+
+  .title {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .features {
+    padding: 40px 0;
+  }
+
+  .mainText {
+    font-size: 14px;
+  }
+
+  .featureCard {
+    padding: 20px 15px;
+  }
+
+  .iconContainer {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 12px;
+  }
+
+  .icon {
+    font-size: 24px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .description {
+    font-size: 12px;
+  }
+}

@@ -80,7 +80,7 @@ function GameDetails() {
 
             <div className={styles.priceSection}>
               <div className={styles.priceInfo}>
-                <span className={styles.priceLabel}>السعر:</span>
+                <span className={styles.priceLabel}>السعر</span>
                 <span className={styles.price}>100.00 جنيه</span>
               </div>
               

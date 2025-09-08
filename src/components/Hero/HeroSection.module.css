@@ -2,7 +2,7 @@
   --bg: #000;
   --text: #ffffff;
   --muted: #c9c4d6;
-  --accent: #a83427;
+  --accent: #eb2027;
   --card: #3d1a15;
 }
 
@@ -35,19 +35,19 @@ body[data-theme="light"] .hero .subtitle {
 }
 
 body[data-theme="light"] .hero .primaryBtn {
-  background: #a83427; /* نفس لون الأزرار */
+  background: #eb2027; /* نفس لون الأزرار */
   color: #ffffff;
-  border-color: #a83427;
+  border-color: #eb2027;
 }
 
 body[data-theme="light"] .hero .ghostBtn {
   background: transparent;
   color: #ffffff; /* نفس لون النص في الدارك مود */
-  border-color: #a83427;
+  border-color: #eb2027;
 }
 
 body[data-theme="light"] .hero .ghostBtn:hover {
-  background: #a83427;
+  background: #eb2027;
   color: #ffffff;
 }
 
@@ -67,17 +67,17 @@ body[data-theme="light"] .hero .mainCard {
 }
 
 body[data-theme="light"] .hero .badge {
-  background: #a83427; /* نفس لون البادج */
+  background: #eb2027; /* نفس لون البادج */
   color: #ffffff;
 }
 
 /* الحفاظ على نفس ألوان التمييز */
 body[data-theme="light"] .hero .highlight1 {
-  color: #a83427; /* نفس لون التمييز الأول */
+  color: #eb2027; /* نفس لون التمييز الأول */
 }
 
 body[data-theme="light"] .hero .highlight2 {
-  color: #a83427; /* نفس لون التمييز الثاني */
+  color: #eb2027; /* نفس لون التمييز الثاني */
 }
 
 .hero::before {

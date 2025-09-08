@@ -1,16 +1,16 @@
 :root {
   --bg: #000;
   --card-bg: #3d1a15;
-  --border: #5a2a1f;
+  --border: #eb2027;
   --text: #ffffff;
   --muted: #c9c4d6;
-  --accent: #a83427;
+  --accent: #eb2027;
 }
 
 .section {
   background: var(--bg);
   color: var(--text);
-  padding: 60px 20px 80px; /* زيادة padding y */
+  padding: 20px 20px 80px; /* تقليل padding y لإزالة المساحة البيضاء */
   position: relative;
   overflow: hidden;
   animation: sectionFadeIn 1s ease-out;
@@ -85,13 +85,13 @@
 
 /* البطاقة */
 .card {
-  background: transparent;
-  border: 1px solid var(--border);
+  background: #141717;
+  border: none;
   border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 380px; /* ارتفاع أقل للكاردات */
+  height: 420px; /* زيادة الارتفاع لاستيعاب زر تصفح المنتج */
   transition: transform 0.3s ease !important;
   text-decoration: none;
   color: inherit;
@@ -100,6 +100,19 @@
 
 .card:hover {
   transform: translateY(-8px) scale(1.02) !important;
+}
+
+/* لون خلفية الكارد في اللايت مود */
+[data-theme="light"] .card {
+  background: #f8f9fa;
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card:nth-child(1) {
@@ -130,6 +143,7 @@
   background: #1a0a0a;
   aspect-ratio: 16/11;
   overflow: hidden;
+  position: relative;
 }
 .thumb {
   width: 100%;
@@ -138,11 +152,108 @@
   display: block;
 }
 
+/* عداد الكمية عند الـ hover */
+.hoverCounter {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 6px 12px;
+  border-radius: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card:hover .hoverCounter {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hoverCounter .counterBtn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.hoverCounter .counterBtn:hover {
+  background: #d32f2f;
+  transform: scale(1.1);
+}
+
+.hoverCounter .quantity {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  min-width: 20px;
+  text-align: center;
+}
+
 .body {
-  padding: 14px 14px 16px;
+  padding: 14px 14px 8px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  flex: 1;
+}
+
+/* زر تصفح المنتج */
+.browseBtn {
+  background: #ffffff;
+  color: #333333;
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.browseBtn:hover {
+  background: #f5f5f5;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* لون الزر في اللايت مود */
+[data-theme="light"] .browseBtn {
+  background: #333333;
+  color: #ffffff;
+  border: 1px solid #555555;
+}
+
+[data-theme="light"] .browseBtn:hover {
+  background: #555555;
+  color: #ffffff;
+}
+
+/* تعديل container السعر */
+.priceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding: 0 14px 14px;
+  gap: 12px;
 }
 
 .gameTitle {
@@ -165,12 +276,23 @@
 .priceLine {
   margin: 0;
   font-size: 14px;
-  color: #d4a574;
-  text-align: center;
+  color: #ffffff;
+  text-align: right;
+  flex: 1;
 }
 .priceLine strong {
-  color: var(--accent);
+  color: #ffffff;
   font-weight: 800;
+}
+
+/* لون قيم السعر في اللايت مود */
+[data-theme="light"] .priceLine strong {
+  color: #000000;
+}
+
+/* لون السعر في اللايت مود */
+[data-theme="light"] .priceLine {
+  color: #000000;
 }
 
 /* زر */
@@ -209,7 +331,7 @@
   border-radius: 20px;
   font-weight: 700;
   font-size: 15px;
-  border: 2px solid #a83427;
+  border: 2px solid #eb2027;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
@@ -260,13 +382,13 @@
 }
 @media (max-width: 600px) {
   .section {
-    padding: 22px 14px 30px;
+    padding: 10px 14px 30px;
   }
   .grid {
     grid-template-columns: 1fr;
   }
   .card {
-    height: 360px;
+    height: 400px;
   } /* ارتفاع أقل في الموبايل */
   .title {
     font-size: 20px;
@@ -285,51 +407,7 @@
   }
 }
 
-/* أنماط العداد */
-.priceAndCounter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.counterContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.counterBtn {
-  width: 32px;
-  height: 32px;
-  border: 2px solid var(--accent);
-  background: var(--accent); /* خلفية حمراء */
-  color: #ffffff !important; /* نص أبيض */
-  border-radius: 50%;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.counterBtn:hover {
-  background: #8a2a1f; /* أحمر أغمق عند الهوفر */
-  color: #ffffff !important; /* نص أبيض */
-  transform: scale(1.1);
-}
-
-.quantity {
-  font-size: 18px;
-  font-weight: bold;
-  color: var(--text);
-  min-width: 24px;
-  text-align: center;
-}
+/* أنماط العداد - تم نقلها للـ hover */
 
 /* أنماط الـ Modal */
 .modalOverlay {
@@ -614,7 +692,7 @@ body[data-theme="dark"] .tab:hover {
 /* لون التابس في الوضع الفاتح */
 :global(body[data-theme="light"]) .tab {
   color: #000000 !important; /* نص أسود في الوضع الفاتح */
-  background: rgba(168, 52, 39, 0.2) !important; /* خلفية أحمر فاتح */
+  background: #eb2027 !important; /* خلفية أحمر فاتح */
   border: 2px solid rgba(168, 52, 39, 0.3) !important; /* حدود أحمر فاتح */
 }
 
@@ -629,8 +707,8 @@ body[data-theme="dark"] .tab:hover {
 }
 
 .activeTab {
-  background: #a83427 !important; /* أحمر غامق للتاب النشط */
-  border: 2px solid #a83427 !important;
+  background: #eb2027 !important; /* أحمر غامق للتاب النشط */
+  border: 2px solid #eb2027 !important;
   color: #ffffff !important; /* نص أبيض */
   box-shadow: 0 4px 12px rgba(168, 52, 39, 0.3);
 }
@@ -643,8 +721,8 @@ body[data-theme="dark"] .tab:hover {
 
 /* إصلاح الـ active tab في اللايت مود */
 :global(body[data-theme="light"]) .activeTab {
-  background: #a83427 !important; /* أحمر غامق للتاب النشط في اللايت مود */
-  border: 2px solid #a83427 !important;
+  background: #eb2027 !important; /* أحمر غامق للتاب النشط في اللايت مود */
+  border: 2px solid #eb2027 !important;
   color: #ffffff !important; /* نص أبيض */
   box-shadow: 0 4px 12px rgba(168, 52, 39, 0.3);
 }

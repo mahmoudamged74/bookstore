@@ -16,7 +16,7 @@ body[data-theme="light"] {
   --auth-border: rgba(0, 0, 0, 0.1);
   --auth-text: #212529;
   --auth-muted: #6c757d;
-  --auth-accent: #8b4513;
+  --auth-accent: #eb2027;
   --auth-accent-hover: #a0522d;
 }
 
@@ -33,22 +33,38 @@ body[data-theme="light"] {
 }
 
 .authContainer::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 119, 48, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(120, 119, 198, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 119, 48, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(120, 119, 198, 0.2) 0%,
+      transparent 50%
+    );
   animation: backgroundShift 20s ease-in-out infinite;
 }
 
 @keyframes backgroundShift {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 .authWrapper {
@@ -60,8 +76,7 @@ body[data-theme="light"] {
   backdrop-filter: blur(20px);
   border-radius: 24px;
   border: 1px solid var(--auth-border);
-  box-shadow: 
-    0 25px 50px rgba(0, 0, 0, 0.3),
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.05);
   overflow: hidden;
   animation: slideUp 0.8s ease-out;
@@ -80,7 +95,11 @@ body[data-theme="light"] {
 
 /* Logo Section - Right Side */
 .logoSection {
-  background: linear-gradient(135deg, var(--auth-accent) 0%, var(--auth-accent-hover) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--auth-accent) 0%,
+    var(--auth-accent-hover) 100%
+  );
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,21 +110,28 @@ body[data-theme="light"] {
 }
 
 .logoSection::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: 
-    radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 1px
+  );
   background-size: 20px 20px;
   animation: float 20s linear infinite;
 }
 
 @keyframes float {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 .logoContainer {
@@ -123,8 +149,13 @@ body[data-theme="light"] {
 }
 
 @keyframes logoFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .logoTitle {
@@ -137,8 +168,12 @@ body[data-theme="light"] {
 }
 
 @keyframes titleGlow {
-  from { text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
-  to { text-shadow: 0 4px 20px rgba(255, 255, 255, 0.3); }
+  from {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  to {
+    text-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+  }
 }
 
 .logoSubtitle {
@@ -202,11 +237,21 @@ body[data-theme="light"] {
 }
 
 @keyframes floatAround {
-  0% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-20px) rotate(90deg); }
-  50% { transform: translateY(0px) rotate(180deg); }
-  75% { transform: translateY(20px) rotate(270deg); }
-  100% { transform: translateY(0px) rotate(360deg); }
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(0px) rotate(180deg);
+  }
+  75% {
+    transform: translateY(20px) rotate(270deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(360deg);
+  }
 }
 
 /* Form Section - Left Side */
@@ -272,11 +317,21 @@ body[data-theme="light"] {
   animation: inputSlideIn 0.6s ease-out both;
 }
 
-.inputGroup:nth-child(1) { animation-delay: 0.1s; }
-.inputGroup:nth-child(2) { animation-delay: 0.2s; }
-.inputGroup:nth-child(3) { animation-delay: 0.3s; }
-.inputGroup:nth-child(4) { animation-delay: 0.4s; }
-.inputGroup:nth-child(5) { animation-delay: 0.5s; }
+.inputGroup:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.inputGroup:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.inputGroup:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.inputGroup:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.inputGroup:nth-child(5) {
+  animation-delay: 0.5s;
+}
 
 @keyframes inputSlideIn {
   from {
@@ -346,7 +401,11 @@ body[data-theme="light"] {
 }
 
 .submitBtn {
-  background: linear-gradient(135deg, var(--auth-accent) 0%, var(--auth-accent-hover) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--auth-accent) 0%,
+    var(--auth-accent-hover) 100%
+  );
   border: none;
   padding: 16px 30px;
   border-radius: 12px;
@@ -365,13 +424,18 @@ body[data-theme="light"] {
 }
 
 .submitBtn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.5s ease;
 }
 
@@ -436,7 +500,7 @@ body[data-theme="light"] {
 /* ألوان ثابتة للايت مود */
 body[data-theme="light"] .switchBtn {
   background: none !important;
-  color: #a83427;
+  color: #eb2027;
 }
 
 body[data-theme="light"] .switchBtn:hover {
@@ -530,40 +594,36 @@ body[data-theme="light"] .btnText {
   color: #ffffff !important;
 }
 
-
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .authWrapper {
     grid-template-columns: 1fr;
     max-width: 400px;
   }
-  
+
   .logoSection {
     padding: 40px 20px;
     order: 2;
   }
-  
+
   .formSection {
     padding: 40px 20px;
     order: 1;
   }
-  
+
   .logo {
     width: 120px;
     height: 120px;
   }
-  
+
   .logoTitle {
     font-size: 2rem;
   }
-  
+
   .formTitle {
     font-size: 2rem;
   }
-  
 
-  
   .floatingCard {
     font-size: 1.5rem;
   }
@@ -573,20 +633,20 @@ body[data-theme="light"] .btnText {
   .authContainer {
     padding: 170px 10px 40px;
   }
-  
+
   .authWrapper {
     border-radius: 16px;
   }
-  
+
   .logoSection,
   .formSection {
     padding: 30px 15px;
   }
-  
+
   .formTitle {
     font-size: 1.8rem;
   }
-  
+
   .authInput {
     padding: 14px 45px 14px 16px;
   }
@@ -648,7 +708,7 @@ body[data-theme="light"] .btnText {
     padding: 12px;
     font-size: 14px;
   }
-  
+
   .countrySelect {
     padding: 12px 8px;
     font-size: 12px;
@@ -660,7 +720,7 @@ body[data-theme="light"] .btnText {
   .phoneInput {
     padding: 14px 12px;
   }
-  
+
   .countrySelect {
     padding: 14px 8px;
     min-width: 70px;

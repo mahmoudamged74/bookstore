@@ -9,7 +9,7 @@
   font-size: 32px;
   font-weight: 800;
   margin: 0 0 12px 0;
-  color: #a83427;
+  color: #eb2027;
   text-align: center;
 }
 
@@ -46,9 +46,9 @@
 
 .input:focus {
   outline: none;
-  border-color: #a83427;
+  border-color: #eb2027;
   background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 20px rgba(168, 52, 39, 0.2);
+  box-shadow: 0 0 20px #eb2027;
 }
 
 .icon {
@@ -57,7 +57,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
-  color: #a83427;
+  color: #eb2027;
   pointer-events: none;
 }
 

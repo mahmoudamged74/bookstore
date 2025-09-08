@@ -1,11 +1,11 @@
 /* إشعارات الموقع */
 .notification {
   position: fixed !important;
-  top: 20px !important;
+  top: 120px !important;
   left: 50% !important;
   transform: translateX(-50%) translateY(-100%) scale(0.8) !important;
-  min-width: 350px;
-  max-width: 450px;
+  min-width: 600px;
+  max-width: 900px;
   width: auto;
   background: linear-gradient(145deg, #ffffff, #f8f9fa);
   border-radius: 16px;
@@ -218,8 +218,10 @@
 .progressFill {
   height: 100%;
   background: linear-gradient(90deg, #3b82f6, #1d4ed8);
-  animation: progressAnimation 5s linear forwards;
+  animation: progressAnimation linear forwards;
   border-radius: 0 2px 2px 0;
+  width: 100%;
+  transform-origin: left;
 }
 
 .notification.success .progressFill {
@@ -270,10 +272,10 @@
 
 @keyframes progressAnimation {
   from {
-    width: 100%;
+    transform: scaleX(1);
   }
   to {
-    width: 0%;
+    transform: scaleX(0);
   }
 }
 
@@ -374,15 +376,33 @@
   animation: floatUp 1s ease-in-out infinite, wiggle 0.5s ease-in-out;
 }
 
+/* شاشات كبيرة جداً */
+@media (min-width: 1200px) {
+  .notification {
+    min-width: 700px;
+    max-width: 1000px;
+    width: auto;
+  }
+}
+
+/* شاشات كبيرة */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .notification {
+    min-width: 650px;
+    max-width: 950px;
+    width: auto;
+  }
+}
+
 /* ريسبونسيف */
 @media (max-width: 768px) {
   .notification {
     left: 50% !important;
     transform: translateX(-50%) translateY(-100%) scale(0.8) !important;
-    min-width: 300px;
-    max-width: calc(100vw - 40px);
-    width: calc(100vw - 40px);
-    top: 10px !important;
+    min-width: calc(100vw - 20px);
+    max-width: calc(100vw - 20px);
+    width: calc(100vw - 20px);
+    top: 150px !important;
     margin: 0;
   }
 
@@ -419,12 +439,12 @@
 /* شاشات أصغر */
 @media (max-width: 480px) {
   .notification {
-    left: 50%;
-    transform: translateX(-50%) translateY(-100%) scale(0.8);
-    min-width: 280px;
-    max-width: calc(100vw - 20px);
-    width: calc(100vw - 20px);
-    top: 10px;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-100%) scale(0.8) !important;
+    min-width: calc(100vw - 10px);
+    max-width: calc(100vw - 10px);
+    width: calc(100vw - 10px);
+    top: 150px !important;
     margin: 0;
   }
 
@@ -461,12 +481,12 @@
 /* شاشات صغيرة جداً */
 @media (max-width: 360px) {
   .notification {
-    left: 50%;
-    transform: translateX(-50%) translateY(-100%) scale(0.8);
-    min-width: 260px;
-    max-width: calc(100vw - 10px);
-    width: calc(100vw - 10px);
-    top: 5px;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-100%) scale(0.8) !important;
+    min-width: calc(100vw - 5px);
+    max-width: calc(100vw - 5px);
+    width: calc(100vw - 5px);
+    top: 150px !important;
     margin: 0;
   }
 

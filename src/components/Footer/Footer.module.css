@@ -23,7 +23,7 @@ body[data-theme="light"] .footer .social a {
 }
 
 body[data-theme="light"] .footer .social a:hover {
-  color: #a83427; /* أحمر عند الهوفر */
+  color: #eb2027; /* أحمر عند الهوفر */
 }
 
 body[data-theme="light"] .footer .brandName {
@@ -35,7 +35,7 @@ body[data-theme="light"] .footer .navCol a {
 }
 
 body[data-theme="light"] .footer .navCol a:hover {
-  color: #a83427; /* أحمر عند الهوفر */
+  color: #eb2027; /* أحمر عند الهوفر */
   background: rgba(168, 52, 39, 0.1);
 }
 
@@ -69,7 +69,7 @@ body[data-theme="light"] .footer .inner::before {
 }
 
 .social a:hover {
-  color: #a83427; /* لون أحمر عند الهوفر */
+  color: #eb2027; /* لون أحمر عند الهوفر */
 }
 /* البانِل الداخلية (تشبه الصورة) */
 .inner {
@@ -109,7 +109,7 @@ body[data-theme="light"] .footer .inner::before {
   font-weight: 800;
   font-size: 18px;
   margin-top: 2px;
-  color: #a83427;
+  color: #eb2027;
 }
 
 .desc {
@@ -141,7 +141,7 @@ body[data-theme="light"] .footer .inner::before {
 }
 
 .navCol a:hover {
-  color: #a83427;
+  color: #eb2027;
   opacity: 1;
   background: rgba(168, 52, 39, 0.1);
   transform: translateY(-2px);
@@ -214,7 +214,7 @@ body[data-theme="light"] .footer .inner::before {
 }
 
 .social a:hover {
-  background: rgba(168, 52, 39, 0.2);
+  /* background: #eb2027; */
   transform: translateY(-2px);
 }
 

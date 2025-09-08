@@ -1,10 +1,20 @@
 :root {
   --bg: #000;
-  --panel: #2a1a60;
+  --panel: #2a2a2a;
   --text: #ffffff;
   --muted: #d0cbe0;
-  --accent: #a83427;
+  --accent: #eb2027;
   --stroke: rgba(255, 255, 255, 0.12);
+}
+
+/* Light Mode Variables */
+body[data-theme="light"] {
+  --bg: #f8f9fa;
+  --panel: #e9ecef;
+  --text: #000000;
+  --muted: #6c757d;
+  --accent: #eb2027;
+  --stroke: rgba(0, 0, 0, 0.12);
 }
 
 .details {
@@ -28,7 +38,7 @@
 
 .header {
   text-align: center;
-  margin-bottom: 40px;
+  margin: 40px 0;
   padding: 30px 0;
   background: linear-gradient(
     135deg,
@@ -55,17 +65,16 @@
   margin: 0 0 12px;
   font-size: 32px;
   font-weight: 800;
-  color: var(--accent);
+  color: var(--text);
   text-align: center;
 }
 
 .subtitle {
-  margin: 0;
-  color: var(--muted);
+  margin: 0 auto;
+  color: var(--text);
   font-size: 16px;
   font-weight: 500;
   max-width: 600px;
-  margin: 0 auto;
   line-height: 1.6;
   text-align: center;
 }
@@ -307,16 +316,23 @@
 }
 
 .bookInfo {
-  background: linear-gradient(145deg, #ffebee 0%, #ffcdd2 100%);
-  border: 1px solid rgba(168, 52, 39, 0.3);
+  background: #2a2a2a;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 10px 30px rgba(168, 52, 39, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   text-align: right;
   direction: rtl;
   animation: slideInFromLeft 0.8s ease-out;
   position: relative;
   overflow: hidden;
+}
+
+/* لون خلفية معلومات الكتاب في اللايت مود */
+body[data-theme="light"] .bookInfo {
+  background: var(--panel);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* انيميشن دخول من اليسار */
@@ -419,75 +435,12 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* تحسين ألوان اللايت مود */
-:global(body[data-theme="light"]) .bookInfo {
-  background: linear-gradient(145deg, #ffebee 0%, #ffcdd2 100%);
-  border: 1px solid rgba(168, 52, 39, 0.3);
-  color: #333;
-  box-shadow: 0 10px 30px rgba(168, 52, 39, 0.2);
-}
-
-:global(body[data-theme="light"]) .bookTitle {
-  color: #a83427;
-}
-
-:global(body[data-theme="light"]) .bookDescription p {
-  color: #333;
-}
-
-:global(body[data-theme="light"]) .features h4 {
-  color: #a83427;
-}
-
-:global(body[data-theme="light"]) .features li {
-  color: #333;
-}
-
-:global(body[data-theme="light"]) .price {
-  color: #a83427;
-}
-
-:global(body[data-theme="light"]) .priceLabel,
-:global(body[data-theme="light"]) .quantityLabel {
-  color: #333;
-}
-
-:global(body[data-theme="light"]) .priceSection {
-  background: rgba(168, 52, 39, 0.05);
-  border: 1px solid rgba(168, 52, 39, 0.1);
-}
-
-:global(body[data-theme="light"]) .addToCartBtn {
-  background: transparent;
-  color: #a83427;
-  border: 2px solid #a83427;
-}
-
-:global(body[data-theme="light"]) .addToCartBtn:hover {
-  background: #a83427;
-  color: #fff;
-}
-
-/* أزرار العداد - نفس الألوان في اللايت مود */
-:global(body[data-theme="light"]) .quantityBtn {
-  background: #3d1a15;
-  color: #ffffff;
-}
-
-:global(body[data-theme="light"]) .quantityBtn:hover {
-  background: #5a2a1f;
-}
-
-:global(body[data-theme="light"]) .note {
-  background: rgba(255, 0, 0, 0.05);
-  border: 1px solid rgba(255, 0, 0, 0.2);
-  color: #d63384;
-}
+/* تم استبدال الستايلات القديمة بالمتغيرات الجديدة */
 
 .bookTitle {
   font-size: 24px;
   font-weight: 700;
-  color: #a83427;
+  color: var(--text);
   margin: 0 0 20px 0;
   line-height: 1.3;
   text-align: right;
@@ -501,7 +454,7 @@
   font-size: 16px;
   line-height: 1.6;
   margin-bottom: 15px;
-  color: #000000;
+  color: var(--text);
   text-align: right;
 }
 
@@ -510,7 +463,7 @@
 }
 
 .features h4 {
-  color: #a83427;
+  color: var(--accent);
   margin-bottom: 10px;
   font-size: 18px;
   text-align: right;
@@ -524,7 +477,7 @@
 
 .features li {
   padding: 5px 0;
-  color: #000000;
+  color: var(--text);
   position: relative;
   padding-right: 20px;
   text-align: right;
@@ -532,7 +485,7 @@
 
 .features li::before {
   content: "✓";
-  color: #a83427;
+  color: #eb2027;
   font-weight: bold;
   position: absolute;
   right: 0;
@@ -544,9 +497,15 @@
   align-items: center;
   margin: 25px 0;
   padding: 20px;
-  background: rgba(255, 215, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* لون خلفية قسم السعر في اللايت مود */
+body[data-theme="light"] .priceSection {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .priceInfo {
@@ -554,15 +513,16 @@
   flex-direction: column;
   gap: 5px;
   text-align: right;
+  align-items: flex-end;
 }
 
 .priceLabel {
-  color: #000000;
+  color: var(--text);
   font-size: 14px;
 }
 
 .price {
-  color: #a83427;
+  color: var(--text);
   font-size: 24px;
   font-weight: bold;
 }
@@ -576,7 +536,7 @@
 }
 
 .quantityLabel {
-  color: #000000;
+  color: var(--text);
   font-size: 14px;
 }
 
@@ -588,7 +548,7 @@
 }
 
 .quantityBtn {
-  background: #3d1a15;
+  background: #eb2027;
   color: #ffffff;
   border: none;
   width: 35px;
@@ -626,7 +586,7 @@
 .quantity {
   font-size: 18px;
   font-weight: bold;
-  color: #000;
+  color: var(--text);
   min-width: 30px;
   text-align: center;
 }
@@ -647,26 +607,32 @@
   cursor: pointer;
   transition: all 0.3s ease;
   background: transparent;
-  color: #a83427;
-  border: 2px solid #a83427;
+  color: #eb2027;
+  border: 2px solid #eb2027;
   min-width: 150px;
   text-align: center;
 }
 
 .addToCartBtn:hover {
-  background: #a83427;
+  background: #eb2027;
   color: #fff;
 }
 
 .note {
-  background: rgba(255, 0, 0, 0.1);
-  border: 1px solid rgba(255, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   padding: 15px;
-  color: #ff6b6b;
+  color: var(--text);
   font-size: 14px;
   line-height: 1.5;
   text-align: right;
+}
+
+/* لون خلفية الملاحظة في اللايت مود */
+body[data-theme="light"] .note {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Slider Styles */

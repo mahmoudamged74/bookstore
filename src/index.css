@@ -1,6 +1,6 @@
 * {
-  font-family: "JF-Flat", "Tajawal", Inter, "Open Sans", Helvetica, Arial,
-    sans-serif;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", Inter, "Open Sans",
+    Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
@@ -297,7 +297,7 @@ body[data-theme="light"] .authContainer .countrySelect {
 }
 
 body[data-theme="light"] .authContainer .submitBtn {
-  background: linear-gradient(135deg, #a83427, #ff6b35) !important;
+  background: linear-gradient(135deg, #eb2027, #ff6b35) !important;
   color: #ffffff !important;
 }
 
@@ -384,8 +384,8 @@ body[data-theme="light"] .faqPage .heroSubtitle {
 }
 
 [dir="rtl"] {
-  --font-family-sans-serif: "JF-Flat", "Tajawal", Inter, "Open Sans", Helvetica,
-    Arial, sans-serif;
+  --font-family-sans-serif: "JF-Flat", "JFFlat-Regular", "Tajawal", Inter,
+    "Open Sans", Helvetica, Arial, sans-serif;
 }
 
 /* تطبيق فونت JF-Flat على النصوص العربية */
@@ -395,8 +395,8 @@ body[data-theme="light"] .faqPage .heroSubtitle {
 [lang="ar"] *,
 [lang="ar"] body,
 [lang="ar"] html {
-  font-family: "JF-Flat", "Tajawal", Inter, "Open Sans", Helvetica, Arial,
-    sans-serif !important;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", Inter, "Open Sans",
+    Helvetica, Arial, sans-serif !important;
 }
 
 /* متغيرات الألوان للدارك مود (الافتراضي) */
@@ -404,7 +404,7 @@ body[data-theme="light"] .faqPage .heroSubtitle {
   --bg: #000;
   --text: #ffffff;
   --muted: #cccccc;
-  --accent: #a83427;
+  --accent: #eb2027;
   --card: #3d1a15;
   --border: #4a2c1f;
   --hover: #5a3c2f;
@@ -429,7 +429,7 @@ body[data-theme="light"] .faqPage .heroSubtitle {
   --bg: #ffffff;
   --text: #1f2937;
   --muted: #6b7280;
-  --accent: #a83427; /* نفس لون الأزرار */
+  --accent: #eb2027; /* نفس لون الأزرار */
   --card: #f3f4f6;
   --border: #e5e7eb;
   --hover: #d1d5db;
@@ -531,11 +531,7 @@ body::after {
       rgba(38, 17, 13, 0.3) 0%,
       transparent 50%
     ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(168, 52, 39, 0.2) 0%,
-      transparent 50%
-    ),
+    radial-gradient(circle at 80% 20%, #eb2027 0%, transparent 50%),
     radial-gradient(
       circle at 40% 40%,
       rgba(38, 17, 13, 0.1) 0%,
@@ -628,7 +624,7 @@ a::after {
   left: 0;
   width: 0;
   height: 2px;
-  background: #a83427;
+  background: #eb2027;
   transition: width 0.3s ease;
 }
 
@@ -639,8 +635,8 @@ a:hover::after {
 body {
   margin: 0;
   /* padding-top: 80px;  */
-  font-family: "JF-Flat", "Tajawal", Inter, "Open Sans", Helvetica, Arial,
-    sans-serif;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", Inter, "Open Sans",
+    Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;

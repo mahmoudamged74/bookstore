@@ -1,10 +1,10 @@
 :root {
   --bg: #000;
   --card-bg: #22124f;
-  --border: #3b2c74;
+  --border: #eb2027;
   --text: #ffffff;
   --muted: #c9c4d6;
-  --accent: #a83427;
+  --accent: #eb2027;
   --success: #00ff88;
   --danger: #ff4757;
   --warning: #ffa502;
@@ -33,7 +33,7 @@
   margin: 0 0 8px;
   font-size: 32px;
   font-weight: 800;
-  background: linear-gradient(45deg, #a83427, #ff6b35);
+  background: linear-gradient(45deg, #eb2027, #ff6b35);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -265,8 +265,8 @@
 
 .pageBtn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.1);
-  border-color: #a83427;
-  color: #a83427;
+  border-color: #eb2027;
+  color: #eb2027;
 }
 
 .pageBtn:disabled {
@@ -275,9 +275,9 @@
 }
 
 .pageBtn.active {
-  background: #a83427;
+  background: #eb2027;
   color: #000;
-  border-color: #a83427;
+  border-color: #eb2027;
   font-weight: 700;
 }
 

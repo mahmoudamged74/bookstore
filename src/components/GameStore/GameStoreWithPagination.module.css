@@ -1,10 +1,10 @@
 :root {
   --bg: #000;
   --card-bg: #22124f;
-  --border: #3b2c74;
+  --border: #eb2027;
   --text: #ffffff;
   --muted: #c9c4d6;
-  --accent: #a83427;
+  --accent: #eb2027;
 }
 
 .section {
@@ -164,8 +164,8 @@
 
 .pageBtn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.1);
-  border-color: #a83427;
-  color: #a83427;
+  border-color: #eb2027;
+  color: #eb2027;
 }
 
 .pageBtn:disabled {
@@ -174,9 +174,9 @@
 }
 
 .pageBtn.active {
-  background: #a83427;
+  background: #eb2027;
   color: #000;
-  border-color: #a83427;
+  border-color: #eb2027;
   font-weight: 700;
 }
 
@@ -215,8 +215,8 @@
 .moreLink:hover {
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.1);
-  border-color: #a83427;
-  color: #a83427;
+  border-color: #eb2027;
+  color: #eb2027;
 }
 
 .moreLink:active {

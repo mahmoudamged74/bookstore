@@ -3,6 +3,7 @@
   background: #000;
   color: white;
   padding: 0;
+  margin: 0;
   font-size: 14px;
   position: fixed;
   top: 0;
@@ -145,10 +146,16 @@
 
 /* ريسبونسيف */
 @media (max-width: 768px) {
+  .topNav {
+    height: auto;
+    min-height: 60px;
+  }
+
   .container {
     flex-direction: column;
     gap: 6px;
-    padding: 6px 15px;
+    padding: 8px 15px;
+    height: auto;
   }
 
   .scrollingWrapper {
@@ -162,12 +169,12 @@
 
   .textItem {
     margin: 0 16px;
-    font-size: 20px; /* زيادة حجم النص */
+    font-size: 20px;
   }
 
   .separator {
     margin: 0 12px;
-    font-size: 20px; /* زيادة حجم الفاصل */
+    font-size: 20px;
   }
 
   .socialLinks {
@@ -191,17 +198,21 @@
   .topNav {
     padding: 4px 0;
     height: auto;
-    min-height: 60px;
+    min-height: 70px;
+  }
+
+  .container {
+    padding: 6px 12px;
   }
 
   .textItem {
     margin: 0 12px;
-    font-size: 18px; /* زيادة حجم النص */
+    font-size: 18px;
   }
 
   .separator {
     margin: 0 8px;
-    font-size: 18px; /* زيادة حجم الفاصل */
+    font-size: 18px;
   }
 
   .socialLinks {
@@ -224,12 +235,16 @@
 @media (max-width: 400px) {
   .topNav {
     height: auto;
-    min-height: 55px;
+    min-height: 65px;
+  }
+
+  .container {
+    padding: 5px 10px;
   }
 
   .textItem {
     margin: 0 10px;
-    font-size: 17px; /* زيادة حجم النص */
+    font-size: 17px;
   }
 
   .separator {
@@ -252,12 +267,16 @@
 @media (max-width: 300px) {
   .topNav {
     height: auto;
-    min-height: 50px;
+    min-height: 60px;
+  }
+
+  .container {
+    padding: 4px 8px;
   }
 
   .textItem {
     margin: 0 8px;
-    font-size: 16px; /* زيادة حجم النص */
+    font-size: 16px;
   }
 
   .separator {
@@ -280,12 +299,16 @@
 @media (max-width: 250px) {
   .topNav {
     height: auto;
-    min-height: 45px;
+    min-height: 55px;
+  }
+
+  .container {
+    padding: 3px 6px;
   }
 
   .textItem {
     margin: 0 6px;
-    font-size: 15px; /* زيادة حجم النص */
+    font-size: 15px;
   }
 
   .separator {
@@ -308,12 +331,16 @@
 @media (max-width: 200px) {
   .topNav {
     height: auto;
-    min-height: 40px;
+    min-height: 50px;
+  }
+
+  .container {
+    padding: 2px 4px;
   }
 
   .textItem {
     margin: 0 4px;
-    font-size: 14px; /* زيادة حجم النص */
+    font-size: 14px;
   }
 
   .separator {

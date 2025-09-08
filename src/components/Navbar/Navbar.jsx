@@ -8,6 +8,7 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isLightMode, setIsLightMode] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [selectedLang, setSelectedLang] = useState({
     name: "العربية",
     flag: "/Flag_of_Egypt.png",
@@ -66,9 +67,21 @@ const Navbar = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [showDropdown]);
 
+  // مراقبة التمرير لتطبيق تأثير الشفافية
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      setIsScrolled(scrollTop > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <nav
-      className={styles.navbar}
+      className={`${styles.navbar} ${isScrolled ? styles.scrolled : ""}`}
       style={{
         fontFamily: "Tajawal, sans-serif",
         fontWeight: 500,
@@ -126,6 +139,12 @@ const Navbar = () => {
           <span className={styles.cartIconSymbol}>🛒</span>
           <span className={styles.cartCount}>0</span>
         </div>
+      </div>
+
+      {/* أيقونة الكارت للموبايل فقط */}
+      <div className={styles.mobileCartIcon}>
+        <span className={styles.cartIconSymbol}>🛒</span>
+        <span className={styles.cartCount}>0</span>
       </div>
 
       {/* Desktop Auth & Language */}
@@ -222,10 +241,6 @@ const Navbar = () => {
             >
               الأسئلة الشائعة
             </Link>
-            <div className={styles.mobileCartIcon}>
-              <span className={styles.cartIconSymbol}>🛒</span>
-              <span className={styles.cartCount}>0</span>
-            </div>
 
             {/* Language inside mobile */}
             <div

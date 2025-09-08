@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Notification from './Notification';
-import styles from './NotificationContainer.module.css';
+import React, { useState, useEffect } from "react";
+import Notification from "./Notification";
+import styles from "./NotificationContainer.module.css";
 
 const NotificationContainer = () => {
   const [notifications, setNotifications] = useState([]);
@@ -10,18 +10,21 @@ const NotificationContainer = () => {
     const id = Date.now() + Math.random();
     const newNotification = {
       id,
-      type: 'info',
-      duration: 5000,
-      ...notification
+      type: "info",
+      duration: 4000,
+      ...notification,
     };
-    
-    setNotifications(prev => [...prev, newNotification]);
+
+    // إزالة الإشعارات السابقة وإضافة الجديد فقط
+    setNotifications([newNotification]);
     return id;
   };
 
   // إزالة إشعار
   const removeNotification = (id) => {
-    setNotifications(prev => prev.filter(notification => notification.id !== id));
+    setNotifications((prev) =>
+      prev.filter((notification) => notification.id !== id)
+    );
   };
 
   // إزالة جميع الإشعارات
@@ -33,7 +36,7 @@ const NotificationContainer = () => {
   useEffect(() => {
     window.showNotification = addNotification;
     window.clearAllNotifications = clearAllNotifications;
-    
+
     return () => {
       delete window.showNotification;
       delete window.clearAllNotifications;
@@ -44,7 +47,7 @@ const NotificationContainer = () => {
     <div className={styles.container}>
       {notifications.length > 0 && (
         <div className={styles.notificationsWrapper}>
-          {notifications.map(notification => (
+          {notifications.map((notification) => (
             <Notification
               key={notification.id}
               {...notification}

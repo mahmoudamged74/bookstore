@@ -6,9 +6,8 @@ function AllMostSelling() {
 
     return (
        <>
-       <div style={{paddingTop:"80px"}}>
+       <div style={{paddingTop:"130px"}}>
        <MostSelling/>
-
        </div>
        </>
     );

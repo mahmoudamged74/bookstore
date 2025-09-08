@@ -3,7 +3,7 @@
   --panel: #3d1a15;
   --text: #ffffff;
   --muted: #c9c4d6;
-  --accent: #a83427;
+  --accent: #eb2027;
   --border: rgba(255, 255, 255, 0.14);
   --sel: #2b74ff;
 }
@@ -57,7 +57,7 @@
   );
   padding: 25px;
   border-radius: 16px;
-  border: 1px solid rgba(168, 52, 39, 0.2);
+  border: 1px solid #eb2027;
 }
 
 .title {
@@ -105,7 +105,7 @@
   );
   padding: 25px;
   border-radius: 16px;
-  border: 1px solid rgba(168, 52, 39, 0.2);
+  border: 1px solid #eb2027;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
 }
@@ -183,7 +183,7 @@
 
 .selected {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(168, 52, 39, 0.2);
+  box-shadow: 0 0 0 3px #eb2027;
   background: linear-gradient(145deg, #fff8e1 0%, #ffffff 100%);
 }
 
@@ -226,7 +226,7 @@
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 4px 15px rgba(168, 52, 39, 0.2);
+  box-shadow: 0 4px 15px #eb2027;
 }
 
 /* ريسبونسيف */
