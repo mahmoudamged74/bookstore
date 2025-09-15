@@ -6,6 +6,15 @@
   --card: #3d1a15;
 }
 
+/* متغيرات الوضع الليت مود */
+[data-theme="light"] {
+  --bg: #f8f9fa;
+  --text: #212529;
+  --muted: #6c757d;
+  --accent: #eb2027;
+  --card: #ffffff;
+}
+
 .hero {
   background: var(--bg);
   color: var(--text);
@@ -14,17 +23,162 @@
   gap: 40px;
   align-items: center;
   padding: 250px 32px 60px;
-  direction: rtl;
   min-height: 100vh;
   position: relative;
   overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* الوضع الليت مود للهيرو سكشن */
+[data-theme="light"] .hero {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: #212529;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* النصوص في الوضع الليت مود */
+[data-theme="light"] .hero .title,
+[data-theme="light"] .hero .heroTitle {
+  color: #212529 !important;
+  text-shadow: none;
+}
+
+[data-theme="light"] .hero .subtitle,
+[data-theme="light"] .hero .heroSubtitle {
+  color: #6c757d !important;
+}
+
+[data-theme="light"] .hero .heroDescription {
+  color: #495057 !important;
+}
+
+[data-theme="light"] .hero .primaryBtn,
+[data-theme="light"] .hero .ghostBtn,
+[data-theme="light"] .hero .heroButton {
+  background: #eb2027 !important;
+  color: #ffffff !important;
+  border: 2px solid #eb2027 !important;
+  box-shadow: 0 4px 15px rgba(235, 32, 39, 0.3);
+}
+
+[data-theme="light"] .hero .primaryBtn:hover,
+[data-theme="light"] .hero .ghostBtn:hover,
+[data-theme="light"] .hero .heroButton:hover {
+  background: #d41e24 !important;
+  border-color: #d41e24 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(235, 32, 39, 0.4);
+}
+
+/* الصورة في الوضع الليت مود */
+[data-theme="light"] .hero .left img,
+[data-theme="light"] .hero .mainImg {
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  border: 3px solid #ffffff;
+}
+
+[data-theme="light"] .hero .left::before {
+  background: linear-gradient(
+    45deg,
+    rgba(235, 32, 39, 0.1),
+    rgba(0, 0, 0, 0.05)
+  );
+}
+
+/* الكارد الرئيسي في الوضع الليت مود */
+[data-theme="light"] .hero .mainCard {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e9ecef;
+}
+
+[data-theme="light"] .hero .badge {
+  background: #eb2027;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(235, 32, 39, 0.3);
+}
+
+/* العناصر المتحركة في الوضع الليت مود */
+[data-theme="light"] .hero .floating-element {
+  background: rgba(255, 255, 255, 0.9);
+  color: #212529;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+[data-theme="light"] .hero .floating-element:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+/* الاستجابة في الوضع الليت مود */
+@media (max-width: 768px) {
+  [data-theme="light"] .hero {
+    background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 200px 20px 40px;
+  }
+
+  [data-theme="light"] .hero .heroTitle {
+    font-size: 2.5rem;
+    color: #212529;
+  }
+
+  [data-theme="light"] .hero .heroSubtitle {
+    font-size: 1.1rem;
+    color: #6c757d;
+  }
+}
+
+@media (max-width: 480px) {
+  [data-theme="light"] .hero {
+    padding: 180px 15px 30px;
+  }
+
+  [data-theme="light"] .hero .heroTitle {
+    font-size: 2rem;
+  }
+
+  [data-theme="light"] .hero .heroSubtitle {
+    font-size: 1rem;
+  }
+}
+
+/* اتجاه RTL للعربية */
+.hero.rtl {
+  direction: rtl;
+}
+
+/* اتجاه LTR للإنجليزية */
+.hero.ltr {
+  direction: ltr;
+}
+
+/* تغيير ترتيب العناصر في LTR */
+.hero.ltr {
+  /* grid-template-columns: 1fr 1fr; */
+}
+
+.hero.ltr .right {
+  order: 1; /* النص على اليسار في الإنجليزية */
+}
+
+.hero.ltr .left {
+  order: 2; /* الصورة على اليمين في الإنجليزية */
+}
+
+/* ترتيب العناصر في RTL */
+.hero.rtl .right {
+  order: 1; /* النص على اليمين في العربية */
+}
+
+.hero.rtl .left {
+  order: 2; /* الصورة على اليسار في العربية */
 }
 
 /* تطبيق الألوان في اللايت مود - نفس الدارك مود */
-body[data-theme="light"] .hero {
-  background: #000; /* نفس لون الدارك مود */
-  color: #ffffff; /* نفس لون النص في الدارك مود */
-}
+
 
 body[data-theme="light"] .hero .title {
   color: #ffffff; /* نفس لون العنوان في الدارك مود */

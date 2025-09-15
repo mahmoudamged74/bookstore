@@ -1,73 +1,121 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import api from "../../services/api";
 import styles from "./Features.module.css";
 
 function Features() {
-  const featuresData = [
-    {
-      id: 1,
-      icon: "https://cdn-icons-png.flaticon.com/512/1055/1055687.png", // سماعة
-      title: "دعم فني ٢٤ ساعة",
-      description: "على مدار الأسبوع",
-    },
-    {
-      id: 2,
-      icon: "https://cdn-icons-png.flaticon.com/512/2920/2920277.png", // كتب
-      title: "كل كتب الثانوية العامة",
-      description: "للمدرسين اللي بتحبهم",
-    },
-    {
-      id: 3,
-      icon: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", // دولار
-      title: "أقل سعر شحن",
-      description: "في مصر",
-    },
-    {
-      id: 4,
-      icon: "https://cdn-icons-png.flaticon.com/512/684/684908.png", // توصيل
-      title: "توصيل لأي حته",
-      description: "في مصر",
-    },
-    {
-      id: 5,
-      icon: "https://cdn-icons-png.flaticon.com/512/2753/2753611.png", // صاروخ
-      title: "مدة توصيل من ٣ - ٧ أيام عمل",
-      description: "بحد أقصى",
-    },
-    {
-      id: 6,
-      icon: "https://cdn-icons-png.flaticon.com/512/2583/2583785.png", // هدية
-      title: "عروض ومسابقات وخدمات كتير",
-      description: "على أوردراتنا",
-    },
-  ];
+  const { t, i18n } = useTranslation("global");
+  const [featuresData, setFeaturesData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // بيانات احتياطية في حالة فشل API
+  const fallbackData = {
+    feature_text: t("features.main_text"),
+    features: [
+      {
+        id: 1,
+        title: t("features.support_24h"),
+        logo: "/customer-service.png",
+      },
+      {
+        id: 2,
+        title: t("features.all_books"),
+        logo: "/stack-of-books.png",
+      },
+      {
+        id: 3,
+        title: t("features.lowest_shipping"),
+        logo: "/pay.png",
+      },
+      {
+        id: 4,
+        title: t("features.delivery_anywhere"),
+        logo: "/placeholder.png",
+      },
+      {
+        id: 5,
+        title: t("features.delivery_time"),
+        logo: "/rocket.png",
+      },
+      {
+        id: 6,
+        title: t("features.offers_services"),
+        logo: "/rocket.png",
+      },
+    ],
+  };
+
+  // جلب بيانات الخصائص من API
+  useEffect(() => {
+    fetchFeaturesData();
+  }, [i18n.language]);
+
+  const fetchFeaturesData = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get("/home/features-section", {
+        headers: {
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (response.data?.status && response.data?.data) {
+        setFeaturesData(response.data.data);
+      } else {
+        setFeaturesData(fallbackData);
+      }
+    } catch (error) {
+      console.error("Error fetching features data:", error);
+      setFeaturesData(fallbackData);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section
+        className={`${styles.features} ${
+          i18n.language === "ar" ? styles.rtl : styles.ltr
+        }`}
+      >
+        <div className="container">
+          <div className={styles.loading}>
+            <div className={styles.spinner}></div>
+            <p>{t("loading") || "Loading..."}</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section className={styles.features} dir="rtl">
+    <section
+      className={`${styles.features} ${
+        i18n.language === "ar" ? styles.rtl : styles.ltr
+      }`}
+    >
       <div className="container">
         {/* النص الرئيسي */}
         <div className={styles.header}>
           <p className={styles.mainText}>
-            يا صديق ثانوية ستور، احنا مش بنشتغل عشان نشتغل، احنا بنشتغل بطريقة
-            تخليك متأكد إننا خطوة قدام كل حد. ليه؟ عشان احنا بنفكر مختلف، بنركز
-            على التفاصيل الصغيرة اللي بتحقق الفرق، وبنقدم حلول مفيش حد تاني
-            عنده. احنا هنا عشان نكبر سوا وننجح سوا.
+            {featuresData?.feature_text || t("features.main_text")}
           </p>
         </div>
 
         {/* شبكة الكاردات */}
         <div className="row g-4">
-          {featuresData.map((feature) => (
+          {featuresData?.features?.map((feature) => (
             <div key={feature.id} className="col-lg-4 col-md-6 col-sm-12">
               <div className={styles.featureCard}>
                 <div className={styles.iconContainer}>
                   <img
-                    src={feature.icon}
+                    src={feature.logo}
                     alt={feature.title}
                     className={styles.icon}
                   />
                 </div>
                 <h3 className={styles.title}>{feature.title}</h3>
-                <p className={styles.description}>{feature.description}</p>
               </div>
             </div>
           ))}

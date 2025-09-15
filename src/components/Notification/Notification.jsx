@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import styles from "./Notification.module.css";
 
 const Notification = ({
@@ -11,29 +12,30 @@ const Notification = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
+  const { i18n } = useTranslation("global");
+  const dir = i18n?.dir ? i18n.dir() : "ltr";
 
   useEffect(() => {
-    // إظهار الإشعار بعد تحميل المكون
+    // إظهار الإشعار بعد 100ms
     const showTimer = setTimeout(() => {
       setIsVisible(true);
+
+      // بدء عداد الإغلاق بعد الظهور
+      const hideTimer = setTimeout(() => {
+        handleClose();
+      }, duration);
+
+      return () => clearTimeout(hideTimer);
     }, 100);
 
-    // إغلاق الإشعار تلقائياً بعد المدة المحددة
-    const hideTimer = setTimeout(() => {
-      handleClose();
-    }, duration);
-
-    return () => {
-      clearTimeout(showTimer);
-      clearTimeout(hideTimer);
-    };
+    return () => clearTimeout(showTimer);
   }, [duration]);
 
   const handleClose = () => {
     setIsExiting(true);
     setTimeout(() => {
       onClose(id);
-    }, 300);
+    }, 300); // مدة الانيميشن
   };
 
   const getIcon = () => {
@@ -55,7 +57,7 @@ const Notification = ({
       className={`${styles.notification} ${styles[type]} ${
         isVisible ? styles.show : ""
       } ${isExiting ? styles.hide : ""}`}
-      dir="rtl"
+      dir={dir}
     >
       <div className={styles.notificationContent}>
         <div className={styles.iconContainer}>
@@ -63,7 +65,7 @@ const Notification = ({
         </div>
 
         <div className={styles.textContent}>
-          <h4 className={styles.title}>{title}</h4>
+          {title && <h4 className={styles.title}>{title}</h4>}
           <p className={styles.message}>{message}</p>
         </div>
 

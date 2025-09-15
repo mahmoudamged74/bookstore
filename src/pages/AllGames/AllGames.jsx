@@ -1,4 +1,3 @@
-import GameStoreWithPagination from "../../components/GameStore/GameStoreWithPagination";
 import FloatingAnimations from "../../components/FloatingAnimations/FloatingAnimations";
 import styles from './AllGames.module.css';
 function AllGames() {
@@ -20,7 +19,6 @@ function AllGames() {
                     <span className={styles.icon}>🔍</span>
                 </div>
             </header>
-            <GameStoreWithPagination />
         </>
     )
 }

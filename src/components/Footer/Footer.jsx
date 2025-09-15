@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import api from "../../services/api";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
+  const { t, i18n } = useTranslation("global");
   const [isLightMode, setIsLightMode] = useState(false);
+  const [footerData, setFooterData] = useState(null);
 
   // مراقبة تغيير الثيم
   useEffect(() => {
@@ -22,8 +26,33 @@ const Footer = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  // جلب بيانات الفوتر من API
+  useEffect(() => {
+    fetchFooterData();
+  }, [i18n.language]);
+
+  const fetchFooterData = async () => {
+    try {
+      const response = await api.get("/settings/footer", {
+        headers: {
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (response.data?.status) {
+        setFooterData(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching footer data:", error);
+    }
+  };
   return (
-    <footer className={styles.footer} dir="rtl">
+    <footer
+      className={`${styles.footer} ${
+        i18n.language === "ar" ? styles.rtl : styles.ltr
+      }`}
+    >
       <div className={styles.inner}>
         {/* الصف العلوي */}
         <div className={styles.topRow}>
@@ -35,80 +64,90 @@ const Footer = () => {
               className={styles.logo}
             />
             <p className={styles.desc}>
-              كتب دراسية شاملة لجميع المواد والصفوف الدراسية بأفضل الأسعار.
+              {footerData?.footerText || t("footer.description")}
             </p>
             <div className={styles.social}>
-              <a
-                href="https://facebook.com/thanawyastore"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="فيسبوك"
-              >
-                <img
-                  src="/facebook.png"
-                  alt="فيسبوك"
-                  className={styles.socialIcon}
-                />
-              </a>
-              <a
-                href="https://wa.me/1234567890"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="واتساب"
-              >
-                <img
-                  src="/whatsapp.png"
-                  alt="واتساب"
-                  className={styles.socialIcon}
-                />
-              </a>
-              <a
-                href="https://t.me/thanawyastore"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="تيليجرام"
-              >
-                <img
-                  src="/telegram.png"
-                  alt="تيليجرام"
-                  className={styles.socialIcon}
-                />
-              </a>
-              <a
-                href="https://instagram.com/thanawyastore"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="إنستجرام"
-              >
-                <img
-                  src="/instagram.png"
-                  alt="إنستجرام"
-                  className={styles.socialIcon}
-                />
-              </a>
-              <a
-                href="https://tiktok.com/@thanawyastore"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="تيك توك"
-              >
-                <img
-                  src="/tiktok.png"
-                  alt="تيك توك"
-                  className={styles.socialIcon}
-                />
-              </a>
+              {footerData?.facebook_link && (
+                <a
+                  href={footerData.facebook_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="فيسبوك"
+                >
+                  <img
+                    src="/facebook.png"
+                    alt="فيسبوك"
+                    className={styles.socialIcon}
+                  />
+                </a>
+              )}
+              {footerData?.whats_link && (
+                <a
+                  href={footerData.whats_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="واتساب"
+                >
+                  <img
+                    src="/whatsapp.png"
+                    alt="واتساب"
+                    className={styles.socialIcon}
+                  />
+                </a>
+              )}
+              {footerData?.instgram_link && (
+                <a
+                  href={footerData.instgram_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="إنستجرام"
+                >
+                  <img
+                    src="/instagram.png"
+                    alt="إنستجرام"
+                    className={styles.socialIcon}
+                  />
+                </a>
+              )}
+              {footerData?.tiktok_link && (
+                <a
+                  href={footerData.tiktok_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="تيك توك"
+                >
+                  <img
+                    src="/tiktok.png"
+                    alt="تيك توك"
+                    className={styles.socialIcon}
+                  />
+                </a>
+              )}
+              {footerData?.telegram_link && (
+                <a
+                  href={footerData.telegram_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="تلجرام"
+                >
+                  <img
+                    src="/telegram.png"
+                    alt="تلجرام"
+                    className={styles.socialIcon}
+                  />
+                </a>
+              )}
             </div>
           </div>
 
           {/* العمود الأوسط: روابط */}
-          <nav className={styles.navCol} aria-label="روابط التذييل">
-            <a href="/">الرئيسية</a>
-            <a href="/bestsellers">الأكثر مبيعاً</a>
-            <a href="/about">من نحن</a>
-            <a href="/faq">الأسئلة الشائعة</a>
-            <a href="/account">حسابي</a>
-            <a href="/contact">اتصل بنا</a>
+          <nav className={styles.navCol} aria-label={t("footer.nav_label")}>
+            <a href="/">{t("navbar.home")}</a>
+            <a href="/all-most-selling">{t("navbar.most_selling")}</a>
+            <a href="/about">{t("navbar.about")}</a>
+            <a href="/faq">{t("navbar.faq")}</a>
+            <a href="/contact">{t("footer.contact_us")}</a>
+            <a href="/profile">{t("footer.my_account")}</a>
           </nav>
         </div>
 
@@ -120,7 +159,7 @@ const Footer = () => {
           <div aria-hidden="true" />
 
           {/* حقوق النشر في المنتصف */}
-          <p className={styles.copy}>© 2025 Brmja Tech. All rights reserved.</p>
+          <p className={styles.copy}>{t("footer.copyright")}</p>
 
           {/* عمود فارغ لضبط السنتر */}
           <div aria-hidden="true" />

@@ -6,6 +6,16 @@
   margin-top: 0;
 }
 
+/* اتجاه RTL للعربية */
+.footer.rtl {
+  direction: rtl;
+}
+
+/* اتجاه LTR للإنجليزية */
+.footer.ltr {
+  direction: ltr;
+}
+
 /* تطبيق الألوان في اللايت مود */
 body[data-theme="light"] .footer {
   background-color: #f3f1f1; /* لون خلفية الفوتر في اللايت مود */

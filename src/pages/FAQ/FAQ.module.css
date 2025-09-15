@@ -6,6 +6,46 @@
   padding-top: 120px; /* مساحة للنافبار */
 }
 
+/* Loading Styles */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--faq-bg);
+  color: var(--faq-text);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--faq-item-border);
+  border-top: 4px solid var(--faq-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* اتجاه RTL للعربية */
+.faqPage.rtl {
+  direction: rtl;
+}
+
+/* اتجاه LTR للإنجليزية */
+.faqPage.ltr {
+  direction: ltr;
+}
+
 /* CSS Variables for Theme Support */
 :root {
   --faq-bg: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
@@ -113,6 +153,11 @@ body[data-theme="light"] {
   animation: titleShine 3s ease-in-out infinite;
 }
 
+/* إصلاح محاذاة العنوان في الإنجليزية */
+.faqPage.ltr .heroTitle {
+  text-align: center;
+}
+
 @keyframes titleShine {
   0% {
     background-position: 0% 50%;
@@ -134,6 +179,11 @@ body[data-theme="light"] {
   line-height: 1.6;
   margin-bottom: 0;
   animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+/* إصلاح محاذاة الوصف في الإنجليزية */
+.faqPage.ltr .heroSubtitle {
+  text-align: center;
 }
 
 @keyframes fadeInUp {
@@ -270,6 +320,12 @@ body[data-theme="light"] {
   direction: rtl;
 }
 
+/* إصلاح محاذاة الأسئلة في الإنجليزية */
+.faqPage.ltr .faqQuestion {
+  text-align: left;
+  direction: ltr;
+}
+
 .faqQuestion:hover {
   background: var(--faq-item-hover);
 }
@@ -327,6 +383,12 @@ body[data-theme="light"] {
   font-size: 1rem;
   text-align: right;
   direction: rtl;
+}
+
+/* إصلاح محاذاة الأجوبة في الإنجليزية */
+.faqPage.ltr .faqAnswer p {
+  text-align: left;
+  direction: ltr;
 }
 
 /* Responsive Design */

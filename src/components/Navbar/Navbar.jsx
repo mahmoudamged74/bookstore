@@ -1,28 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import styles from "./Navbar.module.css";
-import { FaChevronDown } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaUser,
+  FaSignOutAlt,
+  FaShoppingCart,
+} from "react-icons/fa";
+import api from "../../services/api";
+import { showNotification } from "../../utils/notifications";
+import { useCart } from "../../context/CartContext";
 
 const Navbar = () => {
   const location = useLocation();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isLightMode, setIsLightMode] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [selectedLang, setSelectedLang] = useState({
-    name: "العربية",
-    flag: "/Flag_of_Egypt.png",
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
+
+  const { i18n, t } = useTranslation("global");
+  const { cartCount } = useCart();
 
   const languages = [
-    { name: "العربية", flag: "/Flag_of_Egypt.png" },
-    { name: "English", flag: "/Flag_of_UK.png" },
+    { code: "ar", name: "العربية", flag: "/Flag_of_Egypt.png" },
+    { code: "en", name: "English", flag: "/Flag_of_UK.png" },
   ];
 
+  // ✅ اللغة الحالية
+  const currentLang =
+    languages.find((l) => l.code === i18n.language) || languages[0];
+
   const handleLangChange = (lang) => {
-    setSelectedLang(lang);
+    i18n.changeLanguage(lang.code);
     setShowDropdown(false);
-    // TODO: منطق تغيير اللغة (i18n/localStorage/router لاحقًا)
   };
 
   const toggleTheme = () => {
@@ -46,18 +60,80 @@ const Navbar = () => {
       document.documentElement.setAttribute("data-theme", "light");
       document.body.setAttribute("data-theme", "light");
     } else {
-      // الوضع الافتراضي - Dark Mode
       setIsLightMode(false);
       document.documentElement.removeAttribute("data-theme");
       document.body.removeAttribute("data-theme");
-      // التأكد من تطبيق الوضع الافتراضي
       if (!savedTheme) {
         localStorage.setItem("theme", "dark");
       }
     }
   }, []);
 
-  // إغلاق دروب داون عند الضغط في أي مكان
+  // تحقق من حالة تسجيل الدخول
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+      fetchUserProfile();
+    } else {
+      setIsLoggedIn(false);
+      setUserProfile(null);
+    }
+  }, []);
+
+  const fetchUserProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await api.get("/auth/get-profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          lang: "en",
+        },
+      });
+
+      if (response.data.status) {
+        setUserProfile(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      setUserProfile(null);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await api.post(
+        "/auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            lang: "en",
+          },
+        }
+      );
+
+      if (response.data.status) {
+        showNotification("success", response.data.message);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setIsLoggedIn(false);
+        setUserProfile(null);
+        setShowProfileDropdown(false);
+        window.location.href = "/";
+      } else {
+        showNotification("error", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error logging out:", error);
+      showNotification("error", "Failed to logout");
+    }
+  };
+
+  // إغلاق dropdown عند الضغط خارجها
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (showDropdown) {
@@ -66,13 +142,19 @@ const Navbar = () => {
           setShowDropdown(false);
         }
       }
+      if (showProfileDropdown) {
+        const profileElement = event.target.closest('[class*="profile"]');
+        if (!profileElement) {
+          setShowProfileDropdown(false);
+        }
+      }
     };
 
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
-  }, [showDropdown]);
+  }, [showDropdown, showProfileDropdown]);
 
-  // مراقبة التمرير لتطبيق تأثير الشفافية
+  // تغيير الـ Navbar عند التمرير
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop =
@@ -106,7 +188,7 @@ const Navbar = () => {
         />
       </div>
 
-      {/* Desktop Links (تظل ظاهرة لحد 990px) */}
+      {/* Desktop Links */}
       <div className={styles.navLinks}>
         <Link
           to="/"
@@ -114,7 +196,7 @@ const Navbar = () => {
             location.pathname === "/" ? styles.active : ""
           }`}
         >
-          الرئيسية
+          {t("navbar.home")}
         </Link>
         <Link
           to="/all-most-selling"
@@ -122,7 +204,7 @@ const Navbar = () => {
             location.pathname === "/all-most-selling" ? styles.active : ""
           }`}
         >
-          الأكثر مبيعاً
+          {t("navbar.most_selling")}
         </Link>
         <Link
           to="/about"
@@ -130,7 +212,7 @@ const Navbar = () => {
             location.pathname === "/about" ? styles.active : ""
           }`}
         >
-          من نحن
+          {t("navbar.about")}
         </Link>
         <Link
           to="/faq"
@@ -138,19 +220,29 @@ const Navbar = () => {
             location.pathname === "/faq" ? styles.active : ""
           }`}
         >
-          الأسئلة الشائعة
+          {t("navbar.faq")}
         </Link>
-        <div className={styles.cartIcon}>
-          <span className={styles.cartIconSymbol}>🛒</span>
-          <span className={styles.cartCount}>0</span>
-        </div>
+        <Link
+          to="/contact"
+          className={`${styles.link} ${
+            location.pathname === "/contact" ? styles.active : ""
+          }`}
+        >
+          {t("navbar.contact")}
+        </Link>
+        <Link to="/cart" className={styles.cartIcon}>
+          <FaShoppingCart className={styles.cartIconSymbol} />
+          {cartCount > 0 && (
+            <span className={styles.cartCount}>{cartCount}</span>
+          )}
+        </Link>
       </div>
 
-      {/* أيقونة الكارت للموبايل فقط */}
-      <div className={styles.mobileCartIcon}>
-        <span className={styles.cartIconSymbol}>🛒</span>
-        <span className={styles.cartCount}>0</span>
-      </div>
+      {/* Mobile Cart */}
+      <Link to="/cart" className={styles.mobileCartIcon}>
+        <FaShoppingCart className={styles.cartIconSymbol} />
+        {cartCount > 0 && <span className={styles.cartCount}>{cartCount}</span>}
+      </Link>
 
       {/* Desktop Auth & Language */}
       <div className={styles.authButtons}>
@@ -158,26 +250,26 @@ const Navbar = () => {
         <button
           className={styles.themeToggle}
           onClick={toggleTheme}
-          title={isLightMode ? "التبديل للوضع المظلم" : "التبديل للوضع الفاتح"}
+          title={isLightMode ? t("navbar.dark_mode") : t("navbar.light_mode")}
         >
           {isLightMode ? "🌙" : "☀️"}
         </button>
 
-        {/* Language Switcher (Desktop) */}
+        {/* Language Switcher */}
         <div
           className={styles.lang}
           onClick={() => setShowDropdown((s) => !s)}
           style={{ cursor: "pointer" }}
         >
           <span style={{ color: "white", fontSize: "14px" }}>
-            {selectedLang.name}
+            {currentLang.name}
           </span>
           <FaChevronDown style={{ fontSize: "12px", color: "white" }} />
-          <img src={selectedLang.flag} alt="flag" />
+          <img src={currentLang.flag} alt="flag" />
           {showDropdown && (
             <ul className={styles.langDropdown}>
               {languages.map((lang) => (
-                <li key={lang.name} onClick={() => handleLangChange(lang)}>
+                <li key={lang.code} onClick={() => handleLangChange(lang)}>
                   <img src={lang.flag} alt={lang.name} />
                   {lang.name}
                 </li>
@@ -185,14 +277,44 @@ const Navbar = () => {
             </ul>
           )}
         </div>
-        <Link to="/auth" className={styles.login}>
-          تسجيل الدخول
-        </Link>
-        {/* لو محتاج زر إنشاء حساب ارجعه هنا */}
-        {/* <button className={styles.signup}>إنشاء حساب</button> */}
+
+        {isLoggedIn ? (
+          <div className={styles.profileDropdown}>
+            <button
+              className={styles.profileButton}
+              onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+            >
+              <span className={styles.profileName}>{userProfile?.name}</span>
+              <FaChevronDown className={styles.dropdownIcon} />
+            </button>
+            {showProfileDropdown && (
+              <div className={styles.profileMenu}>
+                <Link
+                  to="/profile"
+                  className={styles.profileMenuItem}
+                  onClick={() => setShowProfileDropdown(false)}
+                >
+                  <FaUser />
+                  <span>Profile</span>
+                </Link>
+                <button
+                  className={styles.profileMenuItem}
+                  onClick={handleLogout}
+                >
+                  <FaSignOutAlt />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Link to="/login" className={styles.login}>
+            {t("navbar.login")}
+          </Link>
+        )}
       </div>
 
-      {/* Hamburger (يظهر تحت 990px) */}
+      {/* Hamburger */}
       <button
         className={`${styles.hamburger} ${
           isMobileOpen ? styles.hamburgerOpen : ""
@@ -217,7 +339,7 @@ const Navbar = () => {
               }`}
               onClick={() => setIsMobileOpen(false)}
             >
-              الرئيسية
+              {t("navbar.home")}
             </Link>
             <Link
               to="/all-most-selling"
@@ -226,7 +348,7 @@ const Navbar = () => {
               }`}
               onClick={() => setIsMobileOpen(false)}
             >
-              الأكثر مبيعاً
+              {t("navbar.most_selling")}
             </Link>
             <Link
               to="/about"
@@ -235,7 +357,7 @@ const Navbar = () => {
               }`}
               onClick={() => setIsMobileOpen(false)}
             >
-              من نحن
+              {t("navbar.about")}
             </Link>
             <Link
               to="/faq"
@@ -244,29 +366,24 @@ const Navbar = () => {
               }`}
               onClick={() => setIsMobileOpen(false)}
             >
-              الأسئلة الشائعة
+              {t("navbar.faq")}
             </Link>
 
-            {/* Language inside mobile */}
+            {/* Language in Mobile */}
             <div
               className={styles.lang}
               onClick={() => setShowDropdown((s) => !s)}
               style={{ cursor: "pointer" }}
             >
               <span style={{ color: "white", fontSize: "14px" }}>
-                {selectedLang.name}
+                {currentLang.name}
               </span>
               <FaChevronDown style={{ fontSize: "12px", color: "white" }} />
-              <img src={selectedLang.flag} alt="flag" />
+              <img src={currentLang.flag} alt="flag" />
               {showDropdown && (
                 <ul className={styles.langDropdown}>
                   {languages.map((lang) => (
-                    <li
-                      key={lang.name}
-                      onClick={() => {
-                        handleLangChange(lang);
-                      }}
-                    >
+                    <li key={lang.code} onClick={() => handleLangChange(lang)}>
                       <img src={lang.flag} alt={lang.name} />
                       {lang.name}
                     </li>
@@ -283,21 +400,45 @@ const Navbar = () => {
                 setIsMobileOpen(false);
               }}
               title={
-                isLightMode ? "التبديل للوضع المظلم" : "التبديل للوضع الفاتح"
+                isLightMode ? t("navbar.dark_mode") : t("navbar.light_mode")
               }
             >
-              {isLightMode ? "🌙 الوضع المظلم" : "☀️ الوضع الفاتح"}
+              {isLightMode
+                ? "🌙 " + t("navbar.dark_mode")
+                : "☀️ " + t("navbar.light_mode")}
             </button>
 
             <div className={styles.mobileAuth}>
-              <Link
-                to="/auth"
-                className={styles.login}
-                onClick={() => setIsMobileOpen(false)}
-              >
-                تسجيل الدخول
-              </Link>
-              {/* <button className={styles.signup} onClick={() => setIsMobileOpen(false)}>إنشاء حساب</button> */}
+              {isLoggedIn ? (
+                <>
+                  <Link
+                    to="/profile"
+                    className={styles.login}
+                    onClick={() => setIsMobileOpen(false)}
+                  >
+                    <FaUser />
+                    Profile
+                  </Link>
+                  <button
+                    className={styles.logoutBtn}
+                    onClick={() => {
+                      handleLogout();
+                      setIsMobileOpen(false);
+                    }}
+                  >
+                    <FaSignOutAlt />
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link
+                  to="/login"
+                  className={styles.login}
+                  onClick={() => setIsMobileOpen(false)}
+                >
+                  {t("navbar.login")}
+                </Link>
+              )}
             </div>
           </div>
         </div>

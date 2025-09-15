@@ -51,6 +51,16 @@
   order: 0;
 }
 
+/* اتجاه النص للعربية */
+[dir="rtl"] .scrollingWrapper {
+  direction: rtl;
+}
+
+/* اتجاه النص للإنجليزية */
+[dir="ltr"] .scrollingWrapper {
+  direction: ltr;
+}
+
 .scrollingText {
   display: flex;
   align-items: center;
@@ -59,6 +69,34 @@
 }
 
 @keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* انيميشن للعربية */
+[dir="rtl"] .scrollingText {
+  animation: scrollRTL 55s linear infinite;
+}
+
+@keyframes scrollRTL {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* انيميشن للإنجليزية */
+[dir="ltr"] .scrollingText {
+  animation: scrollLTR 55s linear infinite;
+}
+
+@keyframes scrollLTR {
   0% {
     transform: translateX(100%);
   }

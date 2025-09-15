@@ -1,142 +1,123 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import api from "../../services/api";
 import {
   showSuccess,
   showError,
   showWarning,
   showInfo,
 } from "../../utils/notifications";
+import { useCart } from "../../context/CartContext";
 import styles from "./GameStore.module.css";
 
 function MostSelling() {
-  // بيانات تجريبية للكتب حسب التاب
-  const booksData = useMemo(
-    () => ({
-      teachers: [
-        {
-          id: "math-teacher-1",
-          title: "كتاب الرياضيات للمدرسين",
-          image: "/bookPng.jpg",
-          desc: "دليل شامل للمدرسين لتدريس الرياضيات مع الأنشطة والتمارين.",
-          price: 35.99,
-        },
-        {
-          id: "physics-teacher-1",
-          title: "دليل الفيزياء التعليمي",
-          image: "/bookPng2.webp",
-          desc: "مرجع تعليمي للمدرسين مع التجارب العملية والشرح التفصيلي.",
-          price: 38.99,
-        },
-        {
-          id: "chemistry-teacher-1",
-          title: "كيمياء المدرسين المتقدمة",
-          image: "/bookPng3.jpg",
-          desc: "دليل شامل لتدريس الكيمياء مع التجارب والتفاعلات الكيميائية.",
-          price: 40.99,
-        },
-        {
-          id: "arabic-teacher-1",
-          title: "اللغة العربية للمدرسين",
-          image: "/bookPng.jpg",
-          desc: "مرجع تعليمي شامل للنحو والصرف والأدب العربي.",
-          price: 32.99,
-        },
-        {
-          id: "arabic-teacher-1",
-          title: "اللغة العربية للمدرسين",
-          image: "/bookPng.jpg",
-          desc: "مرجع تعليمي شامل للنحو والصرف والأدب العربي.",
-          price: 32.99,
-        },
-        {
-          id: "arabic-teacher-1",
-          title: "اللغة العربية للمدرسين",
-          image: "/bookPng.jpg",
-          desc: "مرجع تعليمي شامل للنحو والصرف والأدب العربي.",
-          price: 32.99,
-        },
-      ],
-      external: [
-        {
-          id: "math-external-1",
-          title: "الرياضيات الخارجية المتقدمة",
-          image: "/bookPng2.webp",
-          desc: "كتاب خارجي متقدم في الرياضيات مع حلول مفصلة.",
-          price: 45.99,
-        },
-        {
-          id: "physics-external-1",
-          title: "الفيزياء الخارجية الشاملة",
-          image: "/bookPng3.jpg",
-          desc: "مرجع خارجي شامل في الفيزياء مع التطبيقات العملية.",
-          price: 48.99,
-        },
-        {
-          id: "chemistry-external-1",
-          title: "الكيمياء الخارجية المتخصصة",
-          image: "/bookPng.jpg",
-          desc: "كتاب خارجي متخصص في الكيمياء العضوية وغير العضوية.",
-          price: 50.99,
-        },
-        {
-          id: "english-external-1",
-          title: "اللغة الإنجليزية الخارجية",
-          image: "/bookPng2.webp",
-          desc: "مرجع خارجي شامل في اللغة الإنجليزية مع القواعد والمحادثة.",
-          price: 42.99,
-        },
-      ],
-      stationery: [
-        {
-          id: "pen-set-1",
-          title: "طقم أقلام جاف متعدد الألوان",
-          image: "/bookPng3.jpg",
-          desc: "طقم أقلام جاف عالية الجودة مع 12 لون مختلف.",
-          price: 15.99,
-        },
-        {
-          id: "notebook-set-1",
-          title: "دفاتر ملاحظات A4",
-          image: "/bookPng.jpg",
-          desc: "مجموعة دفاتر ملاحظات عالية الجودة مقاس A4.",
-          price: 25.99,
-        },
-        {
-          id: "calculator-1",
-          title: "آلة حاسبة علمية",
-          image: "/bookPng2.webp",
-          desc: "آلة حاسبة علمية متقدمة مع شاشة LCD واضحة.",
-          price: 35.99,
-        },
-        {
-          id: "ruler-set-1",
-          title: "طقم مساطر هندسية",
-          image: "/bookPng3.jpg",
-          desc: "طقم مساطر هندسية شاملة مع منقلة وفرجار.",
-          price: 12.99,
-        },
-      ],
-    }),
-    []
-  );
+  const { t, i18n, ready } = useTranslation("global");
+  const [booksData, setBooksData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { addToCart, updateCartItem, cartItems } = useCart();
 
-  // تعريف activeTab قبل استخدامه
-  const [activeTab, setActiveTab] = useState("teachers"); // كتب المدرسين افتراضياً
+  // Don't render until translations are ready
+  if (!ready) {
+    return <div>Loading...</div>;
+  }
 
-  const books = booksData[activeTab] || [];
+  // بيانات احتياطية في حالة فشل API
+  const fallbackData = [
+    {
+      id: "math-teacher-1",
+      title: t("gamestore.books.teachers.math.title"),
+      main_image: "/bookPng.jpg",
+      desc: t("gamestore.books.teachers.math.desc"),
+      real_price: "35.99",
+      fake_price: "0",
+      discount: "0",
+      in_cart: false,
+    },
+    {
+      id: "physics-teacher-1",
+      title: t("gamestore.books.teachers.physics.title"),
+      main_image: "/bookPng2.webp",
+      desc: t("gamestore.books.teachers.physics.desc"),
+      real_price: "38.99",
+      fake_price: "0",
+      discount: "0",
+      in_cart: false,
+    },
+    {
+      id: "chemistry-teacher-1",
+      title: t("gamestore.books.teachers.chemistry.title"),
+      main_image: "/bookPng3.jpg",
+      desc: t("gamestore.books.teachers.chemistry.desc"),
+      real_price: "40.99",
+      fake_price: "0",
+      discount: "0",
+      in_cart: false,
+    },
+    {
+      id: "arabic-teacher-1",
+      title: t("gamestore.books.teachers.arabic.title"),
+      main_image: "/bookPng.jpg",
+      desc: t("gamestore.books.teachers.arabic.desc"),
+      real_price: "32.99",
+      fake_price: "0",
+      discount: "0",
+      in_cart: false,
+    },
+  ];
+
+  // جلب بيانات الكتب من API
+  useEffect(() => {
+    fetchBooksData();
+  }, [i18n.language]);
+
+  const fetchBooksData = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get("/home/best-seller-books-section", {
+        headers: {
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (response.data?.status && response.data?.data?.books_data) {
+        setBooksData(response.data.data.books_data);
+      } else {
+        setBooksData(fallbackData);
+      }
+    } catch (error) {
+      console.error("Error fetching books data:", error);
+      setBooksData(fallbackData);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const books = booksData || [];
 
   const [quantities, setQuantities] = useState({});
   const [showLoginModal, setShowLoginModal] = useState(false);
 
+  // تحديث العدادات من الكارت الفعلي
+  useEffect(() => {
+    if (cartItems && cartItems.length > 0) {
+      const cartQuantities = {};
+      cartItems.forEach((item) => {
+        cartQuantities[item.product.id] = parseInt(item.qty);
+      });
+      setQuantities(cartQuantities);
+    }
+  }, [cartItems]);
+
   // دوال العداد
-  const handleQuantityChange = (bookId, change) => {
+  const handleQuantityChange = async (bookId, change) => {
     // تحقق من تسجيل الدخول
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    if (!isLoggedIn) {
+    const token = localStorage.getItem("token");
+    if (!token) {
       setShowLoginModal(true);
       showWarning(
         "تسجيل الدخول مطلوب",
@@ -145,18 +126,24 @@ function MostSelling() {
       return;
     }
 
-    const newQuantity = Math.max(0, (quantities[bookId] || 0) + change);
+    const currentQuantity = quantities[bookId] || 0;
+    const newQuantity = Math.max(0, currentQuantity + change);
 
+    // تحديث العداد المحلي أولاً
     setQuantities((prev) => ({
       ...prev,
       [bookId]: newQuantity,
     }));
 
-    // إظهار إشعارات
+    // إضافة للكارت إذا كان التغيير موجب
     if (change > 0) {
-      showSuccess("تم الإضافة!", "تم إضافة الكتاب إلى السلة بنجاح");
-    } else if (change < 0 && newQuantity === 0) {
-      showInfo("تم الحذف", "تم إزالة الكتاب من السلة");
+      await addToCart(bookId, 1);
+    } else if (change < 0 && newQuantity > 0) {
+      // البحث عن المنتج في الكارت وتحديث كميته
+      const cartItem = cartItems.find((item) => item.product.id === bookId);
+      if (cartItem) {
+        await updateCartItem(cartItem.id, newQuantity);
+      }
     }
   };
 
@@ -164,13 +151,32 @@ function MostSelling() {
     setShowLoginModal(false);
   };
 
+  if (loading) {
+    return (
+      <section
+        className={`${styles.section} ${
+          i18n.language === "ar" ? styles.rtl : styles.ltr
+        }`}
+      >
+        <div className={styles.loading}>
+          <div className={styles.spinner}></div>
+          <p>{t("loading") || "Loading..."}</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className={styles.section} dir="rtl">
+    <section
+      className={`${styles.section} ${
+        i18n.language === "ar" ? styles.rtl : styles.ltr
+      }`}
+    >
       <div className={styles.headerRow}>
         <div className={styles.headings}>
-          <h2 className={styles.title}>الاكثر مبيعا</h2>
+          <h2 className={styles.title}>{t("gamestore.most_selling.title")}</h2>
           <p style={{ textAlign: "center" }} className={styles.subtitle}>
-            أفضل الكتب الدراسية والمراجع العلمية لجميع المراحل التعليمية
+            {t("gamestore.most_selling.subtitle")}
           </p>
         </div>
       </div>
@@ -188,18 +194,19 @@ function MostSelling() {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         }}
+        dir={i18n.language === "ar" ? "rtl" : "ltr"}
         breakpoints={{
           0: {
             slidesPerView: 1,
+            spaceBetween: 20,
           },
-          600: {
-            slidesPerView: 1,
-          },
-          990: {
+          640: {
             slidesPerView: 2,
+            spaceBetween: 25,
           },
-          1200: {
+          1024: {
             slidesPerView: 4,
+            spaceBetween: 30,
           },
         }}
         className={styles.swiper}
@@ -207,10 +214,10 @@ function MostSelling() {
         {books.map((book) => (
           <SwiperSlide key={book.id}>
             <div className={`${styles.card} floating-element`}>
-              <Link to="/book-details" className={styles.cardLink}>
+              <Link to={`/book-details/${book.id}`} className={styles.cardLink}>
                 <div className={styles.thumbWrap}>
                   <img
-                    src={book.image}
+                    src={book.main_image}
                     alt={book.title}
                     className={styles.thumb}
                   />
@@ -250,9 +257,13 @@ function MostSelling() {
                   {/* السعر والزر */}
                   <div className={styles.priceContainer}>
                     <p className={styles.priceLine}>
-                      <strong>{book.price.toFixed(2)} جنيهًا</strong>
+                      <strong>
+                        {book.real_price} {t("gamestore.currency")}
+                      </strong>
                     </p>
-                    <button className={styles.browseBtn}>تصفح المنتج</button>
+                    <button className={styles.browseBtn}>
+                      {t("gamestore.browse_product")}
+                    </button>
                   </div>
                 </div>
               </Link>
@@ -262,9 +273,9 @@ function MostSelling() {
       </Swiper>
 
       <div className={styles.moreRow}>
-        <a href="/books" className={styles.moreLink}>
-          عرض المزيد
-        </a>
+        <Link to="/all-most-selling" className={styles.moreLink}>
+          {t("gamestore.show_more")}
+        </Link>
       </div>
 
       {/* Modal التسجيل */}
@@ -272,13 +283,13 @@ function MostSelling() {
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
             <div className={styles.modalHeader}>
-              <h3>تسجيل الدخول مطلوب</h3>
+              <h3>{t("gamestore.modal.login_required")}</h3>
               <button className={styles.closeBtn} onClick={closeLoginModal}>
                 ×
               </button>
             </div>
             <div className={styles.modalBody}>
-              <p>يجب عليك تسجيل الدخول أولاً لإضافة الكتب إلى السلة</p>
+              <p>{t("gamestore.modal.login_message")}</p>
               <div className={styles.modalActions}>
                 <button
                   className={styles.loginBtn}
@@ -287,10 +298,10 @@ function MostSelling() {
                     closeLoginModal();
                   }}
                 >
-                  تسجيل الدخول
+                  {t("gamestore.modal.login_btn")}
                 </button>
                 <button className={styles.cancelBtn} onClick={closeLoginModal}>
-                  إلغاء
+                  {t("gamestore.modal.cancel_btn")}
                 </button>
               </div>
             </div>

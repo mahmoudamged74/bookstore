@@ -1,0 +1,383 @@
+{
+  "navbar": {
+    "home": "Home",
+    "most_selling": "Most Selling",
+    "about": "About Us",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "login": "Login",
+    "dark_mode": "Dark Mode",
+    "light_mode": "Light Mode"
+  },
+  "change_language": "Change Language",
+  "loading": "Loading...",
+  "retry": "Retry",
+  "topnav": {
+    "welcome": "Welcome to Thanawya Store",
+    "free_shipping": "Free shipping for orders over 500 EGP",
+    "support": "24/7 Technical Support"
+  },
+  "hero": {
+    "title": "Thanawya Store",
+    "subtitle": "Not just books 📚, but here you'll find everything you need and we'll help you with everything from A to Z 🚀",
+    "book_title": "Educational Books",
+    "order_now": "Order Now",
+    "register_now": "Register Now"
+  },
+  "footer": {
+    "description": "Comprehensive educational books for all subjects and grade levels at the best prices.",
+    "nav_label": "Footer Links",
+    "my_account": "My Account",
+    "contact_us": "Contact Us",
+    "copyright": "© 2025 Brmja Tech. All rights reserved."
+  },
+  "features": {
+    "main_text": "Hey Thanawya Store friend, we don't work just to work, we work in a way that makes you sure we're a step ahead of everyone. Why? Because we think differently, we focus on the small details that make the difference, and we provide solutions that no one else has. We're here to grow together and succeed together.",
+    "support_24h": "24/7 Technical Support",
+    "support_24h_desc": "All week long",
+    "all_books": "All High School Books",
+    "all_books_desc": "For teachers you love",
+    "lowest_shipping": "Lowest Shipping Price",
+    "lowest_shipping_desc": "In Egypt",
+    "delivery_anywhere": "Delivery Anywhere",
+    "delivery_anywhere_desc": "In Egypt",
+    "delivery_time": "Delivery time 3-7 business days",
+    "delivery_time_desc": "Maximum",
+    "offers_services": "Offers, competitions and many services",
+    "offers_services_desc": "On our orders"
+  },
+  "book_details": {
+    "title": "Book Details",
+    "subtitle": "Biology Book - Hormones, Support and Movement",
+    "book_title": "Hormones - 3 - Biology - Mr. Majed Imam",
+    "book_description": "Explanation and Exercises Book in Support, Movement and Hormones",
+    "modern_system": "Modern System",
+    "features_title": "Features",
+    "feature_1": "Majed Card (gifts and discounts on Geo platform)",
+    "feature_2": "Educational stickers",
+    "feature_3": "Geo certificate",
+    "feature_4": "Detailed explanation with practical examples",
+    "feature_5": "Diverse and progressive exercises",
+    "price": "Price",
+    "price_value": "100.00 EGP",
+    "quantity": "Quantity",
+    "add_to_cart": "Add to Cart",
+    "important_note": "Important Note",
+    "note_text": "You can pre-order the book as it is currently out of stock and will be available soon.",
+    "front_cover": "Front Cover",
+    "contents_page": "Contents Page",
+    "sample_content": "Sample Content",
+    "exercises": "Exercises",
+    "answers": "Answers"
+  },
+  "contact": {
+    "hero": {
+      "title": "Contact Us",
+      "subtitle": "We're here to help you with any inquiry or request"
+    },
+    "info": {
+      "title": "Contact Information",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "hours": "Working Hours"
+    },
+    "form": {
+      "title": "Send us a Message",
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "subject": "Subject",
+      "message": "Message",
+      "name_placeholder": "Enter your full name",
+      "email_placeholder": "Enter your email address",
+      "phone_placeholder": "Enter your phone number",
+      "subject_placeholder": "Enter message subject",
+      "message_placeholder": "Enter your message here",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "success": "Contact request sent successfully",
+      "error": "Failed to send message",
+      "fill_required": "Please fill all required fields"
+    }
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "loading": "Loading cart...",
+    "back_to_shop": "Back to Shopping",
+    "empty": {
+      "title": "Cart is Empty",
+      "message": "You haven't added any products to your cart yet",
+      "continue_shopping": "Continue Shopping"
+    },
+    "summary": {
+      "title": "Order Summary",
+      "items_count": "Items Count",
+      "discount": "Discount",
+      "total": "Total"
+    },
+    "checkout": "Checkout",
+    "remove_item": "Remove Item",
+    "currency": "EGP"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "phone": "Phone Number",
+      "password": "Password",
+      "forgot_password": "Forgot Password?",
+      "submit": "Login",
+      "no_account": "Don't have an account?",
+      "create_account": "Create Account",
+      "phone_placeholder": "Enter your phone number",
+      "password_placeholder": "Enter your password"
+    },
+    "profile": {
+      "title": "Profile",
+      "profile_information": "Profile Information",
+      "change_password": "Change Password",
+      "profile_image": "Profile Image",
+      "full_name": "Full Name",
+      "phone_number": "Phone Number",
+      "parent_phone": "Parent Phone Number",
+      "grade": "Grade",
+      "section": "Section",
+      "city": "City",
+      "current_password": "Current Password",
+      "new_password": "New Password",
+      "confirm_new_password": "Confirm New Password",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "save_changes": "Save Changes",
+      "update_password": "Update Password",
+      "logout": "Logout",
+      "select_grade": "Select Grade",
+      "select_section": "Select Section",
+      "select_city": "Select City",
+      "enter_current_password": "Enter current password",
+      "enter_new_password": "Enter new password",
+      "confirm_new_password_placeholder": "Re-enter new password",
+      "show": "Show",
+      "hide": "Hide",
+      "loading_profile": "Loading profile...",
+      "please_login": "Please login first",
+      "failed_fetch_profile": "Failed to fetch profile data",
+      "updated": "Updated successfully",
+      "failed": "Operation failed",
+      "failed_update_profile": "Failed to update profile",
+      "password_changed": "Password changed successfully",
+      "failed_update_password": "Failed to update password",
+      "logged_out": "Logged out successfully",
+      "failed_logout": "Failed to logout"
+    },
+    "register": {
+      "title": "Create Account",
+      "full_name": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "parent_phone": "Parent Phone Number",
+      "grade": "Grade",
+      "section": "Section",
+      "city": "City",
+      "password": "Password",
+      "confirm_password": "Confirm Password",
+      "submit": "Create Account",
+      "has_account": "Already have an account?",
+      "login": "Login",
+      "select_grade": "Select Grade",
+      "select_section": "Select Section",
+      "select_city": "Select City",
+      "placeholders": {
+        "full_name": "Enter your full name",
+        "phone": "Enter your phone number",
+        "parent_phone": "Enter parent's phone number",
+        "password": "Enter your password",
+        "confirm_password": "Re-enter your password"
+      }
+    },
+    "otp": {
+      "title": "Verify Code",
+      "description": "Enter the code sent to your phone",
+      "resend_text": "Didn't receive the code?",
+      "resend_btn": "Resend",
+      "submit": "Verify"
+    },
+    "forgot_password": {
+      "title": "Forgot Password",
+      "description": "Enter your phone number to send recovery code",
+      "phone": "Phone Number",
+      "submit": "Send Code",
+      "remembered": "Remembered your password?",
+      "login": "Login"
+    },
+    "reset_password": {
+      "title": "Reset Password",
+      "new_password": "New Password",
+      "confirm_password": "Confirm New Password",
+      "submit": "Reset Password",
+      "remembered": "Remembered your password?",
+      "login": "Login",
+      "new_password_placeholder": "Enter new password",
+      "confirm_password_placeholder": "Re-enter new password"
+    },
+    "logo": {
+      "title": "Thanaweya Store",
+      "subtitle": "Best educational books for high school"
+    }
+  },
+  "offers": {
+    "title": "All Offers & Discounts",
+    "subtitle": "Discover all exclusive offers and amazing discounts on the best books and office supplies",
+    "notifications": {
+      "welcome_title": "Exclusive Offers!",
+      "welcome_message": "Discover the best offers and discounts on books and supplies"
+    }
+  },
+  "gamestore": {
+    "title": "Books Section",
+    "subtitle": "Best educational books and scientific references for all educational levels",
+    "tabs": {
+      "teachers": "Teachers Books",
+      "external": "External Books",
+      "stationery": "Stationery"
+    },
+    "most_selling": {
+      "title": "Most Selling",
+      "subtitle": "Best educational books and scientific references for all educational levels"
+    },
+    "currency": "EGP",
+    "browse_product": "Browse Product",
+    "show_more": "Show More",
+    "prices_start_from": "Prices start from",
+    "view": "View",
+    "previous": "Previous",
+    "next": "Next",
+    "modal": {
+      "login_required": "Login Required",
+      "login_message": "You must log in first to add books to cart",
+      "login_btn": "Login",
+      "cancel_btn": "Cancel"
+    },
+    "offers": {
+      "title": "All Offers & Discounts",
+      "subtitle": "Discover all exclusive offers and amazing discounts on the best books and office supplies",
+      "currency": "EGP",
+      "browse_product": "Browse Product",
+      "notifications": {
+        "welcome_title": "Exclusive Offers!",
+        "welcome_message": "Discover the best offers and discounts on books and supplies",
+        "added": "Added!",
+        "added_message": "Offer added to cart successfully",
+        "removed": "Removed",
+        "removed_message": "Offer removed from cart"
+      },
+      "modal": {
+        "login_required": "Login Required",
+        "login_message": "You must log in first to add offers to cart",
+        "login_btn": "Login",
+        "cancel_btn": "Cancel"
+      }
+    },
+    "about": {
+      "hero": {
+        "title": "About Us",
+        "subtitle": "Thanaweya Store is the leading store in the world of educational books and tools. We provide the best shopping experience for books and educational tools in Egypt with guaranteed quality and safety in every transaction.",
+        "brand_name": "Thanaweya Store"
+      },
+      "content": {
+        "title": "Our Vision & Mission",
+        "vision": "Our vision is to be the first and most trusted destination for students and teachers in Egypt and the Arab world, by providing the best educational books and tools that contribute to developing the educational process.",
+        "mission": "Our mission is to support students' educational journey by providing high-quality books and advanced educational tools, while providing exceptional customer service and ensuring customer satisfaction at every step.",
+        "commitment": "We are committed to providing an exceptional shopping experience with guaranteed quality and safety, and we always strive to develop our services and expand our library to include the latest curricula and most famous educational books."
+      },
+      "stats": {
+        "students": "Students",
+        "books": "Available Books",
+        "support": "Technical Support",
+        "satisfaction": "Satisfaction Rate"
+      }
+    },
+    "faq": {
+      "hero": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Answers to the most common questions about our services and products"
+      },
+      "questions": {
+        "how_to_order": "How can I order books?",
+        "payment_methods": "What payment methods are available?",
+        "delivery_time": "How long does delivery take?",
+        "return_policy": "Can I return or exchange books?",
+        "student_discount": "Do you offer student discounts?",
+        "contact_support": "How can I contact customer service?",
+        "grade_books": "Are there books for different grades?",
+        "book_quality": "What is the quality of the books provided?"
+      },
+      "answers": {
+        "how_to_order": "You can order books easily by browsing the website and selecting the required books, then adding them to the cart and proceeding to the payment page. We offer multiple and secure payment methods.",
+        "payment_methods": "We accept cash on delivery, bank transfer, and electronic payment via credit cards. All transactions are secure and protected.",
+        "delivery_time": "We deliver orders within 2-5 business days within Cairo, and 3-7 days for other governorates. Delivery is free for orders over 500 EGP.",
+        "return_policy": "Yes, you can return or exchange books within 14 days of purchase, provided they are in good condition and sealed.",
+        "student_discount": "Yes, we offer special discounts for students up to 20% on educational books. You can get the discount by proving your student status.",
+        "contact_support": "You can contact us by phone: 01234567890, or via WhatsApp, or email: info@thanawyastore.com. We are available 24/7 to serve you.",
+        "grade_books": "Yes, we have books for all educational levels from primary to secondary, in addition to university books and scientific references.",
+        "book_quality": "All our books are original and conform to official curricula, with guaranteed high quality and clear printing. We deal with the best certified publishing houses."
+      }
+    },
+    "books": {
+      "teachers": {
+        "math": {
+          "title": "Mathematics Book for Teachers",
+          "desc": "Comprehensive guide for teachers to teach mathematics with activities and exercises."
+        },
+        "physics": {
+          "title": "Physics Educational Guide",
+          "desc": "Educational reference for teachers with practical experiments and detailed explanation."
+        },
+        "chemistry": {
+          "title": "Advanced Chemistry for Teachers",
+          "desc": "Comprehensive guide for teaching chemistry with experiments and chemical reactions."
+        },
+        "arabic": {
+          "title": "Arabic Language for Teachers",
+          "desc": "Comprehensive educational reference for grammar, morphology and Arabic literature."
+        }
+      },
+      "external": {
+        "math": {
+          "title": "Advanced External Mathematics",
+          "desc": "Advanced external book in mathematics with detailed solutions."
+        },
+        "physics": {
+          "title": "Comprehensive External Physics",
+          "desc": "Comprehensive external reference in physics with practical applications."
+        },
+        "chemistry": {
+          "title": "Specialized External Chemistry",
+          "desc": "Specialized external book in organic and inorganic chemistry."
+        },
+        "english": {
+          "title": "External English Language",
+          "desc": "Comprehensive external reference in English language with grammar and conversation."
+        }
+      },
+      "stationery": {
+        "pen": {
+          "title": "Multi-color Ballpoint Pen Set",
+          "desc": "High-quality ballpoint pen set with 12 different colors."
+        },
+        "notebook": {
+          "title": "A4 Notebooks",
+          "desc": "High-quality A4 notebook collection."
+        },
+        "calculator": {
+          "title": "Scientific Calculator",
+          "desc": "Advanced scientific calculator with clear LCD screen."
+        },
+        "ruler": {
+          "title": "Geometric Ruler Set",
+          "desc": "Comprehensive geometric ruler set with protractor and compass."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,255 @@
+.authContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  padding: 20px;
+}
+
+.authWrapper {
+  display: flex;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 1000px;
+  width: 100%;
+  min-height: 600px;
+}
+
+.logoSection {
+  flex: 1;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+}
+
+.logoContainer {
+  text-align: center;
+  color: white;
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+}
+
+.logoText {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", sans-serif;
+}
+
+.logoSubtext {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", sans-serif;
+}
+
+.formSection {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+}
+
+.formTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", sans-serif;
+}
+
+.description {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", sans-serif;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.otpContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.otpInput {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 1.5rem;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", sans-serif;
+  direction: ltr !important;
+  unicode-bidi: bidi-override;
+  text-align-last: center;
+}
+
+/* RTL support for OTP inputs - Force LTR */
+.rtl .otpInput {
+  direction: ltr !important;
+  unicode-bidi: bidi-override;
+  text-align-last: center;
+}
+
+/* Additional RTL fixes */
+.rtl .otpContainer {
+  direction: ltr;
+}
+
+.rtl .otpContainer .otpInput {
+  direction: ltr !important;
+}
+
+.otpInput:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.resendContainer {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.resendContainer span {
+  color: #666;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", sans-serif;
+}
+
+.resendBtn {
+  background: none;
+  border: none;
+  color: #667eea;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 5px;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", sans-serif;
+}
+
+.resendBtn:hover {
+  text-decoration: underline;
+}
+
+.resendBtn.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.resendBtn.disabled:hover {
+  text-decoration: none;
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  font-family: "JF-Flat", "JFFlat-Regular", "Tajawal", sans-serif;
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .authWrapper {
+    flex-direction: column;
+    max-width: 400px;
+  }
+
+  .logoSection {
+    padding: 30px 20px;
+  }
+
+  .logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .logoText {
+    font-size: 1.8rem;
+  }
+
+  .logoSubtext {
+    font-size: 1rem;
+  }
+
+  .formSection {
+    padding: 30px 20px;
+  }
+
+  .formTitle {
+    font-size: 1.5rem;
+  }
+
+  .otpInput {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+}
+
+/* Dark Mode Support */
+[data-theme="dark"] .authContainer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+[data-theme="dark"] .authWrapper {
+  background: #2a2a2a;
+}
+
+[data-theme="dark"] .formTitle {
+  color: white;
+}
+
+[data-theme="dark"] .description {
+  color: #ccc;
+}
+
+[data-theme="dark"] .otpInput {
+  background: #3a3a3a;
+  border-color: #555;
+  color: white;
+}
+
+[data-theme="dark"] .otpInput:focus {
+  border-color: #667eea;
+}
+
+[data-theme="dark"] .resendContainer span {
+  color: #ccc;
+}

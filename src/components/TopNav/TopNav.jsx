@@ -1,27 +1,78 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import api from "../../services/api";
 import styles from "./TopNav.module.css";
 // تم إزالة React Icons واستبدالها بالصور
 
 function TopNav() {
   const canvasRef = useRef();
   const [isLightMode, setIsLightMode] = useState(false);
+  const [sliderTexts, setSliderTexts] = useState([]);
+  const [socialLinks, setSocialLinks] = useState({});
+  const [loading, setLoading] = useState(true);
+  const { t, i18n } = useTranslation("global");
 
-  // بيانات ثابتة للمكتبة
-  const sliderTexts = [
-    { id: 1, text: "📚 كتب دراسية شاملة لجميع المراحل التعليمية" },
-    { id: 2, text: "🎯 أفضل الأسعار والخصومات الحصرية" },
-    { id: 3, text: "🚚 توصيل سريع ومضمون لجميع أنحاء الجمهورية" },
-    { id: 4, text: "⭐ جودة عالية وضمان على جميع المنتجات" },
-    { id: 5, text: "📖 مراجع علمية متخصصة للمدرسين والطلاب" },
-    { id: 6, text: "🛒 تسوق آمن مع وسائل دفع متعددة" },
+  // بيانات احتياطية في حالة فشل API
+  const fallbackTexts = [
+    { id: 1, text: t("topnav.welcome") },
+    { id: 2, text: t("topnav.free_shipping") },
+    { id: 3, text: t("topnav.support") },
   ];
 
-  const socialLinks = {
-    facebook: "https://facebook.com/thanawyastore",
-    whatsapp: "https://wa.me/1234567890",
-    telegram: "https://t.me/thanawyastore",
-    instagram: "https://instagram.com/thanawyastore",
-    tiktok: "https://tiktok.com/@thanawyastore",
+  // روابط اجتماعية افتراضية
+  const fallbackSocialLinks = {
+    facebook_link: "https://facebook.com/thanawyastore",
+    whats_link: "https://wa.me/1234567890",
+    telegram_link: "https://t.me/thanawyastore",
+    instgram_link: "https://instagram.com/thanawyastore",
+    tiktok_link: "https://tiktok.com/@thanawyastore",
+  };
+
+  // جلب بيانات النصوص المتحركة والروابط الاجتماعية من API
+  useEffect(() => {
+    fetchSliderTexts();
+    fetchSocialLinks();
+  }, [i18n.language]);
+
+  const fetchSliderTexts = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get("/settings/sliders-text-navbar", {
+        headers: {
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (response.data?.status && response.data?.data) {
+        setSliderTexts(response.data.data);
+      } else {
+        setSliderTexts(fallbackTexts);
+      }
+    } catch (error) {
+      console.error("Error fetching slider texts:", error);
+      setSliderTexts(fallbackTexts);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSocialLinks = async () => {
+    try {
+      const response = await api.get("/settings/footer", {
+        headers: {
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (response.data?.status && response.data?.data) {
+        setSocialLinks(response.data.data);
+      } else {
+        setSocialLinks(fallbackSocialLinks);
+      }
+    } catch (error) {
+      console.error("Error fetching social links:", error);
+      setSocialLinks(fallbackSocialLinks);
+    }
   };
 
   // تحقق من الوضع المظلم/الفاتح
@@ -104,84 +155,100 @@ function TopNav() {
         {/* النص المتحرك */}
         <div className={styles.scrollingWrapper}>
           <div className={styles.scrollingText}>
-            {sliderTexts.map((item, idx) => (
-              <span key={item.id} className={styles.textItem}>
-                {item.text}
-                {idx !== sliderTexts.length - 1 && (
-                  <span className={styles.separator}>|</span>
-                )}
+            {loading ? (
+              <span className={styles.textItem}>
+                {t("loading") || "Loading..."}
               </span>
-            ))}
+            ) : (
+              sliderTexts.map((item, idx) => (
+                <span key={item.id} className={styles.textItem}>
+                  {item.text}
+                  {idx !== sliderTexts.length - 1 && (
+                    <span className={styles.separator}>|</span>
+                  )}
+                </span>
+              ))
+            )}
           </div>
         </div>
 
         {/* روابط السوشيال ميديا */}
         <div className={styles.socialLinks}>
-          <a
-            href={socialLinks.facebook}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.socialLink}
-            title="فيسبوك"
-          >
-            <img
-              src="/facebook.png"
-              alt="فيسبوك"
-              className={styles.socialIcon}
-            />
-          </a>
-          <a
-            href={socialLinks.whatsapp}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.socialLink}
-            title="واتساب"
-          >
-            <img
-              src="/whatsapp.png"
-              alt="واتساب"
-              className={styles.socialIcon}
-            />
-          </a>
-          <a
-            href={socialLinks.telegram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.socialLink}
-            title="تيليجرام"
-          >
-            <img
-              src="/telegram.png"
-              alt="تيليجرام"
-              className={styles.socialIcon}
-            />
-          </a>
-          <a
-            href={socialLinks.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.socialLink}
-            title="إنستجرام"
-          >
-            <img
-              src="/instagram.png"
-              alt="إنستجرام"
-              className={styles.socialIcon}
-            />
-          </a>
-          <a
-            href={socialLinks.tiktok}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.socialLink}
-            title="تيك توك"
-          >
-            <img
-              src="/tiktok.png"
-              alt="تيك توك"
-              className={styles.socialIcon}
-            />
-          </a>
+          {socialLinks.facebook_link && (
+            <a
+              href={socialLinks.facebook_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+              title="فيسبوك"
+            >
+              <img
+                src="/facebook.png"
+                alt="فيسبوك"
+                className={styles.socialIcon}
+              />
+            </a>
+          )}
+          {socialLinks.whats_link && (
+            <a
+              href={socialLinks.whats_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+              title="واتساب"
+            >
+              <img
+                src="/whatsapp.png"
+                alt="واتساب"
+                className={styles.socialIcon}
+              />
+            </a>
+          )}
+          {socialLinks.telegram_link && (
+            <a
+              href={socialLinks.telegram_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+              title="تيليجرام"
+            >
+              <img
+                src="/telegram.png"
+                alt="تيليجرام"
+                className={styles.socialIcon}
+              />
+            </a>
+          )}
+          {socialLinks.instgram_link && (
+            <a
+              href={socialLinks.instgram_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+              title="إنستجرام"
+            >
+              <img
+                src="/instagram.png"
+                alt="إنستجرام"
+                className={styles.socialIcon}
+              />
+            </a>
+          )}
+          {socialLinks.tiktok_link && (
+            <a
+              href={socialLinks.tiktok_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+              title="تيك توك"
+            >
+              <img
+                src="/tiktok.png"
+                alt="تيك توك"
+                className={styles.socialIcon}
+              />
+            </a>
+          )}
         </div>
       </div>
     </section>

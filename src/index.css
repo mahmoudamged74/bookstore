@@ -5,7 +5,6 @@
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: 0%;
-  text-align: left;
   vertical-align: middle;
   margin: 0;
   padding: 0;
@@ -399,15 +398,266 @@ body[data-theme="light"] .faqPage .heroSubtitle {
     Helvetica, Arial, sans-serif !important;
 }
 
+/* دعم تغيير الاتجاهات للعناصر المختلفة */
+[dir="rtl"] .swiper {
+  direction: rtl;
+}
+
+[dir="ltr"] .swiper {
+  direction: ltr;
+}
+
+/* دعم تغيير الاتجاهات للـ Hero Section */
+[dir="rtl"] .hero .right {
+  order: 1; /* النص على اليمين في العربية */
+}
+
+[dir="rtl"] .hero .left {
+  order: 2; /* الصورة على اليسار في العربية */
+}
+
+[dir="ltr"] .hero .right {
+  order: 1; /* النص على اليسار في الإنجليزية */
+}
+
+[dir="ltr"] .hero .left {
+  order: 2; /* الصورة على اليمين في الإنجليزية */
+}
+
+/* دعم تغيير الاتجاهات لصفحة تفاصيل الكتاب */
+[dir="rtl"] .details .textBox {
+  order: 1; /* النص على اليسار في العربية */
+}
+[dir="rtl"] .details .left {
+  order: 2; /* الصورة على اليمين في العربية */
+}
+[dir="ltr"] .details .textBox {
+  order: 1; /* النص على اليسار في الإنجليزية */
+}
+[dir="ltr"] .details .left {
+  order: 2; /* الصورة على اليمين في الإنجليزية */
+}
+
+/* إصلاح اتجاهات GameStore */
+[dir="rtl"] .section .gameTitle,
+[dir="rtl"] .section .desc,
+[dir="rtl"] .section .priceLine {
+  text-align: right;
+}
+[dir="ltr"] .section .gameTitle,
+[dir="ltr"] .section .desc,
+[dir="ltr"] .section .priceLine {
+  text-align: left;
+}
+[dir="ltr"] .section .priceContainer {
+  flex-direction: row-reverse;
+}
+
+/* إصلاح اتجاهات Offers */
+[dir="rtl"] .offers .offerTitle,
+[dir="rtl"] .offers .desc {
+  text-align: right;
+}
+[dir="ltr"] .offers .offerTitle,
+[dir="ltr"] .offers .desc {
+  text-align: left;
+}
+
+/* إصلاح اتجاهات About */
+[dir="rtl"] .aboutPage .heroTitle,
+[dir="rtl"] .aboutPage .heroSubtitle,
+[dir="rtl"] .aboutPage .sectionTitle,
+[dir="rtl"] .aboutPage .description {
+  text-align: right;
+}
+[dir="ltr"] .aboutPage .heroTitle,
+[dir="ltr"] .aboutPage .heroSubtitle,
+[dir="ltr"] .aboutPage .sectionTitle,
+[dir="ltr"] .aboutPage .description {
+  text-align: left;
+}
+
+/* إصلاح اتجاهات FAQ */
+[dir="rtl"] .faqPage .heroTitle,
+[dir="rtl"] .faqPage .heroSubtitle,
+[dir="rtl"] .faqPage .faqQuestion,
+[dir="rtl"] .faqPage .faqAnswer p {
+  text-align: right;
+}
+[dir="ltr"] .faqPage .heroTitle,
+[dir="ltr"] .faqPage .heroSubtitle,
+[dir="ltr"] .faqPage .faqQuestion,
+[dir="ltr"] .faqPage .faqAnswer p {
+  text-align: left;
+}
+
+/* إصلاح اتجاهات Navbar */
+[dir="rtl"] .navbar .langDropdown {
+  left: 0;
+  right: auto;
+  text-align: right;
+}
+[dir="ltr"] .navbar .langDropdown {
+  left: auto;
+  right: 0;
+  text-align: left;
+}
+
+[dir="rtl"] .navbar .langDropdown li {
+  flex-direction: row-reverse;
+}
+[dir="ltr"] .navbar .langDropdown li {
+  flex-direction: row;
+}
+
+/* إصلاح اتجاهات Swiper */
+[dir="rtl"] .swiper {
+  direction: rtl;
+}
+[dir="ltr"] .swiper {
+  direction: ltr;
+}
+
+/* إصلاح عرض الكروت في الإنجليزية */
+[dir="ltr"] .swiper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: visible;
+}
+
+[dir="ltr"] .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  min-height: 420px;
+}
+
+[dir="ltr"] .swiper-wrapper {
+  display: flex;
+  align-items: center;
+  height: auto;
+  min-height: 420px;
+}
+
+[dir="ltr"] .card {
+  display: flex;
+  flex-direction: column;
+  height: 420px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* إصلاح الوضع الليت مود للهيرو سكشن */
+[data-theme="light"] .hero {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+  color: #212529 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .hero .title,
+[data-theme="light"] .hero h1 {
+  color: #212529 !important;
+  text-shadow: none;
+}
+
+[data-theme="light"] .hero .subtitle,
+[data-theme="light"] .hero p {
+  color: #6c757d !important;
+}
+
+[data-theme="light"] .hero .primaryBtn,
+[data-theme="light"] .hero .ghostBtn {
+  background: #eb2027 !important;
+  color: #ffffff !important;
+  border: 2px solid #eb2027 !important;
+  box-shadow: 0 4px 15px rgba(235, 32, 39, 0.3);
+}
+
+/* إصلاح اتجاه علامات المميزات */
+[dir="rtl"] .details .features li {
+  padding-right: 20px;
+  padding-left: 0;
+  text-align: right;
+}
+[dir="rtl"] .details .features li::before {
+  right: 0;
+  left: auto;
+}
+[dir="ltr"] .details .features li {
+  padding-right: 0;
+  padding-left: 20px;
+  text-align: left;
+}
+[dir="ltr"] .details .features li::before {
+  right: auto;
+  left: 0;
+}
+
+/* دعم تغيير الاتجاهات للكاردات */
+[dir="rtl"] .card,
+[dir="rtl"] .game-card,
+[dir="rtl"] [class*="card"] {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="ltr"] .card,
+[dir="ltr"] .game-card,
+[dir="ltr"] [class*="card"] {
+  text-align: left;
+  direction: ltr;
+}
+
+/* دعم تغيير الاتجاهات للعناوين */
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  /* text-align: right; */
+  direction: rtl;
+}
+
+[dir="ltr"] h1,
+[dir="ltr"] h2,
+[dir="ltr"] h3,
+[dir="ltr"] h4,
+[dir="ltr"] h5,
+[dir="ltr"] h6 {
+  /* text-align: left; */
+  direction: ltr;
+}
+
+/* دعم تغيير الاتجاهات للفقرات */
+[dir="rtl"] p {
+  /* text-align: right; */
+  direction: rtl;
+}
+
+[dir="ltr"] p {
+  /* text-align: left; */
+  direction: ltr;
+}
+
 /* متغيرات الألوان للدارك مود (الافتراضي) */
 :root {
   --bg: #000;
   --text: #ffffff;
+  --text-secondary: #cccccc;
   --muted: #cccccc;
   --accent: #eb2027;
-  --card: #3d1a15;
-  --border: #4a2c1f;
-  --hover: #5a3c2f;
+  --card: #2a2a2a;
+  --border: #404040;
+  --hover: #3a3a3a;
+  --disabled: #1a1a1a;
   --shadow: rgba(0, 0, 0, 0.3);
 }
 
@@ -417,9 +667,9 @@ html:not([data-theme="light"]) {
   --text: #ffffff;
   --muted: #cccccc;
   --accent: #eb2027;
-  --card: #3d1a15;
-  --border: #4a2c1f;
-  --hover: #5a3c2f;
+  --card: #2a2a2a;
+  --border: #404040;
+  --hover: #3a3a3a;
   --shadow: rgba(0, 0, 0, 0.3);
 
   /* ألوان إضافية */
@@ -440,11 +690,13 @@ html:not([data-theme="light"]) {
 [data-theme="light"] {
   --bg: #ffffff;
   --text: #1f2937;
+  --text-secondary: #6b7280;
   --muted: #6b7280;
   --accent: #eb2027; /* نفس لون الأزرار */
   --card: #f3f4f6;
   --border: #e5e7eb;
   --hover: #d1d5db;
+  --disabled: #f8f9fa;
   --shadow: rgba(0, 0, 0, 0.1);
 
   /* ألوان إضافية للايت مود */
@@ -527,6 +779,28 @@ body[data-theme="light"] a {
 
 body[data-theme="light"] a:hover {
   color: var(--accent);
+}
+
+/* Placeholder styling */
+::placeholder {
+  color: #ffffff;
+  opacity: 0.7;
+}
+
+body[data-theme="light"] ::placeholder {
+  color: #000000;
+  opacity: 0.7;
+}
+
+/* Select placeholder styling */
+select option:first-child {
+  color: #ffffff;
+  opacity: 0.7;
+}
+
+body[data-theme="light"] select option:first-child {
+  color: #000000;
+  opacity: 0.7;
 }
 
 /* أنيميشن الألعاب في الخلفية - تم إزالته */

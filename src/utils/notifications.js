@@ -1,47 +1,32 @@
 // نظام الإشعارات - يمكن استخدامه في أي مكان في التطبيق
-
-export const showNotification = (options) => {
+export const showNotification = (type, message, duration = 3000) => {
+  // استخدام النظام المخصص للإشعارات
   if (window.showNotification) {
-    return window.showNotification(options);
+    return window.showNotification({
+      type: type,
+      message: message,
+      duration: duration,
+    });
   }
-  console.warn('نظام الإشعارات غير متاح');
-  return null;
+
+  // fallback إلى console.log في حالة عدم توفر النظام
+  console.log(`[${type.toUpperCase()}] ${message}`);
 };
 
-export const showSuccess = (title, message, duration = 5000) => {
-  return showNotification({
-    type: 'success',
-    title,
-    message,
-    duration
-  });
+export const showSuccess = (message, duration = 5000) => {
+  return showNotification("success", message, duration);
 };
 
-export const showError = (title, message, duration = 7000) => {
-  return showNotification({
-    type: 'error',
-    title,
-    message,
-    duration
-  });
+export const showError = (message, duration = 7000) => {
+  return showNotification("error", message, duration);
 };
 
-export const showWarning = (title, message, duration = 6000) => {
-  return showNotification({
-    type: 'warning',
-    title,
-    message,
-    duration
-  });
+export const showWarning = (message, duration = 6000) => {
+  return showNotification("warning", message, duration);
 };
 
-export const showInfo = (title, message, duration = 5000) => {
-  return showNotification({
-    type: 'info',
-    title,
-    message,
-    duration
-  });
+export const showInfo = (message, duration = 5000) => {
+  return showNotification("info", message, duration);
 };
 
 export const clearAllNotifications = () => {

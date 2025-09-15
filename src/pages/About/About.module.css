@@ -29,6 +29,46 @@ body[data-theme="light"] {
   min-height: 100vh;
 }
 
+/* Loading Styles */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* اتجاه RTL للعربية */
+.aboutPage.rtl {
+  direction: rtl;
+}
+
+/* اتجاه LTR للإنجليزية */
+.aboutPage.ltr {
+  direction: ltr;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -46,6 +86,19 @@ body[data-theme="light"] {
   position: relative;
   overflow: hidden;
   min-height: 100vh;
+}
+
+/* إصلاح اتجاه Hero Section في الإنجليزية */
+.aboutPage.ltr .heroSection {
+  grid-template-columns: 1fr 1fr;
+}
+
+.aboutPage.ltr .right {
+  order: 1;
+}
+
+.aboutPage.ltr .left {
+  order: 2;
 }
 
 .heroSection::before {
@@ -109,6 +162,11 @@ body[data-theme="light"] {
   text-shadow: 0 0 30px rgba(168, 52, 39, 0.3);
 }
 
+/* إصلاح محاذاة العنوان في الإنجليزية */
+.aboutPage.ltr .heroTitle {
+  text-align: left;
+}
+
 @keyframes titleShine {
   0% {
     background-position: 0% 50%;
@@ -133,6 +191,11 @@ body[data-theme="light"] {
   animation: fadeInUp 1s ease-out 0.5s both;
   position: relative;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* إصلاح محاذاة الوصف في الإنجليزية */
+.aboutPage.ltr .heroSubtitle {
+  text-align: left;
 }
 
 @keyframes fadeInUp {
@@ -646,6 +709,11 @@ body[data-theme="light"] {
   text-align: right;
 }
 
+/* إصلاح محاذاة عنوان القسم في الإنجليزية */
+.aboutPage.ltr .sectionTitle {
+  text-align: left;
+}
+
 /* لون عنوان القسم في اللايت مود */
 [data-theme="light"] .sectionTitle {
   color: #000000;
@@ -657,6 +725,11 @@ body[data-theme="light"] {
   color: #ffffff;
   margin: 0 0 20px;
   text-align: right;
+}
+
+/* إصلاح محاذاة الوصف في الإنجليزية */
+.aboutPage.ltr .description {
+  text-align: left;
 }
 
 /* لون الفقرات في اللايت مود */

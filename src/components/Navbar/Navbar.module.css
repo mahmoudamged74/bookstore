@@ -224,12 +224,14 @@ body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
 }
 
 /* اتجاه النافبار للعربية */
-.navbar.arabic {
+.navbar.arabic,
+[dir="rtl"] .navbar {
   direction: rtl;
 }
 
 /* اتجاه النافبار للإنجليزية */
-.navbar.english {
+.navbar.english,
+[dir="ltr"] .navbar {
   direction: ltr;
 }
 
@@ -282,15 +284,18 @@ body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
+  text-decoration: none;
+  color: var(--text);
 }
 
 .cartIcon:hover {
   background: #eb2027;
   transform: translateY(-1px);
+  color: #fff;
 }
 
 .cartIconSymbol {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .cartCount {
@@ -318,6 +323,7 @@ body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
 .lang {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -387,6 +393,13 @@ body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
   text-align: right;
 }
 
+/* إصلاح اتجاه القائمة المنسدلة في الإنجليزية */
+[dir="ltr"] .langDropdown {
+  left: auto;
+  right: 0;
+  text-align: left;
+}
+
 .langDropdown li {
   padding: 6px 12px;
   cursor: pointer;
@@ -395,6 +408,12 @@ body[data-theme="light"] .navbar .mobilePanel .mobileThemeToggle {
   gap: 8px;
   transition: background-color 0.2s ease-in-out;
   font-size: 12px;
+  flex-direction: row-reverse; /* العلم على اليمين في العربية */
+}
+
+/* إصلاح اتجاه العناصر في القائمة المنسدلة للإنجليزية */
+[dir="ltr"] .langDropdown li {
+  flex-direction: row; /* العلم على اليسار في الإنجليزية */
 }
 
 .langDropdown li:hover {
@@ -596,7 +615,7 @@ body[data-theme="light"] .hamburger:hover {
   padding: 10px 8px 10px 16px;
   border-radius: 6px;
   font-size: 15px;
-  text-align: right;
+  /* text-align: right; */
 }
 
 /* اتجاه الروابط في الموبايل للعربية */
@@ -622,6 +641,46 @@ body[data-theme="light"] .hamburger:hover {
 .mobilePanel.english .lang {
   text-align: left !important;
   direction: ltr !important;
+}
+
+/* إصلاح اتجاه القائمة المنسدلة في الموبايل */
+.mobilePanel .langDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--card);
+  color: var(--text);
+  list-style: none;
+  padding: 0.4rem 0;
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  min-width: 120px;
+  text-align: right;
+}
+
+/* إصلاح اتجاه القائمة المنسدلة في الموبايل للإنجليزية */
+[dir="ltr"] .mobilePanel .langDropdown {
+  /* right: auto; */
+  left: 0;
+  text-align: left;
+}
+
+.mobilePanel .langDropdown li {
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease-in-out;
+  font-size: 12px;
+  flex-direction: row-reverse; /* العلم على اليمين في العربية */
+}
+
+[dir="ltr"] .mobilePanel .langDropdown li {
+  flex-direction: row; /* العلم على اليسار في الإنجليزية */
 }
 
 .mobileLink:hover {
@@ -661,11 +720,14 @@ body[data-theme="light"] .hamburger:hover {
   text-align: right;
   direction: rtl;
   position: relative;
+  text-decoration: none;
+  color: var(--text);
 }
 
 .mobileCartIcon:hover {
   background: #eb2027;
   transform: translateY(-1px);
+  color: #fff;
 }
 
 .mobileCartIcon .cartCount {
@@ -880,4 +942,181 @@ body[data-theme="light"] .mobileThemeToggle:hover {
 .mobileThemeToggle:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(168, 52, 39, 0.3);
+}
+
+/* Profile Dropdown Styles */
+.profileDropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.profileButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.profileButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.profileName {
+  font-weight: 600;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdownIcon {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.profileDropdown:hover .dropdownIcon {
+  transform: rotate(180deg);
+}
+
+.profileMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--card);
+  color: var(--text);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  min-width: 160px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.profileMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  text-decoration: none;
+  text-align: right;
+  direction: rtl;
+}
+
+.profileMenuItem:hover {
+  background-color: var(--hover);
+  color: var(--accent);
+}
+
+.profileMenuItem svg {
+  font-size: 16px;
+}
+
+/* Light Mode Profile Styles */
+body[data-theme="light"] .profileButton {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #000000;
+}
+
+body[data-theme="light"] .profileButton:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+body[data-theme="light"] .profileMenu {
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+body[data-theme="light"] .profileMenuItem {
+  color: #000000;
+}
+
+body[data-theme="light"] .profileMenuItem:hover {
+  background-color: #f8f9fa;
+  color: var(--accent);
+}
+
+/* Mobile Profile Styles */
+.mobileAuth .logoutBtn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.mobileAuth .logoutBtn:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+}
+
+.mobileAuth .login {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.mobileAuth .login svg {
+  font-size: 16px;
+}
+
+/* Responsive Profile Styles */
+@media (max-width: 1200px) {
+  .profileButton {
+    padding: 0.4rem 0.8rem;
+    gap: 0.4rem;
+  }
+
+  .profileName {
+    max-width: 80px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .profileButton {
+    padding: 0.3rem 0.6rem;
+    gap: 0.3rem;
+  }
+
+  .profileName {
+    max-width: 60px;
+    font-size: 12px;
+  }
+
+  .profileMenu {
+    min-width: 140px;
+  }
+
+  .profileMenuItem {
+    padding: 0.6rem 0.8rem;
+    font-size: 13px;
+  }
 }
