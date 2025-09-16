@@ -8,6 +8,10 @@ import {
   FaTimes,
   FaEye,
   FaEyeSlash,
+  FaShoppingBag,
+  FaEye as FaViewDetails,
+  FaTimes as FaCancel,
+  FaSpinner,
 } from "react-icons/fa";
 import api from "../../services/api";
 import { showNotification } from "../../utils/notifications";
@@ -43,6 +47,15 @@ const Profile = () => {
   const [cities, setCities] = useState([]);
   const [sections, setSections] = useState([]);
 
+  // Orders states
+  const [orders, setOrders] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [orderDetails, setOrderDetails] = useState(null);
+  const [orderDetailsLoading, setOrderDetailsLoading] = useState(false);
+  const [cancellingOrder, setCancellingOrder] = useState(null);
+  const [showOrderModal, setShowOrderModal] = useState(false);
+
   useEffect(() => {
     fetchProfileData();
     fetchGrades();
@@ -50,6 +63,13 @@ const Profile = () => {
     // if formData.grade_id initially set, fetch sections
     if (formData.grade_id) fetchSections(formData.grade_id);
   }, []);
+
+  // جلب الطلبات عند تغيير التبويب
+  useEffect(() => {
+    if (activeTab === "orders") {
+      fetchOrders();
+    }
+  }, [activeTab]);
 
   const fetchProfileData = async () => {
     try {
@@ -124,6 +144,140 @@ const Profile = () => {
       setSections(response.data?.data || []);
     } catch (error) {
       console.error("Error fetching sections:", error);
+    }
+  };
+
+  // جلب الطلبات
+  const fetchOrders = async () => {
+    try {
+      setOrdersLoading(true);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showNotification(
+          "error",
+          t("auth.profile.please_login") || "Please login first"
+        );
+        return;
+      }
+
+      const response = await api.get("/orders", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (response.data?.status && response.data?.data?.orders_data) {
+        setOrders(response.data.data.orders_data);
+      } else {
+        setOrders([]);
+      }
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      showNotification(
+        "error",
+        t("profile.orders.fetch_error") || "Failed to fetch orders"
+      );
+      setOrders([]);
+    } finally {
+      setOrdersLoading(false);
+    }
+  };
+
+  // جلب تفاصيل الطلب
+  const fetchOrderDetails = async (orderId) => {
+    try {
+      setOrderDetailsLoading(true);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showNotification(
+          "error",
+          t("auth.profile.please_login") || "Please login first"
+        );
+        return;
+      }
+
+      const response = await api.get(`/orders/details/${orderId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (response.data?.status && response.data?.data) {
+        setOrderDetails(response.data.data);
+        setShowOrderModal(true);
+      } else {
+        showNotification(
+          "error",
+          t("profile.orders.details_error") || "Failed to fetch order details"
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching order details:", error);
+      showNotification(
+        "error",
+        t("profile.orders.details_error") || "Failed to fetch order details"
+      );
+    } finally {
+      setOrderDetailsLoading(false);
+    }
+  };
+
+  // إلغاء الطلب
+  const cancelOrder = async (orderId) => {
+    try {
+      setCancellingOrder(orderId);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showNotification(
+          "error",
+          t("auth.profile.please_login") || "Please login first"
+        );
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("order_id", orderId);
+
+      const response = await api.post("/orders/cancel", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (response.data?.status) {
+        showNotification(
+          "success",
+          response.data.message ||
+            t("profile.orders.cancel_success") ||
+            "Order cancelled successfully"
+        );
+        // تحديث قائمة الطلبات
+        await fetchOrders();
+        // إغلاق modal إذا كان مفتوح
+        if (showOrderModal) {
+          setShowOrderModal(false);
+          setOrderDetails(null);
+        }
+      } else {
+        showNotification(
+          "error",
+          response.data.message ||
+            t("profile.orders.cancel_error") ||
+            "Failed to cancel order"
+        );
+      }
+    } catch (error) {
+      console.error("Error cancelling order:", error);
+      showNotification(
+        "error",
+        t("profile.orders.cancel_error") || "Failed to cancel order"
+      );
+    } finally {
+      setCancellingOrder(null);
     }
   };
 
@@ -320,6 +474,15 @@ const Profile = () => {
             <span>
               {t("auth.profile.change_password") || "Change Password"}
             </span>
+          </button>
+          <button
+            className={`${styles.navItem} ${
+              activeTab === "orders" ? styles.active : ""
+            }`}
+            onClick={() => setActiveTab("orders")}
+          >
+            <FaShoppingBag />
+            <span>{t("profile.orders.title") || "My Orders"}</span>
           </button>
         </nav>
 
@@ -620,6 +783,281 @@ const Profile = () => {
                   <span>
                     {t("auth.profile.update_password") || "Update Password"}
                   </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "orders" && (
+          <div className={styles.ordersTab}>
+            <div className={styles.tabHeader}>
+              <h2>{t("profile.orders.title") || "My Orders"}</h2>
+            </div>
+
+            {ordersLoading ? (
+              <div className={styles.loading}>
+                <div className={styles.spinner}></div>
+                <p>{t("profile.orders.loading") || "Loading orders..."}</p>
+              </div>
+            ) : orders.length === 0 ? (
+              <div className={styles.emptyOrders}>
+                <FaShoppingBag />
+                <h3>{t("profile.orders.empty_title") || "No Orders Yet"}</h3>
+                <p>
+                  {t("profile.orders.empty_message") ||
+                    "You haven't placed any orders yet."}
+                </p>
+              </div>
+            ) : (
+              <div className={styles.ordersList}>
+                {orders.map((order) => (
+                  <div key={order.id} className={styles.orderCard}>
+                    <div className={styles.orderHeader}>
+                      <div className={styles.orderInfo}>
+                        <h3>#{order.order_number}</h3>
+                        <p className={styles.orderDate}>
+                          {t("profile.orders.order_date") || "Order Date"}:{" "}
+                          {new Date().toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className={styles.orderStatus}>
+                        <span
+                          className={`${styles.statusBadge} ${
+                            styles[order.order_status]
+                          }`}
+                        >
+                          {t(`profile.orders.status_${order.order_status}`) ||
+                            order.order_status}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className={styles.orderDetails}>
+                      <div className={styles.orderAddress}>
+                        <strong>
+                          {t("profile.orders.address") || "Address"}:
+                        </strong>
+                        <p>{order.address}</p>
+                        <p>
+                          {order.city_name}, {order.region_name}
+                        </p>
+                      </div>
+
+                      <div className={styles.orderPayment}>
+                        <div className={styles.paymentInfo}>
+                          <strong>
+                            {t("profile.orders.payment_type") || "Payment Type"}
+                            :
+                          </strong>
+                          <span>
+                            {t(
+                              `profile.orders.payment_${order.payment_type}`
+                            ) || order.payment_type}
+                          </span>
+                        </div>
+                        <div className={styles.paymentStatus}>
+                          <strong>
+                            {t("profile.orders.payment_status") ||
+                              "Payment Status"}
+                            :
+                          </strong>
+                          <span
+                            className={`${styles.statusBadge} ${
+                              styles[order.payment_status]
+                            }`}
+                          >
+                            {t(
+                              `profile.orders.payment_status_${order.payment_status}`
+                            ) || order.payment_status}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className={styles.orderTotal}>
+                        <div className={styles.totalInfo}>
+                          <strong>
+                            {t("profile.orders.total") || "Total"}:
+                          </strong>
+                          <span className={styles.totalPrice}>
+                            {order.total_price_after_discount}{" "}
+                            {t("profile.orders.currency") || "EGP"}
+                          </span>
+                        </div>
+                        {order.total_price_before_discount > 0 && (
+                          <div className={styles.discountInfo}>
+                            <span className={styles.originalPrice}>
+                              {order.total_price_before_discount}{" "}
+                              {t("profile.orders.currency") || "EGP"}
+                            </span>
+                            <span className={styles.discountAmount}>
+                              -
+                              {order.total_price_before_discount -
+                                order.total_price_after_discount}{" "}
+                              {t("profile.orders.currency") || "EGP"}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className={styles.orderActions}>
+                      <button
+                        className={styles.viewDetailsBtn}
+                        onClick={() => fetchOrderDetails(order.id)}
+                        disabled={orderDetailsLoading}
+                      >
+                        <FaViewDetails />
+                        {t("profile.orders.view_details") || "View Details"}
+                      </button>
+
+                      {order.order_status === "pending" && (
+                        <button
+                          className={styles.cancelBtn}
+                          onClick={() => cancelOrder(order.id)}
+                          disabled={cancellingOrder === order.id}
+                        >
+                          {cancellingOrder === order.id ? (
+                            <>
+                              <FaSpinner className={styles.spinning} />
+                              {t("profile.orders.cancelling") ||
+                                "Cancelling..."}
+                            </>
+                          ) : (
+                            <>
+                              <FaCancel />
+                              {t("profile.orders.cancel") || "Cancel Order"}
+                            </>
+                          )}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Order Details Modal */}
+        {showOrderModal && orderDetails && (
+          <div className={styles.orderModal}>
+            <div className={styles.modalContent}>
+              <div className={styles.modalHeader}>
+                <h3>{t("profile.orders.order_details") || "Order Details"}</h3>
+                <button
+                  className={styles.closeModalBtn}
+                  onClick={() => {
+                    setShowOrderModal(false);
+                    setOrderDetails(null);
+                  }}
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className={styles.modalBody}>
+                <div className={styles.orderInfo}>
+                  <h4>#{orderDetails.order_number}</h4>
+                  <p>
+                    <strong>{t("profile.orders.address") || "Address"}:</strong>{" "}
+                    {orderDetails.address}
+                  </p>
+                  <p>
+                    <strong>
+                      {t("profile.orders.location") || "Location"}:
+                    </strong>{" "}
+                    {orderDetails.city_name}, {orderDetails.region_name}
+                  </p>
+                  <p>
+                    <strong>
+                      {t("profile.orders.payment_type") || "Payment Type"}:
+                    </strong>{" "}
+                    {t(`profile.orders.payment_${orderDetails.payment_type}`) ||
+                      orderDetails.payment_type}
+                  </p>
+                  <p>
+                    <strong>{t("profile.orders.status") || "Status"}:</strong>{" "}
+                    {t(`profile.orders.status_${orderDetails.order_status}`) ||
+                      orderDetails.order_status}
+                  </p>
+                </div>
+
+                <div className={styles.productsList}>
+                  <h4>{t("profile.orders.products") || "Products"}</h4>
+                  {orderDetails.products.map((product) => (
+                    <div key={product.id} className={styles.productItem}>
+                      <img src={product.image} alt={product.name} />
+                      <div className={styles.productInfo}>
+                        <h5>{product.name}</h5>
+                        <p>
+                          {t("profile.orders.quantity") || "Quantity"}:{" "}
+                          {product.qty}
+                        </p>
+                        <span
+                          className={`${styles.statusBadge} ${
+                            styles[product.status]
+                          }`}
+                        >
+                          {t(`profile.orders.status_${product.status}`) ||
+                            product.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className={styles.orderTotal}>
+                  <div className={styles.totalRow}>
+                    <span>{t("profile.orders.total") || "Total"}:</span>
+                    <span className={styles.totalPrice}>
+                      {orderDetails.total_price_after_discount}{" "}
+                      {t("profile.orders.currency") || "EGP"}
+                    </span>
+                  </div>
+                  {orderDetails.total_price_before_discount > 0 && (
+                    <div className={styles.discountRow}>
+                      <span>
+                        {t("profile.orders.original_price") || "Original Price"}
+                        :
+                      </span>
+                      <span className={styles.originalPrice}>
+                        {orderDetails.total_price_before_discount}{" "}
+                        {t("profile.orders.currency") || "EGP"}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className={styles.modalActions}>
+                {orderDetails.order_status === "pending" && (
+                  <button
+                    className={styles.cancelBtn}
+                    onClick={() => cancelOrder(orderDetails.id)}
+                    disabled={cancellingOrder === orderDetails.id}
+                  >
+                    {cancellingOrder === orderDetails.id ? (
+                      <>
+                        <FaSpinner className={styles.spinning} />
+                        {t("profile.orders.cancelling") || "Cancelling..."}
+                      </>
+                    ) : (
+                      <>
+                        <FaCancel />
+                        {t("profile.orders.cancel") || "Cancel Order"}
+                      </>
+                    )}
+                  </button>
+                )}
+                <button
+                  className={styles.closeBtn}
+                  onClick={() => {
+                    setShowOrderModal(false);
+                    setOrderDetails(null);
+                  }}
+                >
+                  {t("profile.orders.close") || "Close"}
                 </button>
               </div>
             </div>

@@ -117,6 +117,20 @@
       "total": "Total"
     },
     "checkout": "Checkout",
+    "checkout_form": {
+      "title": "Complete Order",
+      "city": "City",
+      "region": "Region",
+      "address": "Detailed Address",
+      "select_city": "Select City",
+      "select_region": "Select Region",
+      "address_placeholder": "Enter your detailed address...",
+      "cancel": "Cancel",
+      "confirm": "Confirm Order",
+      "processing": "Processing..."
+    },
+    "update_cart": "Update Cart",
+    "updating": "Updating...",
     "remove_item": "Remove Item",
     "currency": "EGP"
   },
@@ -247,6 +261,8 @@
     },
     "currency": "EGP",
     "browse_product": "Browse Product",
+    "add_to_cart": "Add to Cart",
+    "adding_to_cart": "Adding...",
     "show_more": "Show More",
     "prices_start_from": "Prices start from",
     "view": "View",
@@ -378,6 +394,41 @@
           "desc": "Comprehensive geometric ruler set with protractor and compass."
         }
       }
+    }
+  },
+  "profile": {
+    "orders": {
+      "title": "My Orders",
+      "loading": "Loading orders...",
+      "empty_title": "No Orders Yet",
+      "empty_message": "You haven't placed any orders yet.",
+      "order_date": "Order Date",
+      "address": "Address",
+      "location": "Location",
+      "payment_type": "Payment Type",
+      "payment_status": "Payment Status",
+      "total": "Total",
+      "currency": "EGP",
+      "original_price": "Original Price",
+      "view_details": "View Details",
+      "cancel": "Cancel Order",
+      "cancelling": "Cancelling...",
+      "order_details": "Order Details",
+      "products": "Products",
+      "quantity": "Quantity",
+      "status": "Status",
+      "close": "Close",
+      "fetch_error": "Failed to fetch orders",
+      "details_error": "Failed to fetch order details",
+      "cancel_success": "Order cancelled successfully",
+      "cancel_error": "Failed to cancel order",
+      "status_pending": "Pending",
+      "status_completed": "Completed",
+      "status_cancelled": "Cancelled",
+      "payment_cash": "Cash",
+      "payment_card": "Credit Card",
+      "payment_status_paid": "Paid",
+      "payment_status_not_paid": "Not Paid"
     }
   }
 }

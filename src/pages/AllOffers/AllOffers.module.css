@@ -518,7 +518,6 @@
     text-align: center;
   }
   .headerRow {
-  
     margin-top: 80px;
   }
 }
@@ -572,5 +571,26 @@
     padding: 6px 10px;
     font-size: 11px;
     min-width: 30px;
+  }
+}
+
+/* Loading spinner for buttons */
+.loadingSpinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

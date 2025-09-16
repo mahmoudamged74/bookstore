@@ -8,6 +8,7 @@ import {
   showWarning,
   showInfo,
 } from "../../utils/notifications";
+import { FaSpinner } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
 import styles from "./AllOffers.module.css";
 
@@ -18,7 +19,8 @@ function AllOffers() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [quantities, setQuantities] = useState({});
-  const { addToCart, updateCartItem, cartItems } = useCart();
+  const [addingToCart, setAddingToCart] = useState({});
+  const { addToCart, updateCartItem, removeFromCart, cartItems } = useCart();
 
   // تحديث تاتيل الصفحة
   useEffect(() => {
@@ -75,36 +77,54 @@ function AllOffers() {
     }
   };
 
-  // دوال العداد
-  const handleQuantityChange = async (offerId, change) => {
+  // دوال العداد المحلي
+  const handleQuantityChange = (offerId, change) => {
+    const currentQuantity = quantities[offerId] || 0;
+    const newQuantity = Math.max(0, currentQuantity + change);
+
+    // تحديث العداد المحلي فقط
+    setQuantities((prev) => ({
+      ...prev,
+      [offerId]: newQuantity,
+    }));
+  };
+
+  // دالة إضافة للكارت
+  const handleAddToCart = async (offerId) => {
     // تحقق من تسجيل الدخول
     const token = localStorage.getItem("token");
     if (!token) {
       showWarning(
         "تسجيل الدخول مطلوب",
-        "يجب عليك تسجيل الدخول أولاً لإضافة الكتب إلى السلة"
+        "يجب عليك تسجيل الدخول أولاً لإضافة العروض إلى السلة"
       );
       return;
     }
 
-    const currentQuantity = quantities[offerId] || 0;
-    const newQuantity = Math.max(0, currentQuantity + change);
+    const quantity = quantities[offerId] || 0;
+    if (quantity === 0) {
+      showWarning("الكمية مطلوبة", "يرجى تحديد كمية أكبر من صفر");
+      return;
+    }
 
-    // تحديث العداد المحلي أولاً
-    setQuantities((prev) => ({
-      ...prev,
-      [offerId]: newQuantity,
-    }));
+    try {
+      setAddingToCart((prev) => ({ ...prev, [offerId]: true }));
 
-    // إضافة للكارت إذا كان التغيير موجب
-    if (change > 0) {
-      await addToCart(offerId, 1);
-    } else if (change < 0 && newQuantity > 0) {
-      // البحث عن المنتج في الكارت وتحديث كميته
-      const cartItem = cartItems.find((item) => item.product.id === offerId);
-      if (cartItem) {
-        await updateCartItem(cartItem.id, newQuantity);
+      const success = await addToCart(offerId, quantity);
+
+      if (success) {
+        showSuccess("تم الإضافة بنجاح", "تم إضافة العرض إلى السلة بنجاح");
+        // إعادة تعيين العداد المحلي
+        setQuantities((prev) => ({
+          ...prev,
+          [offerId]: 0,
+        }));
       }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      showError("خطأ في الإضافة", "حدث خطأ أثناء إضافة العرض إلى السلة");
+    } finally {
+      setAddingToCart((prev) => ({ ...prev, [offerId]: false }));
     }
   };
 
@@ -278,8 +298,26 @@ function AllOffers() {
                       {offer.real_price} {t("gamestore.currency")}
                     </span>
                   </div>
-                  <button className={styles.browseBtn}>
-                    {t("gamestore.browse_product")}
+                  <button
+                    className={styles.browseBtn}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleAddToCart(offer.id);
+                    }}
+                    disabled={
+                      addingToCart[offer.id] ||
+                      (quantities[offer.id] || 0) === 0
+                    }
+                  >
+                    {addingToCart[offer.id] ? (
+                      <>
+                        <FaSpinner className={styles.loadingSpinner} />
+                        {t("gamestore.adding_to_cart") || "Adding..."}
+                      </>
+                    ) : (
+                      t("gamestore.add_to_cart") || "Add to Cart"
+                    )}
                   </button>
                 </div>
               </div>

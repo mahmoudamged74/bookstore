@@ -236,36 +236,90 @@ export const CartProvider = ({ children }) => {
         return false;
       }
 
-      const response = await api.delete(`/carts/delete/${cartId}`, {
+      const formData = new FormData();
+      formData.append("cart_id", cartId);
+
+      const response = await api.post("/carts/delete", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       });
 
       if (response.data?.status) {
-        showNotification(
-          "success",
-          response.data.message ||
-            (i18n.language === "ar" ? "تم حذف الكارت" : "Cart cleared")
-        );
-        await fetchCart(); // تحديث الكارت
+        console.log(`Cart ${cartId} cleared successfully`);
+        // لا نعرض notification هنا لأننا نستخدم clearAllCarts
         return true;
       } else {
-        showNotification(
-          "error",
-          response.data.message ||
-            (i18n.language === "ar"
-              ? "فشل في حذف الكارت"
-              : "Failed to clear cart")
-        );
+        console.error(`Failed to clear cart ${cartId}:`, response.data.message);
         return false;
       }
     } catch (error) {
       console.error("Error clearing cart:", error);
-      showNotification(
-        "error",
-        i18n.language === "ar" ? "فشل في حذف الكارت" : "Failed to clear cart"
-      );
+      return false;
+    }
+  };
+
+  // حذف جميع الكارتات (بعد checkout)
+  const clearAllCarts = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return false;
+      }
+
+      // جلب جميع الكارتات أولاً
+      const response = await api.get("/carts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (response.data?.status && response.data?.data) {
+        const carts = response.data.data;
+
+        // حذف كل كارت على حدة
+        for (const cart of carts) {
+          try {
+            const formData = new FormData();
+            formData.append("cart_id", cart.id);
+
+            const deleteResponse = await api.post("/carts/delete", formData, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
+            });
+
+            if (deleteResponse.data?.status) {
+              console.log(`Cart ${cart.id} deleted successfully`);
+            } else {
+              console.error(
+                `Failed to delete cart ${cart.id}:`,
+                deleteResponse.data.message
+              );
+            }
+          } catch (error) {
+            console.error(`Error clearing cart ${cart.id}:`, error);
+          }
+        }
+
+        // تحديث الكارت بعد الحذف
+        console.log("Clearing all carts completed, updating cart state...");
+
+        // تحديث الـ state مباشرة
+        setCartItems([]);
+        setCartCount(0);
+
+        // تحديث من الـ API للتأكد
+        await fetchCart();
+        console.log("Cart updated successfully");
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Error clearing all carts:", error);
       return false;
     }
   };
@@ -315,6 +369,7 @@ export const CartProvider = ({ children }) => {
     updateCartItem,
     removeFromCart,
     clearCart,
+    clearAllCarts,
     getTotalPrice,
     getTotalDiscount,
   };

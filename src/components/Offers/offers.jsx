@@ -19,7 +19,7 @@ function Offers() {
   const { t, i18n } = useTranslation("global");
   const [offersData, setOffersData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { addToCart, updateCartItem, cartItems } = useCart();
+  const { addToCart, updateCartItem, removeFromCart, cartItems } = useCart();
 
   // بيانات احتياطية في حالة فشل API
   const fallbackData = [
@@ -94,6 +94,7 @@ function Offers() {
 
   const [quantities, setQuantities] = useState({});
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [addingToCart, setAddingToCart] = useState(new Set());
 
   // تحديث العدادات من الكارت الفعلي
   useEffect(() => {
@@ -106,9 +107,20 @@ function Offers() {
     }
   }, [cartItems]);
 
-  // دوال العداد
-  const handleQuantityChange = async (offerId, change) => {
-    // تحقق من تسجيل الدخول
+  // دوال العداد - تعمل محلياً فقط
+  const handleQuantityChange = (offerId, change) => {
+    const currentQuantity = quantities[offerId] || 0;
+    const newQuantity = Math.max(0, currentQuantity + change);
+
+    // تحديث العداد المحلي فقط
+    setQuantities((prev) => ({
+      ...prev,
+      [offerId]: newQuantity,
+    }));
+  };
+
+  // دالة إضافة للكارت
+  const handleAddToCart = async (offerId) => {
     const token = localStorage.getItem("token");
     if (!token) {
       setShowLoginModal(true);
@@ -119,24 +131,31 @@ function Offers() {
       return;
     }
 
-    const currentQuantity = quantities[offerId] || 0;
-    const newQuantity = Math.max(0, currentQuantity + change);
+    const quantity = quantities[offerId] || 0;
+    if (quantity === 0) {
+      showWarning("كمية غير صحيحة", "يرجى تحديد كمية أكبر من صفر");
+      return;
+    }
 
-    // تحديث العداد المحلي أولاً
-    setQuantities((prev) => ({
-      ...prev,
-      [offerId]: newQuantity,
-    }));
+    setAddingToCart((prev) => new Set(prev).add(offerId));
 
-    // إضافة للكارت إذا كان التغيير موجب
-    if (change > 0) {
-      await addToCart(offerId, 1);
-    } else if (change < 0 && newQuantity > 0) {
-      // البحث عن المنتج في الكارت وتحديث كميته
-      const cartItem = cartItems.find((item) => item.product.id === offerId);
-      if (cartItem) {
-        await updateCartItem(cartItem.id, newQuantity);
+    try {
+      const success = await addToCart(offerId, quantity);
+      if (success) {
+        // إعادة تعيين العداد بعد الإضافة الناجحة
+        setQuantities((prev) => ({
+          ...prev,
+          [offerId]: 0,
+        }));
       }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    } finally {
+      setAddingToCart((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(offerId);
+        return newSet;
+      });
     }
   };
 
@@ -264,8 +283,26 @@ function Offers() {
                         {offer.real_price} {t("gamestore.currency")}
                       </span>
                     </div>
-                    <button className={styles.browseBtn}>
-                      {t("gamestore.browse_product")}
+                    <button
+                      className={styles.browseBtn}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleAddToCart(offer.id);
+                      }}
+                      disabled={
+                        addingToCart.has(offer.id) ||
+                        (quantities[offer.id] || 0) === 0
+                      }
+                    >
+                      {addingToCart.has(offer.id) ? (
+                        <>
+                          <div className={styles.loadingSpinner}></div>
+                          {t("gamestore.adding_to_cart") || "جاري الإضافة..."}
+                        </>
+                      ) : (
+                        t("gamestore.add_to_cart") || "إضافة للكارت"
+                      )}
                     </button>
                   </div>
                 </div>
@@ -286,25 +323,25 @@ function Offers() {
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
             <div className={styles.modalHeader}>
-              <h3>{t("offers.modal.login_required")}</h3>
+              <h3>{t("gamestore.modal.login_btn")}</h3>
               <button className={styles.closeBtn} onClick={closeLoginModal}>
                 ×
               </button>
             </div>
             <div className={styles.modalBody}>
-              <p>{t("offers.modal.login_message")}</p>
+              <p>{t("gamestore.modal.login_message")}</p>
               <div className={styles.modalActions}>
                 <button
                   className={styles.loginBtn}
                   onClick={() => {
-                    window.location.href = "/auth";
+                    window.location.href = "/login";
                     closeLoginModal();
                   }}
                 >
-                  {t("offers.modal.login_btn")}
+                  {t("gamestore.modal.login_btn")}
                 </button>
                 <button className={styles.cancelBtn} onClick={closeLoginModal}>
-                  {t("offers.modal.cancel_btn")}
+                  {t("gamestore.modal.cancel_btn")}
                 </button>
               </div>
             </div>

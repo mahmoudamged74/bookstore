@@ -8,6 +8,7 @@ import {
   showWarning,
   showInfo,
 } from "../../utils/notifications";
+import { FaSpinner } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
 import styles from "./AllTeacherBooks.module.css";
 
@@ -18,7 +19,8 @@ function AllTeacherBooks() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [quantities, setQuantities] = useState({});
-  const { addToCart, updateCartItem, cartItems } = useCart();
+  const [addingToCart, setAddingToCart] = useState({});
+  const { addToCart, updateCartItem, removeFromCart, cartItems } = useCart();
 
   // تحديث تاتيل الصفحة
   useEffect(() => {
@@ -74,8 +76,20 @@ function AllTeacherBooks() {
     }
   };
 
-  // دوال العداد
-  const handleQuantityChange = async (bookId, change) => {
+  // دوال العداد المحلي
+  const handleQuantityChange = (bookId, change) => {
+    const currentQuantity = quantities[bookId] || 0;
+    const newQuantity = Math.max(0, currentQuantity + change);
+
+    // تحديث العداد المحلي فقط
+    setQuantities((prev) => ({
+      ...prev,
+      [bookId]: newQuantity,
+    }));
+  };
+
+  // دالة إضافة للكارت
+  const handleAddToCart = async (bookId) => {
     // تحقق من تسجيل الدخول
     const token = localStorage.getItem("token");
     if (!token) {
@@ -86,24 +100,30 @@ function AllTeacherBooks() {
       return;
     }
 
-    const currentQuantity = quantities[bookId] || 0;
-    const newQuantity = Math.max(0, currentQuantity + change);
+    const quantity = quantities[bookId] || 0;
+    if (quantity === 0) {
+      showWarning("الكمية مطلوبة", "يرجى تحديد كمية أكبر من صفر");
+      return;
+    }
 
-    // تحديث العداد المحلي أولاً
-    setQuantities((prev) => ({
-      ...prev,
-      [bookId]: newQuantity,
-    }));
+    try {
+      setAddingToCart((prev) => ({ ...prev, [bookId]: true }));
 
-    // إضافة للكارت إذا كان التغيير موجب
-    if (change > 0) {
-      await addToCart(bookId, 1);
-    } else if (change < 0 && newQuantity > 0) {
-      // البحث عن المنتج في الكارت وتحديث كميته
-      const cartItem = cartItems.find((item) => item.product.id === bookId);
-      if (cartItem) {
-        await updateCartItem(cartItem.id, newQuantity);
+      const success = await addToCart(bookId, quantity);
+
+      if (success) {
+        showSuccess("تم الإضافة بنجاح", "تم إضافة الكتاب إلى السلة بنجاح");
+        // إعادة تعيين العداد المحلي
+        setQuantities((prev) => ({
+          ...prev,
+          [bookId]: 0,
+        }));
       }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      showError("خطأ في الإضافة", "حدث خطأ أثناء إضافة الكتاب إلى السلة");
+    } finally {
+      setAddingToCart((prev) => ({ ...prev, [bookId]: false }));
     }
   };
 
@@ -273,8 +293,25 @@ function AllTeacherBooks() {
                       {book.real_price} {t("gamestore.currency")}
                     </strong>
                   </p>
-                  <button className={styles.browseBtn}>
-                    {t("gamestore.browse_product")}
+                  <button
+                    className={styles.browseBtn}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleAddToCart(book.id);
+                    }}
+                    disabled={
+                      addingToCart[book.id] || (quantities[book.id] || 0) === 0
+                    }
+                  >
+                    {addingToCart[book.id] ? (
+                      <>
+                        <FaSpinner className={styles.loadingSpinner} />
+                        {t("gamestore.adding_to_cart") || "Adding..."}
+                      </>
+                    ) : (
+                      t("gamestore.add_to_cart") || "Add to Cart"
+                    )}
                   </button>
                 </div>
               </div>

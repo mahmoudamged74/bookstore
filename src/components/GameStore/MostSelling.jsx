@@ -19,7 +19,7 @@ function MostSelling() {
   const { t, i18n, ready } = useTranslation("global");
   const [booksData, setBooksData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { addToCart, updateCartItem, cartItems } = useCart();
+  const { addToCart, updateCartItem, removeFromCart, cartItems } = useCart();
 
   // Don't render until translations are ready
   if (!ready) {
@@ -101,6 +101,7 @@ function MostSelling() {
 
   const [quantities, setQuantities] = useState({});
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [addingToCart, setAddingToCart] = useState(new Set());
 
   // تحديث العدادات من الكارت الفعلي
   useEffect(() => {
@@ -113,9 +114,20 @@ function MostSelling() {
     }
   }, [cartItems]);
 
-  // دوال العداد
-  const handleQuantityChange = async (bookId, change) => {
-    // تحقق من تسجيل الدخول
+  // دوال العداد - تعمل محلياً فقط
+  const handleQuantityChange = (bookId, change) => {
+    const currentQuantity = quantities[bookId] || 0;
+    const newQuantity = Math.max(0, currentQuantity + change);
+
+    // تحديث العداد المحلي فقط
+    setQuantities((prev) => ({
+      ...prev,
+      [bookId]: newQuantity,
+    }));
+  };
+
+  // دالة إضافة للكارت
+  const handleAddToCart = async (bookId) => {
     const token = localStorage.getItem("token");
     if (!token) {
       setShowLoginModal(true);
@@ -126,24 +138,31 @@ function MostSelling() {
       return;
     }
 
-    const currentQuantity = quantities[bookId] || 0;
-    const newQuantity = Math.max(0, currentQuantity + change);
+    const quantity = quantities[bookId] || 0;
+    if (quantity === 0) {
+      showWarning("كمية غير صحيحة", "يرجى تحديد كمية أكبر من صفر");
+      return;
+    }
 
-    // تحديث العداد المحلي أولاً
-    setQuantities((prev) => ({
-      ...prev,
-      [bookId]: newQuantity,
-    }));
+    setAddingToCart((prev) => new Set(prev).add(bookId));
 
-    // إضافة للكارت إذا كان التغيير موجب
-    if (change > 0) {
-      await addToCart(bookId, 1);
-    } else if (change < 0 && newQuantity > 0) {
-      // البحث عن المنتج في الكارت وتحديث كميته
-      const cartItem = cartItems.find((item) => item.product.id === bookId);
-      if (cartItem) {
-        await updateCartItem(cartItem.id, newQuantity);
+    try {
+      const success = await addToCart(bookId, quantity);
+      if (success) {
+        // إعادة تعيين العداد بعد الإضافة الناجحة
+        setQuantities((prev) => ({
+          ...prev,
+          [bookId]: 0,
+        }));
       }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    } finally {
+      setAddingToCart((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(bookId);
+        return newSet;
+      });
     }
   };
 
@@ -261,8 +280,26 @@ function MostSelling() {
                         {book.real_price} {t("gamestore.currency")}
                       </strong>
                     </p>
-                    <button className={styles.browseBtn}>
-                      {t("gamestore.browse_product")}
+                    <button
+                      className={styles.browseBtn}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleAddToCart(book.id);
+                      }}
+                      disabled={
+                        addingToCart.has(book.id) ||
+                        (quantities[book.id] || 0) === 0
+                      }
+                    >
+                      {addingToCart.has(book.id) ? (
+                        <>
+                          <div className={styles.loadingSpinner}></div>
+                          {t("gamestore.adding_to_cart") || "جاري الإضافة..."}
+                        </>
+                      ) : (
+                        t("gamestore.add_to_cart") || "إضافة للكارت"
+                      )}
                     </button>
                   </div>
                 </div>
@@ -294,7 +331,7 @@ function MostSelling() {
                 <button
                   className={styles.loginBtn}
                   onClick={() => {
-                    window.location.href = "/auth";
+                    window.location.href = "/login";
                     closeLoginModal();
                   }}
                 >

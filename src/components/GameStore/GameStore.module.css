@@ -660,7 +660,7 @@
 
 .cancelBtn {
   background: #f7fafc;
-  color: #ffffff !important;
+  color: #626b71 !important;
   border: 2px solid #e2e8f0;
   padding: 14px 32px;
   border-radius: 12px;
@@ -673,7 +673,7 @@
 .cancelBtn:hover {
   background: #edf2f7;
   border-color: #cbd5e0;
-  color: #ffffff !important;
+  color: #626b71 !important;
   transform: translateY(-1px);
 }
 
@@ -1034,4 +1034,16 @@ body[data-theme="dark"] .tab:hover {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Small Loading Spinner for buttons */
+.loadingSpinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-right: 8px;
 }

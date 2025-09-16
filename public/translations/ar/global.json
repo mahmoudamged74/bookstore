@@ -117,6 +117,20 @@
       "total": "الإجمالي"
     },
     "checkout": "إتمام الطلب",
+    "checkout_form": {
+      "title": "إتمام الطلب",
+      "city": "المدينة",
+      "region": "المنطقة",
+      "address": "العنوان التفصيلي",
+      "select_city": "اختر المدينة",
+      "select_region": "اختر المنطقة",
+      "address_placeholder": "أدخل عنوانك التفصيلي...",
+      "cancel": "إلغاء",
+      "confirm": "تأكيد الطلب",
+      "processing": "جاري المعالجة..."
+    },
+    "update_cart": "تحديث الكارت",
+    "updating": "جاري التحديث...",
     "remove_item": "حذف المنتج",
     "currency": "ج.م"
   },
@@ -247,6 +261,8 @@
     },
     "currency": "جنيهًا",
     "browse_product": "تصفح المنتج",
+    "add_to_cart": "إضافة للكارت",
+    "adding_to_cart": "جاري الإضافة...",
     "show_more": "عرض المزيد",
     "prices_start_from": "أسعار تبدأ من",
     "view": "عرض",
@@ -378,6 +394,41 @@
           "desc": "طقم مساطر هندسية شاملة مع منقلة وفرجار."
         }
       }
+    }
+  },
+  "profile": {
+    "orders": {
+      "title": "طلباتي",
+      "loading": "جاري تحميل الطلبات...",
+      "empty_title": "لا توجد طلبات بعد",
+      "empty_message": "لم تقم بإجراء أي طلبات حتى الآن.",
+      "order_date": "تاريخ الطلب",
+      "address": "العنوان",
+      "location": "الموقع",
+      "payment_type": "نوع الدفع",
+      "payment_status": "حالة الدفع",
+      "total": "المجموع",
+      "currency": "جنيه",
+      "original_price": "السعر الأصلي",
+      "view_details": "عرض التفاصيل",
+      "cancel": "إلغاء الطلب",
+      "cancelling": "جاري الإلغاء...",
+      "order_details": "تفاصيل الطلب",
+      "products": "المنتجات",
+      "quantity": "الكمية",
+      "status": "الحالة",
+      "close": "إغلاق",
+      "fetch_error": "فشل في جلب الطلبات",
+      "details_error": "فشل في جلب تفاصيل الطلب",
+      "cancel_success": "تم إلغاء الطلب بنجاح",
+      "cancel_error": "فشل في إلغاء الطلب",
+      "status_pending": "قيد الانتظار",
+      "status_completed": "مكتمل",
+      "status_cancelled": "ملغي",
+      "payment_cash": "نقداً",
+      "payment_card": "بطاقة ائتمان",
+      "payment_status_paid": "مدفوع",
+      "payment_status_not_paid": "غير مدفوع"
     }
   }
 }

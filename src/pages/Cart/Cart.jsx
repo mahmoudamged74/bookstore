@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import {
@@ -7,8 +7,13 @@ import {
   FaPlus,
   FaMinus,
   FaArrowLeft,
+  FaMapMarkerAlt,
+  FaCity,
+  FaGlobe,
 } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
+import api from "../../services/api";
+import { showSuccess, showError, showWarning } from "../../utils/notifications";
 import styles from "./Cart.module.css";
 
 const Cart = () => {
@@ -19,25 +24,183 @@ const Cart = () => {
     loading,
     updateCartItem,
     removeFromCart,
+    clearCart,
+    clearAllCarts,
     getTotalPrice,
     getTotalDiscount,
   } = useCart();
   const [updatingItems, setUpdatingItems] = useState(new Set());
+  const [localQuantities, setLocalQuantities] = useState({});
+  const [hasChanges, setHasChanges] = useState(false);
 
-  const handleQuantityChange = async (itemId, newQuantity) => {
+  // Checkout states
+  const [cities, setCities] = useState([]);
+  const [regions, setRegions] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [address, setAddress] = useState("");
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+  const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+
+  // تحديث الكميات المحلية عند تغيير الكارت
+  useEffect(() => {
+    if (cartItems && cartItems.length > 0) {
+      const quantities = {};
+      cartItems.forEach((item) => {
+        quantities[item.id] = parseInt(item.qty);
+      });
+      setLocalQuantities(quantities);
+      setHasChanges(false);
+    }
+  }, [cartItems]);
+
+  // جلب المدن والمناطق
+  useEffect(() => {
+    fetchCitiesAndRegions();
+  }, [i18n.language]);
+
+  const fetchCitiesAndRegions = async () => {
+    try {
+      // جلب المدن
+      const citiesResponse = await api.get("/settings/cities", {
+        headers: {
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (citiesResponse.data?.status && citiesResponse.data?.data) {
+        setCities(citiesResponse.data.data);
+      }
+
+      // جلب المناطق (افتراضياً للمدينة الأولى)
+      if (citiesResponse.data?.data?.length > 0) {
+        const firstCityId = citiesResponse.data.data[0].id;
+        fetchRegions(firstCityId);
+      }
+    } catch (error) {
+      console.error("Error fetching cities:", error);
+    }
+  };
+
+  const fetchRegions = async (cityId) => {
+    try {
+      const regionsResponse = await api.get(`/settings/regions/${cityId}`, {
+        headers: {
+          lang: i18n.language || "en",
+        },
+      });
+
+      if (regionsResponse.data?.status && regionsResponse.data?.data) {
+        setRegions(regionsResponse.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching regions:", error);
+    }
+  };
+
+  const handleCityChange = (cityId) => {
+    setSelectedCity(cityId);
+    setSelectedRegion(""); // إعادة تعيين المنطقة عند تغيير المدينة
+    fetchRegions(cityId);
+  };
+
+  const handleQuantityChange = (itemId, newQuantity) => {
     if (newQuantity < 1) return;
 
-    setUpdatingItems((prev) => new Set(prev).add(itemId));
-    const success = await updateCartItem(itemId, newQuantity);
-    setUpdatingItems((prev) => {
-      const newSet = new Set(prev);
-      newSet.delete(itemId);
-      return newSet;
-    });
+    setLocalQuantities((prev) => ({
+      ...prev,
+      [itemId]: newQuantity,
+    }));
+    setHasChanges(true);
+  };
+
+  // دالة تحديث الكارت
+  const handleUpdateCart = async () => {
+    setUpdatingItems(new Set(Object.keys(localQuantities)));
+
+    try {
+      const updatePromises = Object.entries(localQuantities).map(
+        async ([itemId, quantity]) => {
+          const cartItem = cartItems.find(
+            (item) => item.id === parseInt(itemId)
+          );
+          if (cartItem && parseInt(cartItem.qty) !== quantity) {
+            return await updateCartItem(parseInt(itemId), quantity);
+          }
+          return true;
+        }
+      );
+
+      await Promise.all(updatePromises);
+      setHasChanges(false);
+    } catch (error) {
+      console.error("Error updating cart:", error);
+    } finally {
+      setUpdatingItems(new Set());
+    }
   };
 
   const handleRemoveItem = async (itemId) => {
     await removeFromCart(itemId);
+  };
+
+  // دالة Checkout
+  const handleCheckout = async () => {
+    if (!selectedCity || !selectedRegion || !address.trim()) {
+      showWarning("بيانات ناقصة", "يرجى ملء جميع الحقول المطلوبة");
+      return;
+    }
+
+    setIsCheckoutLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("address", address);
+      formData.append("city_id", selectedCity);
+      formData.append("region_id", selectedRegion);
+
+      const response = await api.post("/orders/checkout", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data?.status) {
+        // عرض رسالة النجاح من الـ API
+        showSuccess(
+          "تم إتمام الطلب بنجاح!",
+          response.data.message || "تم إتمام الطلب بنجاح"
+        );
+
+        // إعادة تعيين النموذج
+        setAddress("");
+        setSelectedCity("");
+        setSelectedRegion("");
+        setShowCheckoutForm(false);
+
+        // تنظيف الكارت بعد نجاح الطلب
+        // استخدام clearAllCarts لحذف جميع الكارتات
+        if (cartItems && cartItems.length > 0) {
+          console.log("Starting to clear cart after successful checkout...");
+          await clearAllCarts();
+          console.log("Cart clearing completed");
+        }
+      } else {
+        showError(
+          "خطأ في الطلب",
+          response.data.message || "حدث خطأ أثناء إتمام الطلب"
+        );
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      showError(
+        "خطأ في الطلب",
+        error.response?.data?.message || "حدث خطأ أثناء إتمام الطلب"
+      );
+    } finally {
+      setIsCheckoutLoading(false);
+    }
   };
 
   if (loading) {
@@ -118,10 +281,14 @@ const Cart = () => {
                   <button
                     className={styles.quantityBtn}
                     onClick={() =>
-                      handleQuantityChange(item.id, parseInt(item.qty) - 1)
+                      handleQuantityChange(
+                        item.id,
+                        (localQuantities[item.id] || parseInt(item.qty)) - 1
+                      )
                     }
                     disabled={
-                      updatingItems.has(item.id) || parseInt(item.qty) <= 1
+                      updatingItems.has(item.id) ||
+                      (localQuantities[item.id] || parseInt(item.qty)) <= 1
                     }
                   >
                     <FaMinus />
@@ -131,14 +298,17 @@ const Cart = () => {
                     {updatingItems.has(item.id) ? (
                       <div className={styles.loadingSpinner}></div>
                     ) : (
-                      item.qty
+                      localQuantities[item.id] || item.qty
                     )}
                   </span>
 
                   <button
                     className={styles.quantityBtn}
                     onClick={() =>
-                      handleQuantityChange(item.id, parseInt(item.qty) + 1)
+                      handleQuantityChange(
+                        item.id,
+                        (localQuantities[item.id] || parseInt(item.qty)) + 1
+                      )
                     }
                     disabled={updatingItems.has(item.id)}
                   >
@@ -183,12 +353,152 @@ const Cart = () => {
               </span>
             </div>
 
-            <button className={styles.checkoutBtn}>
+            {hasChanges && (
+              <button
+                className={styles.updateCartBtn}
+                onClick={handleUpdateCart}
+                disabled={updatingItems.size > 0}
+              >
+                {updatingItems.size > 0 ? (
+                  <>
+                    <div className={styles.loadingSpinner}></div>
+                    {t("cart.updating") || "جاري التحديث..."}
+                  </>
+                ) : (
+                  t("cart.update_cart") || "تحديث الكارت"
+                )}
+              </button>
+            )}
+
+            <button
+              className={styles.checkoutBtn}
+              onClick={() => setShowCheckoutForm(true)}
+              disabled={updatingItems.size > 0 || hasChanges}
+            >
               {t("cart.checkout") || "إتمام الطلب"}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Checkout Modal */}
+      {showCheckoutForm && (
+        <div className={styles.checkoutModal}>
+          <div className={styles.checkoutForm}>
+            <div className={styles.checkoutHeader}>
+              <h3>{t("cart.checkout_form.title") || "إتمام الطلب"}</h3>
+              <button
+                className={styles.closeBtn}
+                onClick={() => setShowCheckoutForm(false)}
+              >
+                ×
+              </button>
+            </div>
+
+            <div className={styles.checkoutBody}>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>
+                  <FaCity />
+                  {t("cart.checkout_form.city") || "المدينة"}
+                </label>
+                <select
+                  className={styles.formSelect}
+                  value={selectedCity}
+                  onChange={(e) => handleCityChange(e.target.value)}
+                  required
+                >
+                  <option style={{ color: "#000" }} value="">
+                    {t("cart.checkout_form.select_city") || "اختر المدينة"}
+                  </option>
+                  {cities.map((city) => (
+                    <option
+                      style={{ color: "#000" }}
+                      key={city.id}
+                      value={city.id}
+                    >
+                      {city.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>
+                  <FaGlobe />
+                  {t("cart.checkout_form.region") || "المنطقة"}
+                </label>
+                <select
+                  className={styles.formSelect}
+                  value={selectedRegion}
+                  onChange={(e) => setSelectedRegion(e.target.value)}
+                  required
+                  disabled={!selectedCity}
+                >
+                  <option style={{ color: "#000" }} value="">
+                    {t("cart.checkout_form.select_region") || "اختر المنطقة"}
+                  </option>
+                  {regions.map((region) => (
+                    <option
+                      style={{ color: "#000" }}
+                      key={region.id}
+                      value={region.id}
+                    >
+                      {region.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>
+                  <FaMapMarkerAlt />
+                  {t("cart.checkout_form.address") || "العنوان التفصيلي"}
+                </label>
+                <textarea
+                  className={styles.formTextarea}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder={
+                    t("cart.checkout_form.address_placeholder") ||
+                    "أدخل عنوانك التفصيلي..."
+                  }
+                  rows={3}
+                  required
+                />
+              </div>
+
+              <div className={styles.checkoutActions}>
+                <button
+                  className={styles.cancelCheckoutBtn}
+                  onClick={() => setShowCheckoutForm(false)}
+                  disabled={isCheckoutLoading}
+                >
+                  {t("cart.checkout_form.cancel") || "إلغاء"}
+                </button>
+                <button
+                  className={styles.confirmCheckoutBtn}
+                  onClick={handleCheckout}
+                  disabled={
+                    isCheckoutLoading ||
+                    !selectedCity ||
+                    !selectedRegion ||
+                    !address.trim()
+                  }
+                >
+                  {isCheckoutLoading ? (
+                    <>
+                      <div className={styles.loadingSpinner}></div>
+                      {t("cart.checkout_form.processing") || "جاري المعالجة..."}
+                    </>
+                  ) : (
+                    t("cart.checkout_form.confirm") || "تأكيد الطلب"
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

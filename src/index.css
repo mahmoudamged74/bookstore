@@ -768,9 +768,10 @@ body[data-theme="light"] [class*="card"] {
 body[data-theme="light"] button,
 body[data-theme="light"] .btn,
 body[data-theme="light"] [role="button"] {
-  background-color: var(--accent);
-  color: var(--text);
-  border-color: var(--accent);
+  /* background-color: var(--accent); */
+  /* color: var(--text); */
+  /* color: #000000; */
+  /* border-color: var(--accent); */
 }
 
 body[data-theme="light"] a {
