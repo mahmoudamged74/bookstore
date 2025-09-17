@@ -25,6 +25,7 @@ function GameDetails() {
   const [productData, setProductData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const { addToCart, cartItems } = useCart();
 
   // جلب بيانات المنتج من API
@@ -100,6 +101,7 @@ function GameDetails() {
   const handleAddToCart = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
+      setShowLoginModal(true);
       showWarning(
         "تسجيل الدخول مطلوب",
         "يجب عليك تسجيل الدخول أولاً لإضافة المنتج إلى السلة"
@@ -116,6 +118,11 @@ function GameDetails() {
         `تم إضافة ${quantity} من ${productData?.title} إلى السلة`
       );
     }
+  };
+
+  // دالة إغلاق الموديل
+  const closeLoginModal = () => {
+    setShowLoginModal(false);
   };
 
   if (loading) {
@@ -319,6 +326,37 @@ function GameDetails() {
           </div>
         </div>
       </div>
+
+      {/* Modal التسجيل */}
+      {showLoginModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <div className={styles.modalHeader}>
+              <h3>{t("gamestore.modal.login_required")}</h3>
+              <button className={styles.closeBtn} onClick={closeLoginModal}>
+                ×
+              </button>
+            </div>
+            <div className={styles.modalBody}>
+              <p>{t("gamestore.modal.login_message")}</p>
+              <div className={styles.modalActions}>
+                <button
+                  className={styles.loginBtn}
+                  onClick={() => {
+                    window.location.href = "/login";
+                    closeLoginModal();
+                  }}
+                >
+                  {t("gamestore.modal.login_btn")}
+                </button>
+                <button className={styles.cancelBtn} onClick={closeLoginModal}>
+                  {t("gamestore.modal.cancel_btn")}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -215,7 +215,7 @@ body[data-theme="light"] .bookInfo {
     order: 2;
   }
   .bookTitle {
-  text-align: center;
+    text-align: center;
   }
 }
 
@@ -612,4 +612,223 @@ body[data-theme="light"] .note {
   border-radius: 20px;
   color: var(--muted);
   text-align: center;
+}
+
+/* أنماط الـ Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal {
+  background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 0;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  position: relative;
+}
+
+.modalHeader::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+}
+
+.modalHeader h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+}
+
+.closeBtn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #ffffff !important;
+  font-size: 20px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: #ffffff !important;
+  transform: scale(1.1);
+}
+
+.modalBody {
+  padding: 32px 28px;
+  background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+}
+
+.modalBody p {
+  margin: 0 0 28px 0;
+  color: #4a5568;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.modalActions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.loginBtn {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: #ffffff !important;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.loginBtn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.loginBtn:hover::before {
+  left: 100%;
+}
+
+.loginBtn:hover {
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(44, 62, 80, 0.4);
+}
+
+.cancelBtn {
+  background: #f7fafc;
+  color: #626b71 !important;
+  border: 2px solid #e2e8f0;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancelBtn:hover {
+  background: #edf2f7;
+  border-color: #cbd5e0;
+  color: #626b71 !important;
+  transform: translateY(-1px);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Modal responsive */
+@media (max-width: 768px) {
+  .modal {
+    width: 95%;
+    max-width: 380px;
+  }
+
+  .modalHeader {
+    padding: 20px 24px;
+  }
+
+  .modalHeader h3 {
+    font-size: 18px;
+  }
+
+  .modalBody {
+    padding: 24px;
+  }
+
+  .modalBody p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .modalActions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .loginBtn,
+  .cancelBtn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
 }

@@ -9,6 +9,7 @@ i18n
   .use(LanguageDetector) // Detect browser language
   .use(initReactI18next)
   .init({
+    lng: "ar", // اللغة الافتراضية
     fallbackLng: "ar",
     debug: false, // تعطيل التصحيح لتجنب رسائل الخطأ في الكونسول
     backend: {
@@ -35,8 +36,10 @@ i18n.on("initialized", () => {
   document.documentElement.setAttribute("dir", dir);
   document.documentElement.setAttribute("lang", lng);
 
-  // تأكد من حفظ اللغة في localStorage
-  localStorage.setItem("i18nextLng", lng);
+  // تأكد من حفظ اللغة في localStorage إذا لم تكن موجودة
+  if (!localStorage.getItem("i18nextLng")) {
+    localStorage.setItem("i18nextLng", "ar");
+  }
 });
 
 // ✅ Also update if language changes dynamically

@@ -1,0 +1,26 @@
+{
+  "ar": {
+    "navbar": {
+      "home": "الرئيسية",
+      "shopbooks": "متجر الكتب",
+      "about": "من نحن",
+      "faq": "الأسئلة الشائعة",
+      "contact": "اتصل بنا",
+      "login": "تسجيل الدخول"
+    },
+    "loading": "جاري التحميل...",
+    "change_language": "تغيير اللغة"
+  },
+  "en": {
+    "navbar": {
+      "home": "Home",
+      "shopbooks": "Shop Books",
+      "about": "About Us",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "login": "Login"
+    },
+    "loading": "Loading...",
+    "change_language": "Change Language"
+  }
+}
