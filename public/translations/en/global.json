@@ -1,7 +1,7 @@
 {
   "navbar": {
     "home": "Home",
-    "most_selling": "Most Selling",
+    "shopbooks": "Shop Books",
     "about": "About Us",
     "faq": "FAQ",
     "contact": "Contact",
@@ -430,5 +430,22 @@
       "payment_status_paid": "Paid",
       "payment_status_not_paid": "Not Paid"
     }
+  },
+  "shopbooks": {
+    "title": "Browse Books",
+    "loading": "Loading...",
+    "loading_products": "Loading products...",
+    "select_subject": "Choose Subject",
+    "select_teacher": "Choose Teacher",
+    "select_grade": "Choose Grade",
+    "currency": "EGP",
+    "view_details": "View Details",
+    "no_products": "No Products Found",
+    "no_products_message": "No products found matching the specified criteria",
+    "previous": "Previous",
+    "next": "Next",
+    "showing": "Showing",
+    "of": "of",
+    "products": "products"
   }
 }

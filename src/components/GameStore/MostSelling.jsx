@@ -37,6 +37,9 @@ function MostSelling() {
       fake_price: "0",
       discount: "0",
       in_cart: false,
+      subject_name: "الرياضيات",
+      grade_name: "الصف الأول الثانوي",
+      teacher_name: "أ. أحمد محمد",
     },
     {
       id: "physics-teacher-1",
@@ -47,6 +50,9 @@ function MostSelling() {
       fake_price: "0",
       discount: "0",
       in_cart: false,
+      subject_name: "الفيزياء",
+      grade_name: "الصف الثاني الثانوي",
+      teacher_name: "أ. فاطمة علي",
     },
     {
       id: "chemistry-teacher-1",
@@ -57,6 +63,9 @@ function MostSelling() {
       fake_price: "0",
       discount: "0",
       in_cart: false,
+      subject_name: "الكيمياء",
+      grade_name: "الصف الثالث الثانوي",
+      teacher_name: "أ. محمود حسن",
     },
     {
       id: "arabic-teacher-1",
@@ -67,6 +76,9 @@ function MostSelling() {
       fake_price: "0",
       discount: "0",
       in_cart: false,
+      subject_name: "اللغة العربية",
+      grade_name: "الصف الأول الثانوي",
+      teacher_name: "أ. نور الدين",
     },
   ];
 
@@ -108,7 +120,9 @@ function MostSelling() {
     if (cartItems && cartItems.length > 0) {
       const cartQuantities = {};
       cartItems.forEach((item) => {
-        cartQuantities[item.product.id] = parseInt(item.qty);
+        if (item && item.product && item.product.id) {
+          cartQuantities[item.product.id] = parseInt(item.qty);
+        }
       });
       setQuantities(cartQuantities);
     }
@@ -245,6 +259,25 @@ function MostSelling() {
                 <div className={styles.body}>
                   <h3 className={styles.gameTitle}>{book.title}</h3>
                   <p className={styles.desc}>{book.desc}</p>
+
+                  {/* معلومات المنتج */}
+                  <div className={styles.productInfo}>
+                    {book.subject_name && (
+                      <span className={styles.subjectBadge}>
+                        {book.subject_name}
+                      </span>
+                    )}
+                    {book.grade_name && (
+                      <span className={styles.gradeBadge}>
+                        {book.grade_name}
+                      </span>
+                    )}
+                    {book.teacher_name && (
+                      <span className={styles.teacherBadge}>
+                        {book.teacher_name}
+                      </span>
+                    )}
+                  </div>
 
                   {/* عداد الكمية - يظهر بشكل ثابت */}
                   <div className={styles.staticCounter}>

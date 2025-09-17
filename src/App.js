@@ -13,7 +13,6 @@ import Loader from "./components/Loader/Loader";
 import NotificationContainer from "./components/Notification/NotificationContainer";
 import AllGames from "./pages/AllGames/AllGames";
 import GameDetails from "./pages/gameDetails/gameDetails";
-import BuyGame from "./pages/BuyGame/BuyGame";
 import Offers from "./pages/Offers/Offers";
 import About from "./pages/About/About";
 import FAQ from "./pages/FAQ/FAQ";
@@ -29,6 +28,7 @@ import Profile from "./pages/Profile/Profile";
 import AllTeacherBooks from "./pages/AllTeacherBooks/AllTeacherBooks";
 import AllOffers from "./pages/AllOffers/AllOffers";
 import Cart from "./pages/Cart/Cart";
+import ShopBooks from "./pages/ShopBooks/ShopBooks";
 
 // ✅ Scroll restoration
 function ScrollToTop() {
@@ -118,19 +118,20 @@ export default function App() {
                 </Layout>
               }
             />
-            <Route
-              path="/buy-game"
-              element={
-                <Layout>
-                  <BuyGame />
-                </Layout>
-              }
-            />
+
             <Route
               path="/offers"
               element={
                 <Layout>
                   <Offers />
+                </Layout>
+              }
+            />
+            <Route
+              path="/shop-books"
+              element={
+                <Layout>
+                  <ShopBooks />
                 </Layout>
               }
             />
@@ -187,6 +188,14 @@ export default function App() {
               element={
                 <Layout>
                   <AllOffers />
+                </Layout>
+              }
+            />
+            <Route
+              path="/shop-books"
+              element={
+                <Layout>
+                  <ShopBooks />
                 </Layout>
               }
             />

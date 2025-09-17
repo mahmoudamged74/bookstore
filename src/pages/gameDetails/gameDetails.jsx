@@ -82,7 +82,7 @@ function GameDetails() {
   useEffect(() => {
     if (productData && cartItems && cartItems.length > 0) {
       const cartItem = cartItems.find(
-        (item) => item.product.id === parseInt(id)
+        (item) => item && item.product && item.product.id === parseInt(id)
       );
       if (cartItem) {
         setQuantity(parseInt(cartItem.qty));

@@ -32,6 +32,9 @@ function Offers() {
       real_price: "35.99",
       discount: "30",
       in_cart: false,
+      subject_name: "الرياضيات",
+      grade_name: "الصف الأول الثانوي",
+      teacher_name: "أ. أحمد محمد",
     },
     {
       id: "offer-2",
@@ -42,6 +45,9 @@ function Offers() {
       real_price: "89.99",
       discount: "25",
       in_cart: false,
+      subject_name: "الكيمياء",
+      grade_name: "الصف الثاني الثانوي",
+      teacher_name: "أ. فاطمة علي",
     },
     {
       id: "offer-3",
@@ -52,6 +58,9 @@ function Offers() {
       real_price: "27.99",
       discount: "40",
       in_cart: false,
+      subject_name: "أدوات مكتبية",
+      grade_name: "جميع المراحل",
+      teacher_name: "متجر برمجا",
     },
     {
       id: "offer-4",
@@ -62,6 +71,9 @@ function Offers() {
       real_price: "52.99",
       discount: "35",
       in_cart: false,
+      subject_name: "اللغة الإنجليزية",
+      grade_name: "الصف الثالث الثانوي",
+      teacher_name: "أ. نور الدين",
     },
   ];
 
@@ -101,7 +113,9 @@ function Offers() {
     if (cartItems && cartItems.length > 0) {
       const cartQuantities = {};
       cartItems.forEach((item) => {
-        cartQuantities[item.product.id] = parseInt(item.qty);
+        if (item && item.product && item.product.id) {
+          cartQuantities[item.product.id] = parseInt(item.qty);
+        }
       });
       setQuantities(cartQuantities);
     }
@@ -243,6 +257,25 @@ function Offers() {
                 <div className={styles.body}>
                   <h3 className={styles.offerTitle}>{offer.title}</h3>
                   <p className={styles.desc}>{offer.desc}</p>
+
+                  {/* معلومات المنتج */}
+                  <div className={styles.productInfo}>
+                    {offer.subject_name && (
+                      <span className={styles.subjectBadge}>
+                        {offer.subject_name}
+                      </span>
+                    )}
+                    {offer.grade_name && (
+                      <span className={styles.gradeBadge}>
+                        {offer.grade_name}
+                      </span>
+                    )}
+                    {offer.teacher_name && (
+                      <span className={styles.teacherBadge}>
+                        {offer.teacher_name}
+                      </span>
+                    )}
+                  </div>
 
                   {/* عداد الكمية - يظهر بشكل ثابت */}
                   <div className={styles.staticCounter}>

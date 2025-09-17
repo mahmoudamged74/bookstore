@@ -1,7 +1,7 @@
 {
   "navbar": {
     "home": "الرئيسية",
-    "most_selling": "الأكثر مبيعاً",
+    "shopbooks": "متجر الكتب",
     "about": "من نحن",
     "faq": "الأسئلة الشائعة",
     "contact": "اتصل بنا",
@@ -430,5 +430,22 @@
       "payment_status_paid": "مدفوع",
       "payment_status_not_paid": "غير مدفوع"
     }
+  },
+  "shopbooks": {
+    "title": "تصفح الكتب",
+    "loading": "جاري التحميل...",
+    "loading_products": "جاري تحميل المنتجات...",
+    "select_subject": "اختر المادة",
+    "select_teacher": "اختر المدرس",
+    "select_grade": "اختر الصف",
+    "currency": "ج.م",
+    "view_details": "عرض التفاصيل",
+    "no_products": "لا توجد منتجات",
+    "no_products_message": "لم يتم العثور على منتجات تطابق المعايير المحددة",
+    "previous": "السابق",
+    "next": "التالي",
+    "showing": "عرض",
+    "of": "من",
+    "products": "منتج"
   }
 }

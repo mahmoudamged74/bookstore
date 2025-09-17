@@ -199,6 +199,69 @@
   display: block;
 }
 
+/* معلومات المنتج */
+.productInfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+  justify-content: center;
+}
+
+.subjectBadge,
+.gradeBadge,
+.teacherBadge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.subjectBadge {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.gradeBadge {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  color: white;
+  border: 1px solid rgba(33, 150, 243, 0.3);
+}
+
+.teacherBadge {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.subjectBadge:hover,
+.gradeBadge:hover,
+.teacherBadge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* لون البادجات في اللايت مود */
+[data-theme="light"] .subjectBadge {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+}
+
+[data-theme="light"] .gradeBadge {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  color: white;
+}
+
+[data-theme="light"] .teacherBadge {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+}
+
 /* عداد الكمية الثابت */
 .staticCounter {
   display: flex;
@@ -213,7 +276,7 @@
 }
 
 .staticCounter .counterBtn {
-  background: var(--accent);
+  background: #908c8c;
   color: white;
   border: none;
   width: 24px;

@@ -21,7 +21,7 @@ body[data-theme="light"] {
 .features {
   background: var(--features-bg);
   color: var(--features-text);
-  padding: 80px 0;
+  /* padding: 10px 0; */
   position: relative;
   overflow: hidden;
   user-select: text; /* السماح بتحديد النص في المكون كله */
@@ -320,7 +320,7 @@ body[data-theme="light"] {
 /* ريسبونسيف */
 @media (max-width: 768px) {
   .features {
-    padding: 60px 0;
+    padding: 40px 0;
   }
 
   .header {

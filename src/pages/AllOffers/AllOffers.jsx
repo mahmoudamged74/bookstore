@@ -33,7 +33,9 @@ function AllOffers() {
     if (cartItems && cartItems.length > 0) {
       const cartQuantities = {};
       cartItems.forEach((item) => {
-        cartQuantities[item.product.id] = parseInt(item.qty);
+        if (item && item.product && item.product.id) {
+          cartQuantities[item.product.id] = parseInt(item.qty);
+        }
       });
       setQuantities(cartQuantities);
     }

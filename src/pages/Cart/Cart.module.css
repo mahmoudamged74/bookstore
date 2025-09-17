@@ -87,12 +87,23 @@
   border-radius: 12px;
   overflow: hidden;
   flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.itemImage:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .itemImage img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.itemImage:hover img {
+  transform: scale(1.1);
 }
 
 .itemDetails {
@@ -100,6 +111,11 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  transition: color 0.3s ease;
+}
+
+.itemDetails:hover {
+  color: var(--accent);
 }
 
 .itemTitle {
@@ -108,6 +124,11 @@
   color: var(--text);
   margin: 0;
   line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.itemDetails:hover .itemTitle {
+  color: var(--accent);
 }
 
 .itemDesc {

@@ -214,6 +214,9 @@ body[data-theme="light"] .bookInfo {
   .quantitySection {
     order: 2;
   }
+  .bookTitle {
+  text-align: center;
+  }
 }
 
 @media (max-width: 480px) {

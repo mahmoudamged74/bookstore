@@ -39,8 +39,12 @@ export const CartProvider = ({ children }) => {
 
       if (response.data?.status && response.data?.data) {
         const allItems = response.data.data.flatMap((cart) => cart.items || []);
-        setCartItems(allItems);
-        setCartCount(allItems.length);
+        console.log("All cart items:", allItems);
+        // تصفية العناصر الصالحة فقط (التي لها product)
+        const validItems = allItems.filter((item) => item && item.product);
+        console.log("Valid cart items:", validItems);
+        setCartItems(validItems);
+        setCartCount(validItems.length);
       } else {
         setCartItems([]);
         setCartCount(0);
@@ -327,20 +331,26 @@ export const CartProvider = ({ children }) => {
   // حساب إجمالي السعر
   const getTotalPrice = () => {
     return cartItems.reduce((total, item) => {
-      const price = parseFloat(item.product.real_price) || 0;
-      const qty = parseInt(item.qty) || 0;
-      return total + price * qty;
+      if (item && item.product) {
+        const price = parseFloat(item.product.real_price) || 0;
+        const qty = parseInt(item.qty) || 0;
+        return total + price * qty;
+      }
+      return total;
     }, 0);
   };
 
   // حساب إجمالي الخصم
   const getTotalDiscount = () => {
     return cartItems.reduce((total, item) => {
-      const fakePrice = parseFloat(item.product.fake_price) || 0;
-      const realPrice = parseFloat(item.product.real_price) || 0;
-      const qty = parseInt(item.qty) || 0;
-      const discount = fakePrice > 0 ? (fakePrice - realPrice) * qty : 0;
-      return total + discount;
+      if (item && item.product) {
+        const fakePrice = parseFloat(item.product.fake_price) || 0;
+        const realPrice = parseFloat(item.product.real_price) || 0;
+        const qty = parseInt(item.qty) || 0;
+        const discount = fakePrice > 0 ? (fakePrice - realPrice) * qty : 0;
+        return total + discount;
+      }
+      return total;
     }, 0);
   };
 

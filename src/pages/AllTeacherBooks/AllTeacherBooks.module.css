@@ -184,7 +184,7 @@
 }
 
 .staticCounter .counterBtn {
-  background: var(--accent);
+  background:#908c8c;
   color: white;
   border: none;
   width: 24px;

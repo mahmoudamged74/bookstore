@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaShoppingCart,
   FaTrash,
@@ -19,6 +19,7 @@ import styles from "./Cart.module.css";
 const Cart = () => {
   const { t } = useTranslation();
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
   const {
     cartItems,
     loading,
@@ -47,7 +48,9 @@ const Cart = () => {
     if (cartItems && cartItems.length > 0) {
       const quantities = {};
       cartItems.forEach((item) => {
-        quantities[item.id] = parseInt(item.qty);
+        if (item && item.id) {
+          quantities[item.id] = parseInt(item.qty);
+        }
       });
       setLocalQuantities(quantities);
       setHasChanges(false);
@@ -105,7 +108,7 @@ const Cart = () => {
   };
 
   const handleQuantityChange = (itemId, newQuantity) => {
-    if (newQuantity < 1) return;
+    if (newQuantity < 1 || !itemId) return;
 
     setLocalQuantities((prev) => ({
       ...prev,
@@ -122,7 +125,7 @@ const Cart = () => {
       const updatePromises = Object.entries(localQuantities).map(
         async ([itemId, quantity]) => {
           const cartItem = cartItems.find(
-            (item) => item.id === parseInt(itemId)
+            (item) => item && item.id === parseInt(itemId)
           );
           if (cartItem && parseInt(cartItem.qty) !== quantity) {
             return await updateCartItem(parseInt(itemId), quantity);
@@ -141,7 +144,16 @@ const Cart = () => {
   };
 
   const handleRemoveItem = async (itemId) => {
-    await removeFromCart(itemId);
+    if (itemId) {
+      await removeFromCart(itemId);
+    }
+  };
+
+  // دالة الانتقال لصفحة تفاصيل المنتج
+  const handleProductClick = (productId) => {
+    if (productId) {
+      navigate(`/book-details/${productId}`);
+    }
   };
 
   // دالة Checkout
@@ -181,7 +193,7 @@ const Cart = () => {
 
         // تنظيف الكارت بعد نجاح الطلب
         // استخدام clearAllCarts لحذف جميع الكارتات
-        if (cartItems && cartItems.length > 0) {
+        if (validCartItems && validCartItems.length > 0) {
           console.log("Starting to clear cart after successful checkout...");
           await clearAllCarts();
           console.log("Cart clearing completed");
@@ -212,7 +224,12 @@ const Cart = () => {
     );
   }
 
-  if (cartItems.length === 0) {
+  // Filter out items with null products
+  const validCartItems = cartItems.filter((item) => item.product);
+  console.log("Cart items:", cartItems);
+  console.log("Valid cart items:", validCartItems);
+
+  if (validCartItems.length === 0) {
     return (
       <div className={styles.emptyCart}>
         <div className={styles.emptyIcon}>
@@ -243,34 +260,51 @@ const Cart = () => {
 
       <div className={styles.cartContent}>
         <div className={styles.cartItems}>
-          {cartItems.map((item) => (
+          {validCartItems.map((item) => (
             <div key={item.id} className={styles.cartItem}>
-              <div className={styles.itemImage}>
+              <div
+                className={styles.itemImage}
+                onClick={() =>
+                  item.product && handleProductClick(item.product.id)
+                }
+                style={{ cursor: "pointer" }}
+              >
                 <img
-                  src={item.product.main_image}
-                  alt={item.product.title}
+                  src={item.product?.main_image || "/placeholder.png"}
+                  alt={item.product?.title || "Product"}
                   onError={(e) => {
                     e.target.src = "/placeholder.png";
                   }}
                 />
               </div>
 
-              <div className={styles.itemDetails}>
-                <h3 className={styles.itemTitle}>{item.product.title}</h3>
-                <p className={styles.itemDesc}>{item.product.desc}</p>
+              <div
+                className={styles.itemDetails}
+                onClick={() =>
+                  item.product && handleProductClick(item.product.id)
+                }
+                style={{ cursor: "pointer" }}
+              >
+                <h3 className={styles.itemTitle}>
+                  {item.product?.title || "Product Title"}
+                </h3>
+                <p className={styles.itemDesc}>
+                  {item.product?.desc || "Product Description"}
+                </p>
 
                 <div className={styles.itemPrices}>
-                  {item.product.fake_price > 0 && (
+                  {item.product?.fake_price > 0 && (
                     <span className={styles.fakePrice}>
-                      {item.product.fake_price} {t("cart.currency") || "ج.م"}
+                      {item.product?.fake_price} {t("cart.currency") || "ج.م"}
                     </span>
                   )}
                   <span className={styles.realPrice}>
-                    {item.product.real_price} {t("cart.currency") || "ج.م"}
+                    {item.product?.real_price || 0}{" "}
+                    {t("cart.currency") || "ج.م"}
                   </span>
-                  {item.product.discount > 0 && (
+                  {item.product?.discount > 0 && (
                     <span className={styles.discount}>
-                      -{item.product.discount}%
+                      -{item.product?.discount}%
                     </span>
                   )}
                 </div>
@@ -283,12 +317,13 @@ const Cart = () => {
                     onClick={() =>
                       handleQuantityChange(
                         item.id,
-                        (localQuantities[item.id] || parseInt(item.qty)) - 1
+                        (localQuantities[item.id] || parseInt(item.qty) || 1) -
+                          1
                       )
                     }
                     disabled={
                       updatingItems.has(item.id) ||
-                      (localQuantities[item.id] || parseInt(item.qty)) <= 1
+                      (localQuantities[item.id] || parseInt(item.qty) || 1) <= 1
                     }
                   >
                     <FaMinus />
@@ -298,7 +333,7 @@ const Cart = () => {
                     {updatingItems.has(item.id) ? (
                       <div className={styles.loadingSpinner}></div>
                     ) : (
-                      localQuantities[item.id] || item.qty
+                      localQuantities[item.id] || item.qty || 1
                     )}
                   </span>
 
@@ -307,7 +342,8 @@ const Cart = () => {
                     onClick={() =>
                       handleQuantityChange(
                         item.id,
-                        (localQuantities[item.id] || parseInt(item.qty)) + 1
+                        (localQuantities[item.id] || parseInt(item.qty) || 1) +
+                          1
                       )
                     }
                     disabled={updatingItems.has(item.id)}
@@ -334,7 +370,7 @@ const Cart = () => {
 
             <div className={styles.summaryRow}>
               <span>{t("cart.summary.items_count") || "عدد المنتجات"}</span>
-              <span>{cartItems.length}</span>
+              <span>{validCartItems.length}</span>
             </div>
 
             {getTotalDiscount() > 0 && (

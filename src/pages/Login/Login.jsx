@@ -52,7 +52,7 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(response.data.data));
 
         toast.success(response.data.message);
-        navigate("/");
+        window.location.href = "/";
       } else {
         toast.error(response.data.message || "Login failed");
       }

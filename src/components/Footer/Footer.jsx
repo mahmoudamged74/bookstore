@@ -143,7 +143,7 @@ const Footer = () => {
           {/* العمود الأوسط: روابط */}
           <nav className={styles.navCol} aria-label={t("footer.nav_label")}>
             <a href="/">{t("navbar.home")}</a>
-            <a href="/all-most-selling">{t("navbar.most_selling")}</a>
+            <a href="/shop-books">{t("navbar.shopbooks")}</a>
             <a href="/about">{t("navbar.about")}</a>
             <a href="/faq">{t("navbar.faq")}</a>
             <a href="/contact">{t("footer.contact_us")}</a>

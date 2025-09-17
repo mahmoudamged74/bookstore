@@ -199,12 +199,12 @@ const Navbar = () => {
           {t("navbar.home")}
         </Link>
         <Link
-          to="/all-most-selling"
+          to="/shop-books"
           className={`${styles.link} ${
-            location.pathname === "/all-most-selling" ? styles.active : ""
+            location.pathname === "/shop-books" ? styles.active : ""
           }`}
         >
-          {t("navbar.most_selling")}
+          {t("navbar.shopbooks")}
         </Link>
         <Link
           to="/about"
@@ -342,13 +342,13 @@ const Navbar = () => {
               {t("navbar.home")}
             </Link>
             <Link
-              to="/all-most-selling"
+              to="/shop-books"
               className={`${styles.mobileLink} ${
-                location.pathname === "/all-most-selling" ? styles.active : ""
+                location.pathname === "/shop-books" ? styles.active : ""
               }`}
               onClick={() => setIsMobileOpen(false)}
             >
-              {t("navbar.most_selling")}
+              {t("navbar.shopbooks")}
             </Link>
             <Link
               to="/about"
